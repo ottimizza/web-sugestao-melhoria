@@ -18,12 +18,12 @@ export class TimelineComponent implements OnInit {
     this.product = 'Bussola Contábil';
 
     for (let i = 0; i < 20; i++) {
-      this.suggestions.push(new Suggestion(
+      const s = new Suggestion(
         Math.round(Math.random() * 10000),
         'URGENTE!',
         'Muito branco',
         'Mudar o fundo para rosa choque',
-        'Aumento da produtividade em no mínimo 327%',
+        'Aumento da produtividade em no mínimo 327% pois o software irá prender mais a minha atenção',
         false,
         false,
         true,
@@ -32,7 +32,8 @@ export class TimelineComponent implements OnInit {
         4122,
         22,
         new Date()
-      ));
+      ).addTag('bussola').addTag('urgente!').addTag('Cor').addTag('fundo');
+      this.suggestions.push(s);
     }
 
   }

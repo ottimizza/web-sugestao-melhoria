@@ -20,14 +20,14 @@ export class Suggestion {
 
   public addTag(tag: string) {
     if (this._tags.length < 5 && tag.length < 12) {
-      this._tags.push(tag);
+      this._tags.push(tag.toUpperCase());
     }
-    return this._tags;
+    return this;
   }
 
   public removeTag(tag: string) {
     this._tags.splice(this._tags.indexOf(tag), 1);
-    return this._tags;
+    return this;
   }
 
   public get tags() {
