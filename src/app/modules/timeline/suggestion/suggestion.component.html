@@ -1,0 +1,26 @@
+<div class="card p-2">
+
+  <div class="row w-100 m-0">
+    <div class="col-2 p-0">
+      <img src="../../../../assets/icons/icon-72x72.png">
+    </div>
+    <div class="col p-0 pl-2">
+      <span class="name">{{ name }}</span>
+      <span class="hour">{{ hour }}</span>
+    </div>
+  </div>
+
+  <br>
+  <strong>{{ title }}</strong>
+  <br>
+
+  <span>{{ content }}</span>
+  <a href="" class="text-info">Continuar lendo</a>
+
+  <div class="row w-100 m-0 mt-4">
+    <div class="comments clickeable" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
+    <div class="likes clickeable" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
+    <div class="dislikes clickeable" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
+  </div>
+
+</div>

@@ -1,0 +1,36 @@
+img {
+  min-width: 50px;
+  width: 5%;
+}
+
+.name {
+  font-size: 14px;
+  display: block;
+}
+
+.hour {
+  font-size: 12px;
+}
+
+strong {
+  // font-weight: bold;
+  color: black;
+  text-align: justify;
+}
+
+span {
+  text-align: justify;
+  margin: 0 15px 0 15px;
+  line-height: 20px;
+}
+
+strong, a {
+  margin: 0 auto;
+}
+
+.comments, .likes, .dislikes {
+  background-color: #E7E7E7;
+  padding: 4px 10px 4px 10px;
+  border-radius: 4px;
+  margin: 0 auto;
+}

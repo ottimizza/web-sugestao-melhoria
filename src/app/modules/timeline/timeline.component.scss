@@ -1,0 +1,32 @@
+#product-container {
+  background-color: #E9ECEF;
+
+  span {
+    font-size: 110%;
+  }
+
+}
+
+#suggestion-container {
+  background-color: #F8F9FA;
+  border: solid 1px #E7E7E7;
+
+  button {
+    width: 100%;
+    border: solid 1px;
+    border-radius: 5px;
+    margin: 13px;
+  }
+
+  #desabafo {
+    background-color: #FAFAFA;
+    border-color: #C7C7C7;
+    color: #777777;
+  }
+
+  #sugestao {
+    background-color: #1976D2;
+    border-color: #1976D2;
+    color: white;
+  }
+}

@@ -1,0 +1,28 @@
+<div class="row w-100 m-0 p-2 pl-4" id="product-container">
+  <span>{{ product }}</span>
+</div>
+
+<div class="row w-100 m-0" id="suggestion-container">
+  <button class="col" id="desabafo">
+    <i class="fal fa-frown mr-1"></i>
+    TENHO UM DESABAFO!
+  </button>
+  <button class="col" id="sugestao">
+    <i class="fal fa-lightbulb-on mr-1"></i>
+    TENHO UMA SUGESTÃO!
+  </button>
+</div>
+
+<div class="m-4">
+  <app-complex-search-input></app-complex-search-input>
+</div>
+
+<section id="">
+
+  <div class="m-4 text-center" *ngFor="let s of suggestions">
+
+    <app-suggestion [suggestion]="s"></app-suggestion>
+
+  </div>
+
+</section>
