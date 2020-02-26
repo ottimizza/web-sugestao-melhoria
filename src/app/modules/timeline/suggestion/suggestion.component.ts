@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Suggestion } from '@shared/models/Suggestion';
 import { StringCutterUtils } from '@shared/utils/string-cutter.util';
 import { User } from '@shared/models/User';
+import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-suggestion',
@@ -11,13 +12,14 @@ import { User } from '@shared/models/User';
 export class SuggestionComponent {
 
   @Input() suggestion: Suggestion;
+  isSelected = false;
 
   get title(): string {
-    return StringCutterUtils.cut(this.suggestion.problema, 65);
+    return StringCutterUtils.cut(this.suggestion.titulo, 48);
   }
 
   get content() {
-    return StringCutterUtils.cut(`${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 100);
+    return StringCutterUtils.cut(`${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 100);
   }
 
   get hour() {

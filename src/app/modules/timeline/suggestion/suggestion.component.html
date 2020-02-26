@@ -4,18 +4,39 @@
     <div class="col-2 p-0">
       <img src="../../../../assets/icons/icon-72x72.png">
     </div>
-    <div class="col p-0 pl-2">
+    <div class="col p-0 pl-2 text-left">
       <span class="name">{{ name }}</span>
       <span class="hour">{{ hour }}</span>
     </div>
   </div>
 
-  <br>
-  <strong>{{ title }}</strong>
-  <br>
+  <div class="useless class mt-3" *ngIf="!isSelected; else complete">
+    <strong>{{ title }}</strong>
+    <br>
+    <span class="content">{{ content }}</span>
+  </div>
 
-  <span>{{ content }}</span>
-  <a href="" class="text-info">Continuar lendo</a>
+  <ng-template #complete>
+    <div class="mt-3">
+
+      <p>{{ suggestion.titulo }}</p>
+      <br><br>
+
+      <strong>Problema a ser Resolvido</strong>
+      <br>
+      <span>{{ suggestion.problema }}</span>
+      <br><br>
+
+      <strong>Sugestão de Melhoria</strong>
+      <br>
+      <span>{{ suggestion.sugestaoMelhoria }}</span>
+      <br><br>
+
+    </div>
+  </ng-template>
+
+  <a class="text-info clickeable" (click)="isSelected = true" *ngIf="!isSelected">Continuar lendo</a>
+  <a class="text-info clickeable" (click)="isSelected = false" *ngIf="isSelected">Mostrar menos</a>
 
   <div class="row w-100 m-0 mt-4">
     <div class="comments clickeable" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>

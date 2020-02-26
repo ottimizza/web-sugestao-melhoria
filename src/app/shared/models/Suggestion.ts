@@ -3,6 +3,8 @@ export class Suggestion {
   private _tags: string[] = [];
 
   constructor(
+    public id: number,
+    public titulo: string,
     public problema: string,
     public sugestaoMelhoria: string,
     public resultadoEsperado: string,

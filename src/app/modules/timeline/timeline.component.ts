@@ -19,6 +19,8 @@ export class TimelineComponent implements OnInit {
 
     for (let i = 0; i < 20; i++) {
       this.suggestions.push(new Suggestion(
+        Math.round(Math.random() * 10000),
+        'URGENTE!',
         'Muito branco',
         'Mudar o fundo para rosa choque',
         'Aumento da produtividade em no mínimo 327%',
