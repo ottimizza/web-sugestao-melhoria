@@ -9,9 +9,14 @@ export class TimelineComponent implements OnInit {
 
   product: string;
   suggestions: Suggestion[] = [];
+  sortingType = 'Relevância';
 
   ngOnInit(): void {
     this.fake();
+  }
+
+  sortBy() {
+    this.sortingType = this.sortingType === 'Relevância' ? 'Data de Criação' : 'Relevância';
   }
 
   fake() {
