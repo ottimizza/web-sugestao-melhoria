@@ -22,6 +22,14 @@ export class SuggestionComponent {
     return StringCutterUtils.cut(`${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 100);
   }
 
+  get button() {
+    if (this.isSelected) {
+      return 'Mostrar menos';
+    } else {
+      return 'Continuar lendo';
+    }
+  }
+
   get hour() {
     return '3 horas atrás';
   }

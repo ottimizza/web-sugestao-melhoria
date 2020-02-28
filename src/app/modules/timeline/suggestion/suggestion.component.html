@@ -44,8 +44,7 @@
     </div>
   </ng-template>
 
-  <a class="text-info clickeable" (click)="isSelected = true" *ngIf="!isSelected">Continuar lendo</a>
-  <a class="text-info clickeable" (click)="isSelected = false" *ngIf="isSelected">Mostrar menos</a>
+  <a class="text-info clickeable" (click)="isSelected = !isSelected">{{ button }}</a>
 
   <div class="row w-100 m-0 mt-4">
     <div class="comments clickeable" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>

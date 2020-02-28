@@ -17,7 +17,7 @@ const routes: Routes = [
   {
     path: 'timeline',
     component: ContentLayoutComponent,
-    canActivate: [NoAuthGuard], // Should be replaced with actual auth guard
+    canActivate: [AuthGuard], // Should be replaced with actual auth guard
     children: [
       {
         path: '',
@@ -30,7 +30,7 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     loadChildren: () =>
       import('@modules/auth/auth.module').then(m => m.AuthModule)
-  },
+  }
 ];
 
 @NgModule({

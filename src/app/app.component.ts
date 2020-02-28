@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { RxEvent } from '@app/services/rx-event.service';
 import { DOCUMENT } from '@angular/common';
 import { UpdateService } from '@app/services/update.service';
+import { LoggerUtils } from '@shared/utils/logger.utills';
+import { MobileUtils } from '@shared/utils/mobile.utils';
 
 
 @Component({
@@ -37,7 +39,11 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-
+    if (MobileUtils.isMobile) {
+      LoggerUtils.log(`Dispositivo MOBILE`);
+    } else {
+      LoggerUtils.log(`Dispositivo DESKTOP`);
+    }
   }
 
 }
