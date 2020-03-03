@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
@@ -64,7 +63,7 @@ export class ComplexSearchInputComponent implements OnInit {
   private applyDefault(value: string): void {
     if (this.defaultRule) {
       const description = this.format(this.defaultRule.description, value);
-      for (let key in this.defaultRule.value) {
+      for (const key in this.defaultRule.value) {
         if (Object.prototype.hasOwnProperty.call(this.defaultRule.value, key)) {
           this.defaultRule.value[key] = value;
         }

@@ -9,7 +9,7 @@ export interface ISearchOption {
     description: string;
 
     value: any;
-    
+
 }
 
 export class SearchOption implements ISearchOption {
@@ -35,11 +35,11 @@ export class SearchOption implements ISearchOption {
     }
 
     public static fromHackingRule(hackingRule: HackingRule): SearchOption {
-        return SearchOption.builder()
-            .id(hackingRule.id)
-            .description(hackingRule.description)
-            .value(hackingRule.value)
-            .build();
+      return SearchOption.builder()
+          .id(hackingRule.id)
+          .description(hackingRule.description)
+          .value(hackingRule.value)
+          .build();
     }
 
 }

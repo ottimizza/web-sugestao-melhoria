@@ -143,15 +143,16 @@ DESKTOP SIZING
   bottom: 110px;
   right: 40px;
   font-size: 150%;
-  color: white;
-  background-color: #1976D2;
+  color: #1976D2;
+  background-color: white;
   transition: 200ms;
   width: 50px;
   height: 50px;
   border-radius: 100%;
+  border: solid 2px;
 
   i {
-    margin: 25% 30% 20% 20%;
+    margin: 25% 30% 20% 18%;
   }
 
   &:hover {

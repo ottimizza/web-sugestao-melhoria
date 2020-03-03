@@ -8,9 +8,9 @@ export interface ISearchRule {
     description: string;
 
     value: any;
-    
+
     keywords: string[];
-    
+
 }
 
 export class SearchRule implements ISearchRule {
@@ -20,7 +20,7 @@ export class SearchRule implements ISearchRule {
     description: string;
 
     value: any;
-    
+
     keywords: string[];
 
     constructor(builder: any) {
@@ -30,8 +30,17 @@ export class SearchRule implements ISearchRule {
         this.keywords = builder.keywords;
     }
 
+    public static apply(text: string, rules: SearchRule[]): Array<SearchOption> {
+        return rules.filter((v) => new SearchRule(v).matches(text))
+                    .map<SearchOption>((v) => new SearchRule(v).toSearchOption());
+    }
+
+    public static builder(): IBuilder<SearchRule> {
+        return Builder<SearchRule>();
+    }
+
     private normalize(text: string): string {
-        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
     public matches(text: string): boolean {
@@ -40,15 +49,6 @@ export class SearchRule implements ISearchRule {
 
     public toSearchOption(): SearchOption {
         return SearchOption.fromSearchRule(this);
-    }
-
-    public static apply(text: string, rules: SearchRule[]): Array<SearchOption> {
-        return rules.filter((v) => new SearchRule(v).matches(text))
-                    .map<SearchOption>((v) => new SearchRule(v).toSearchOption());
-    }
-
-    public static builder(): IBuilder<SearchRule> {
-        return Builder<SearchRule>();
     }
 
 }
