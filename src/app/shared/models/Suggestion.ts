@@ -1,9 +1,12 @@
+import { StringUtils } from '@shared/utils/string.utils';
+
 export class Suggestion {
 
   private _tags: string[] = [];
 
   constructor(
     public id: number,
+    public produto: string,
     public titulo: string,
     public problema: string,
     public sugestaoMelhoria: string,
@@ -20,7 +23,7 @@ export class Suggestion {
 
   public addTag(tag: string) {
     if (this._tags.length < 5 && tag.length < 12) {
-      this._tags.push(tag.toUpperCase());
+      this._tags.push(`#${StringUtils.normalize(tag.toUpperCase())}`);
     }
     return this;
   }

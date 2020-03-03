@@ -15,6 +15,9 @@
     <strong>{{ title }}</strong>
     <br>
     <span class="content">{{ content }}</span>
+    <div class="m-3 mb-4 mt-4 text-left tags-area">
+      <app-tag [tags]="suggestion.tags"></app-tag>
+    </div>
   </div>
 
   <ng-template #complete>
@@ -38,8 +41,10 @@
         <span>{{ suggestion.resultadoEsperado }}</span>
         <br><br>
 
-        <strong *ngIf="suggestion.tags.length">Tags:</strong>
-        <app-tag [tags]="suggestion.tags"></app-tag>
+        <div class="ml-3">
+          <strong *ngIf="suggestion.tags.length">Tags:</strong>
+          <app-tag [tags]="suggestion.tags"></app-tag>
+        </div>
       </div>
 
     </div>

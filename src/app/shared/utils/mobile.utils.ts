@@ -1,5 +1,7 @@
 export class MobileUtils {
 
+  private static _resizingFunctions: ((event: Event) => void)[] = [];
+
   public static get isMobile() {
     const toMatch = [
       /Android/i,
@@ -12,6 +14,15 @@ export class MobileUtils {
     ];
 
     return toMatch.some(toMatchItem => navigator.userAgent.match(toMatchItem));
+  }
+
+  public static onResize(callbackFn: (event: Event) => void) {
+    this._resizingFunctions.push(callbackFn);
+  }
+
+  public static windowIsResizing(event: Event) {
+    // ! Este método deve ser chamado apenas pelo app.component
+    this._resizingFunctions.forEach(cbfn => cbfn(event));
   }
 
 }

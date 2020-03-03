@@ -3,6 +3,7 @@ import { Suggestion } from '@shared/models/Suggestion';
 import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
+import { LoggerUtils } from '@shared/utils/logger.utills';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -18,6 +19,13 @@ export class TimelineComponent implements OnInit {
   product: string;
   suggestions: Suggestion[] = [];
   sortingType = SortingType.RELEVANCIA;
+  filters = [
+    SearchOption.builder()
+      .id('product')
+      .value({ product: 'Bussola' })
+      .description('Produto: Bussola')
+      .build()
+  ];
 
   ngOnInit(): void {
     this.fake();
@@ -42,7 +50,7 @@ export class TimelineComponent implements OnInit {
       this._hackingFactory('problem', /(problema)\:\s(?<value>.+)/ig, 'Problema a ser resolvido'),
       this._hackingFactory('suggestion', /(sugestao)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
       this._hackingFactory('suggestion', /(sugestão)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
-      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado')
+      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado'),
     ];
   }
 
@@ -55,7 +63,12 @@ export class TimelineComponent implements OnInit {
   }
 
   filterApply(event: SearchOption) {
-
+    const existingFilter = this.filters.filter(el => el.id === event.id);
+    if (existingFilter.length > 0) {
+      this.filters.splice(this.filters.indexOf(existingFilter[0]), 1);
+    }
+    this.filters.push(event);
+    // this.filterFetch();
   }
 
   fake() {
@@ -64,11 +77,12 @@ export class TimelineComponent implements OnInit {
     for (let i = 0; i < 20; i++) {
       const s = new Suggestion(
         Math.round(Math.random() * 10000),
+        'Bussola',
         'URGENTE!',
         // tslint:disable: max-line-length
-        'Desta maneira, o acompanhamento das preferências de consumo desafia a capacidade de equalização do sistema de formação de quadros que corresponde às necessidades. No mundo atual, o consenso sobre a necessidade de qualificação apresenta tendências no sentido de aprovar a manutenção dos conhecimentos estratégicos para atingir a excelência. Neste sentido, a mobilidade dos capitais internacionais possibilita uma melhor visão global das posturas dos órgãos dirigentes com relação às suas atribuições. Todavia, a necessidade de renovação processual estende o alcance e a importância do orçamento setorial.',
-        'Por conseguinte, a estrutura atual da organização assume importantes posições no estabelecimento de todos os recursos funcionais envolvidos. Desta maneira, o consenso sobre a necessidade de qualificação estimula a padronização das diretrizes de desenvolvimento para o futuro. Assim mesmo, a crescente influência da mídia possibilita uma melhor visão global dos procedimentos normalmente adotados. A prática cotidiana prova que a necessidade de renovação processual afeta positivamente a correta previsão das direções preferenciais no sentido do progresso. Por outro lado, o aumento do diálogo entre os diferentes setores produtivos oferece uma interessante oportunidade para verificação do sistema de formação de quadros que corresponde às necessidades.',
-        'O que temos que ter sempre em mente é que o acompanhamento das preferências de consumo aponta para a melhoria dos níveis de motivação departamental. Por outro lado, o consenso sobre a necessidade de qualificação nos obriga à análise dos conhecimentos estratégicos para atingir a excelência. No entanto, não podemos esquecer que a adoção de políticas descentralizadoras cumpre um papel essencial na formulação das condições inegavelmente apropriadas. Todavia, a complexidade dos estudos efetuados estende o alcance e a importância de alternativas às soluções ortodoxas. Pensando mais a longo prazo, o novo modelo estrutural aqui preconizado agrega valor ao estabelecimento das novas proposições.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
         false,
         false,
         true,

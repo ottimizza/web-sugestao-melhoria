@@ -37,6 +37,10 @@ export class AppComponent implements OnInit {
     window.location.reload();
   }
 
+  onResize(event: Event) {
+    MobileUtils.windowIsResizing(event);
+  }
+
   public ngOnInit() {
     if (MobileUtils.isMobile) {
       LoggerUtils.log(`Dispositivo MOBILE`);

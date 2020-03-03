@@ -1,11 +1,11 @@
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Suggestion } from '@shared/models/Suggestion';
 import { User } from '@shared/models/User';
 import { MobileUtils } from '@shared/utils/mobile.utils';
-import { LoggerUtils } from '@shared/utils/logger.utills';
 import { Comment } from '@shared/models/Comment';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { StringUtils } from '@shared/utils/string.utils';
+import { LoggerUtils } from '@shared/utils/logger.utills';
 
 @Component({
   selector: 'app-suggestion',
@@ -23,6 +23,7 @@ export class SuggestionComponent implements OnInit {
   ngOnInit(): void {
     const fake = this.fake().comments;
     this.comments = this.comments.concat(fake);
+    MobileUtils.onResize(event => this.isMobile);
   }
 
   get title(): string {
@@ -51,7 +52,7 @@ export class SuggestionComponent implements OnInit {
   }
 
   get hour() {
-    return '3 horas atrás';
+    return this.fake().hour;
   }
 
   get isMobile() {
@@ -69,6 +70,7 @@ export class SuggestionComponent implements OnInit {
       const comments: Comment[] = [];
       for (let i = 0; i < 5; i++) {
         const comment = new Comment();
+        // tslint:disable-next-line: max-line-length
         comment.comment = 'Gostaria de enfatizar que a revolução dos costumes obstaculiza a apreciação da importância dos níveis de motivação departamental.';
         comment.userId = Math.round(Math.random() * 100);
         comments.push(comment);
@@ -77,7 +79,8 @@ export class SuggestionComponent implements OnInit {
     };
 
     return {
-      comments: a()
+      comments: a(),
+      hour: '3 horas atrás'
     };
   }
 
