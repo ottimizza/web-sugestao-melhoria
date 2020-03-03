@@ -1,4 +1,9 @@
-@-prefix-keyframes slide {
+::ng-deep .mat-tooltip {
+  font-size: 13px;
+  padding: 5px;
+}
+
+@keyframes slide {
   from {
     height: 0;
   }
@@ -6,3 +11,4 @@
     height: 300px;
   }
 }
+

@@ -13,7 +13,7 @@ import { SearchOption } from './models/SearchOption';
 export class ComplexSearchInputComponent implements OnInit {
 
   @Input()
-  public debounceTime: number = 300;
+  public debounceTime = 300;
 
   @Input()
   public defaultRule: SearchRule;
@@ -54,16 +54,16 @@ export class ComplexSearchInputComponent implements OnInit {
   }
 
   private applyHackings(value: string): void {
-    this.options = this.options.concat(...HackingRule.apply(value, this.hackings))
+    this.options = this.options.concat(...HackingRule.apply(value, this.hackings));
   }
 
   private apllyRules(value: string): void {
-    this.options = this.options.concat(...SearchRule.apply(value, this.rules))
+    this.options = this.options.concat(...SearchRule.apply(value, this.rules));
   }
 
   private applyDefault(value: string): void {
     if (this.defaultRule) {
-      let description = this.format(this.defaultRule.description, value);
+      const description = this.format(this.defaultRule.description, value);
       for (let key in this.defaultRule.value) {
         if (Object.prototype.hasOwnProperty.call(this.defaultRule.value, key)) {
           this.defaultRule.value[key] = value;
@@ -71,7 +71,7 @@ export class ComplexSearchInputComponent implements OnInit {
       }
       this.options.push({
         id: 'default', value: this.defaultRule.value,
-        description: description
+        description
       });
     }
   }
@@ -92,11 +92,10 @@ export class ComplexSearchInputComponent implements OnInit {
   }
 
   private format(text: string, ...args: any[]) {
-    return text.replace(/{(\d+)}/g, function (match, number) {
-      return typeof args[number] != 'undefined'
-        ? args[number]
-        : match
-        ;
+    return text.replace(/{(\d+)}/g, (match, num) => {
+      return typeof args[num] != 'undefined'
+        ? args[num]
+        : match;
     });
   }
 

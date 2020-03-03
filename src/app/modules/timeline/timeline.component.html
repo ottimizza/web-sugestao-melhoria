@@ -22,12 +22,17 @@
 </div>
 
 <div class="m-4 mb-0">
-  <app-complex-search-input></app-complex-search-input>
+  <app-complex-search-input
+    [debounceTime]="100"
+    [defaultRule]="defaultRule"
+    [hackings]="hackings()"
+    (filterApplied)="filterApply($event)"
+    ></app-complex-search-input>
 </div>
 
 <section>
 
-  <div class="m-4 mt-0 text-center" *ngFor="let s of suggestions">
+  <div class="suggestion-card mt-0 text-center" *ngFor="let s of suggestions">
 
     <app-suggestion [suggestion]="s"></app-suggestion>
 

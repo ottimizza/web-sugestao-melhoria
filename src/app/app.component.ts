@@ -5,7 +5,6 @@ import { UpdateService } from '@app/services/update.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

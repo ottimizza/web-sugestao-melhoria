@@ -1,6 +1,7 @@
 export class ArrayUtils {
 
   public static sum(array: any[], arr: any[]) {
+    // ! EM MANUTENÇÃO
     /*
      * Soma dois arrays eliminando os elementos repetidos
      */
@@ -62,9 +63,7 @@ export class ArrayUtils {
       }
     });
 
-    return returningArray.filter(arr => {
-      return arr !== '';
-    });
+    return returningArray.filter(arr => arr !== '');
 
   }
 

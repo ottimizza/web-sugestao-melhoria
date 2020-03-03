@@ -8,9 +8,9 @@ export interface IHackinghRule {
     description: string;
 
     value: any;
-    
+
     keywords: string[];
-    
+
 }
 
 export class HackingRule implements IHackinghRule {
@@ -22,7 +22,7 @@ export class HackingRule implements IHackinghRule {
     description: string;
 
     value: any;
-    
+
     keywords: string[];
 
     constructor(builder: any) {
@@ -32,8 +32,17 @@ export class HackingRule implements IHackinghRule {
         this.value = builder.value;
     }
 
+    public static apply(text: string, rules: HackingRule[]): Array<SearchOption> {
+        return rules.filter((v) => new HackingRule(v).matches(text))
+            .map<SearchOption>((v) => new HackingRule(v).toSearchOption(text));
+    }
+
+    public static builder(): IBuilder<HackingRule> {
+      return Builder<HackingRule>();
+    }
+
     private normalize(text: string): string {
-        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
     public matches(text: string): RegExpMatchArray {
@@ -42,7 +51,7 @@ export class HackingRule implements IHackinghRule {
 
     public toSearchOption(text: string): SearchOption {
         const match = this.regex.exec(text);
-        let value = match.groups.value;
+        const value = match.groups.value;
         for (let key in this.value) {
             if (Object.prototype.hasOwnProperty.call(this.value, key)) {
                 this.value[key] = value;
@@ -52,21 +61,12 @@ export class HackingRule implements IHackinghRule {
         return SearchOption.fromHackingRule(this);
     }
 
-    public static apply(text: string, rules: HackingRule[]): Array<SearchOption> {
-        return rules.filter((v) => new HackingRule(v).matches(text))
-                    .map<SearchOption>((v) => new HackingRule(v).toSearchOption(text));
-    }
-
-    public static builder(): IBuilder<HackingRule> {
-        return Builder<HackingRule>();
-    }
 
     private format(text: string, ...args: any[]) {
-        return text.replace(/{(\d+)}/g, function(match, number) { 
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-            ;
+        return text.replace(/{(\d+)}/g, (match, num) => {
+            return typeof args[num] != 'undefined'
+                ? args[num]
+                : match;
         });
     }
 

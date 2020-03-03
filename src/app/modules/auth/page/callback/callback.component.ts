@@ -50,7 +50,7 @@ export class AuthCallbackComponent implements OnInit {
                 if (value) {
                   that.router.navigate([value]);
                 }
-                else that.router.navigate(['/dashboard/products']);
+                else that.router.navigate(['/']);
               });
 
               // const storeUserInfo = that.authenticationService.storeUserInfo();
@@ -60,7 +60,7 @@ export class AuthCallbackComponent implements OnInit {
               //   storeUserInfo,
               //   storeTokenInfo
               // ]).then((values) => {
-              
+
 
 
               // that.router.navigate(['dashboard']);
