@@ -121,3 +121,63 @@ DESKTOP SIZING
   }
 
 }
+
+
+
+.new-post {
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  font-size: 150%;
+  color: rgb(25, 210, 170);
+  transition: 200ms;
+  background-color: white;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.new-post-sugestao {
+  position: fixed;
+  bottom: 110px;
+  right: 40px;
+  font-size: 150%;
+  color: white;
+  background-color: #1976D2;
+  transition: 200ms;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+
+  i {
+    margin: 25% 30% 20% 20%;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+
+.new-post-desabafo {
+  position: fixed;
+  bottom: 20px;
+  right: 120px;
+  font-size: 150%;
+  color: red;
+  background-color: white;
+  transition: 200ms;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: solid 2px;
+
+  i {
+    margin: 25% 20% 20% 25%;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

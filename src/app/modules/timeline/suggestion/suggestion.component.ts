@@ -5,7 +5,6 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Comment } from '@shared/models/Comment';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { StringUtils } from '@shared/utils/string.utils';
-import { LoggerUtils } from '@shared/utils/logger.utills';
 
 @Component({
   selector: 'app-suggestion',

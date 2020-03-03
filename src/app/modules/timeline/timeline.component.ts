@@ -3,7 +3,7 @@ import { Suggestion } from '@shared/models/Suggestion';
 import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
-import { LoggerUtils } from '@shared/utils/logger.utills';
+import { MobileUtils } from '@shared/utils/mobile.utils';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -19,6 +19,8 @@ export class TimelineComponent implements OnInit {
   product: string;
   suggestions: Suggestion[] = [];
   sortingType = SortingType.RELEVANCIA;
+  isSelecting: boolean;
+
   filters = [
     SearchOption.builder()
       .id('product')
@@ -31,6 +33,14 @@ export class TimelineComponent implements OnInit {
     this.fake();
   }
 
+  get info() {
+    return {
+      new: 'Deseja dizer alguma coisa?',
+      suggestion: 'Tenho uma sugestão!',
+      outflow: 'Tenho um desabafo!'
+    };
+  }
+
   sortBy() {
     this.sortingType = this.sortingType === SortingType.RELEVANCIA ? SortingType.DATA_DE_CRIACAO : SortingType.RELEVANCIA;
   }
@@ -40,6 +50,10 @@ export class TimelineComponent implements OnInit {
       .id('default')
       .description('Procurar por "{0}"')
       .build();
+  }
+
+  get isMobile() {
+    return MobileUtils.isMobile;
   }
 
   hackings() {
