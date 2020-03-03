@@ -5,6 +5,9 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Comment } from '@shared/models/Comment';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { StringUtils } from '@shared/utils/string.utils';
+import { MatDialog } from '@angular/material/dialog';
+import { LikeModalComponent } from '../like-modal/like-modal.component';
+import { LoggerUtils } from '@shared/utils/logger.utills';
 
 @Component({
   selector: 'app-suggestion',
@@ -18,6 +21,8 @@ export class SuggestionComponent implements OnInit {
   isSelected = false;
   visibleComments = false;
   comments: Comment[] = [];
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     const fake = this.fake().comments;
@@ -33,6 +38,16 @@ export class SuggestionComponent implements OnInit {
   nextPage() {
     const fake = this.fake().comments;
     this.comments = ArrayUtils.sum(this.comments, fake);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LikeModalComponent, {
+      width: '90vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      LoggerUtils.log(result);
+    });
   }
 
   get content() {
