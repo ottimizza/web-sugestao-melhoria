@@ -5,6 +5,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { LikeModalComponent } from './like-modal.component';
 import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [LikeModalComponent],
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatTooltipModule,
     MatDialogModule,
     MatButtonModule
   ],

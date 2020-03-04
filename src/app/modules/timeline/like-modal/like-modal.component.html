@@ -1,10 +1,11 @@
-<h1 mat-dialog-title><i class="fa fa-heart text-danger mr-4"></i>Que bom que gostou!</h1>
+<h1 mat-dialog-title><i [ngClass]="data.icon" class="mr-4"></i>{{ data.title }}</h1>
 <div mat-dialog-content>
 
     <strong>Deixe sua opinião (opcional):</strong>
     <span>A sua opinião não será publicada</span>
     <br>
-    <textarea placeholder="Escreva aqui..." [(ngModel)]="opinion"></textarea>
+    <textarea placeholder="Escreva aqui..." [(ngModel)]="opinion" maxlength="140"></textarea>
+    <span class="text-right">{{ opinion.length }} / 140</span>
 
     <br><br>
 
@@ -13,14 +14,14 @@
 
     <strong class="mb-3">Diminuição de suporte:</strong>
     <div class="row text-center">
-      <div class="col text-danger" (click)="select('diminuicao-suporte*bad', 'diminuicao-suporte')">
-        <i class="clickeable fal fa-frown fa-4x diminuicao-suporte" id="diminuicao-suporte*bad"></i>
+      <div class="col-4 text-danger" (click)="select('diminuicao-suporte*bad', 'diminuicao-suporte')">
+        <i class="clickeable fal fa-frown fa-4x diminuicao-suporte" id="diminuicao-suporte*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-warning" (click)="select('diminuicao-suporte*meh', 'diminuicao-suporte')">
-        <i class="clickeable fal fa-meh fa-4x diminuicao-suporte" id="diminuicao-suporte*meh"></i>
+      <div class="col-4 text-warning" (click)="select('diminuicao-suporte*meh', 'diminuicao-suporte')">
+        <i class="clickeable fal fa-meh fa-4x diminuicao-suporte" id="diminuicao-suporte*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-success" (click)="select('diminuicao-suporte*top', 'diminuicao-suporte')">
-        <i class="clickeable fal fa-grin fa-4x diminuicao-suporte" id="diminuicao-suporte*top"></i>
+      <div class="col-4 text-success" (click)="select('diminuicao-suporte*top', 'diminuicao-suporte')">
+        <i class="clickeable fal fa-grin fa-4x diminuicao-suporte" id="diminuicao-suporte*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
     </div>
 
@@ -28,14 +29,14 @@
 
     <strong class="mb-3">Automação de processo:</strong>
     <div class="row text-center">
-      <div class="col text-danger" (click)="select('automacao-processo*bad', 'automacao-processo')">
-        <i class="clickeable fal fa-frown fa-4x automacao-processo" id="automacao-processo*bad"></i>
+      <div class="col-4 text-danger" (click)="select('automacao-processo*bad', 'automacao-processo')">
+        <i class="clickeable fal fa-frown fa-4x automacao-processo" id="automacao-processo*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-warning" (click)="select('automacao-processo*meh', 'automacao-processo')">
-        <i class="clickeable fal fa-meh fa-4x automacao-processo" id="automacao-processo*meh"></i>
+      <div class="col-4 text-warning" (click)="select('automacao-processo*meh', 'automacao-processo')">
+        <i class="clickeable fal fa-meh fa-4x automacao-processo" id="automacao-processo*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-success" (click)="select('automacao-processo*top', 'automacao-processo')">
-        <i class="clickeable fal fa-grin fa-4x automacao-processo" id="automacao-processo*top"></i>
+      <div class="col-4 text-success" (click)="select('automacao-processo*top', 'automacao-processo')">
+        <i class="clickeable fal fa-grin fa-4x automacao-processo" id="automacao-processo*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
     </div>
 
@@ -43,14 +44,14 @@
 
     <strong class="mb-3">Aumento de produtividade:</strong>
     <div class="row text-center">
-      <div class="col text-danger" (click)="select('aumento-produtividade*bad', 'aumento-produtividade')">
-        <i class="clickeable fal fa-frown fa-4x aumento-produtividade" id="aumento-produtividade*bad"></i>
+      <div class="col-4 text-danger" (click)="select('aumento-produtividade*bad', 'aumento-produtividade')">
+        <i class="clickeable fal fa-frown fa-4x aumento-produtividade" id="aumento-produtividade*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-warning" (click)="select('aumento-produtividade*meh', 'aumento-produtividade')">
-        <i class="clickeable fal fa-meh fa-4x aumento-produtividade" id="aumento-produtividade*meh"></i>
+      <div class="col-4 text-warning" (click)="select('aumento-produtividade*meh', 'aumento-produtividade')">
+        <i class="clickeable fal fa-meh fa-4x aumento-produtividade" id="aumento-produtividade*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
-      <div class="col text-success" (click)="select('aumento-produtividade*top', 'aumento-produtividade')">
-        <i class="clickeable fal fa-grin fa-4x aumento-produtividade" id="aumento-produtividade*top"></i>
+      <div class="col-4 text-success" (click)="select('aumento-produtividade*top', 'aumento-produtividade')">
+        <i class="clickeable fal fa-grin fa-4x aumento-produtividade" id="aumento-produtividade*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
       </div>
     </div>
 

@@ -40,9 +40,27 @@ export class SuggestionComponent implements OnInit {
     this.comments = ArrayUtils.sum(this.comments, fake);
   }
 
-  openDialog(): void {
+  openLikeDialog(): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
-      width: '90vw'
+      width: '90vw',
+      data: {
+        title: 'Que bom que gostou!',
+        icon: 'fa fa-heart text-danger'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      LoggerUtils.log(result);
+    });
+  }
+
+  openDisikeDialog(): void {
+    const dialogRef = this.dialog.open(LikeModalComponent, {
+      width: '90vw',
+      data: {
+        title: 'Ah! Que pena! :(',
+        icon: 'fa fa-heart-broken text-danger'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

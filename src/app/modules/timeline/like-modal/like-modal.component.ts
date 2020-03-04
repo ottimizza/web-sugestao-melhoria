@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 
@@ -9,15 +9,24 @@ import { LoggerUtils } from '@shared/utils/logger.utills';
 })
 export class LikeModalComponent {
 
-  opinion: string;
+  opinion = '';
   diminuicaoSuporte: number;
   automacaoProcesso: number;
   aumentoProdutividade: number;
 
   constructor(
     public dialogRef: MatDialogRef<LikeModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { title: string, icon: string },
     @Inject(DOCUMENT) private _document: Document
   ) {}
+
+  get info() {
+    return {
+      bad: 'Pouco',
+      meh: 'Médio',
+      top: 'Muito'
+    }
+  }
 
   get evaluation() {
     return {
