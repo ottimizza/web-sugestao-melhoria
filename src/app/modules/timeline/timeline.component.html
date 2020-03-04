@@ -10,7 +10,7 @@
 
 </div>
 <div class="row w-100 m-0" id="suggestion-container" *ngIf="isMobile">
-  <button class="col" id="desabafo">
+  <button class="col" id="desabafo" (click)="openOutflowDialog()">
     <i class="fal fa-frown mr-1"></i>
     TENHO UM DESABAFO!
   </button>
@@ -46,6 +46,6 @@
   <i class="fa fa-lightbulb-on"></i>
 </div>
 
-<div *ngIf="isSelecting && !isMobile" class="new-post-desabafo clickeable" [matTooltip]="info.outflow" matTooltipShowDelay="300" matTooltipHideDelay="500">
+<div *ngIf="isSelecting && !isMobile" (click)="openOutflowDialog()" class="new-post-desabafo clickeable" [matTooltip]="info.outflow" matTooltipShowDelay="300" matTooltipHideDelay="500">
   <i class="fal fa-frown"></i>
 </div>

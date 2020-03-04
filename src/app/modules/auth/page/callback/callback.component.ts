@@ -1,12 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 import { AuthSession } from '@shared/models/AuthSession';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '@env';
 import { StorageService } from '@app/services/storage.service';
-
-// import { Project } from '../../../../data/schema/project';
 
 @Component({
   selector: 'app-auth-callback',
@@ -49,9 +47,10 @@ export class AuthCallbackComponent implements OnInit {
                 this.storageService.destroy('redirect_url');
                 if (value) {
                   that.router.navigate([value]);
+                } else {
+                  that.router.navigate(['/']);
                 }
-                else that.router.navigate(['/']);
-              });
+                });
 
               // const storeUserInfo = that.authenticationService.storeUserInfo();
               // const storeTokenInfo = that.authenticationService.storeTokenInfo();

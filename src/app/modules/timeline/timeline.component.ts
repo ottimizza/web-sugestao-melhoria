@@ -4,6 +4,9 @@ import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
 import { MobileUtils } from '@shared/utils/mobile.utils';
+import { MatDialog } from '@angular/material';
+import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
+import { LoggerUtils } from '@shared/utils/logger.utills';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -29,8 +32,20 @@ export class TimelineComponent implements OnInit {
       .build()
   ];
 
+  constructor(public dialog: MatDialog) { }
+
   ngOnInit(): void {
     this.fake();
+  }
+
+  openOutflowDialog() {
+    const dialogRef = this.dialog.open(OutflowModalComponent, {
+      width: '94vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      LoggerUtils.log(result);
+    });
   }
 
   get info() {
@@ -58,6 +73,7 @@ export class TimelineComponent implements OnInit {
 
   hackings() {
     return [
+      this._hackingFactory('product', /(produto)\:\s(?<value>.+)/ig, 'Produto'),
       this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag'),
       this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
       this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
