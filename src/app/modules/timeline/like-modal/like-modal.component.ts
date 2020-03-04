@@ -25,7 +25,7 @@ export class LikeModalComponent {
       bad: 'Pouco',
       meh: 'Médio',
       top: 'Muito'
-    }
+    };
   }
 
   get evaluation() {

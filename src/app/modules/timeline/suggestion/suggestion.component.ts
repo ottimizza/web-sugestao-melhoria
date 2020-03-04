@@ -8,6 +8,7 @@ import { StringUtils } from '@shared/utils/string.utils';
 import { MatDialog } from '@angular/material/dialog';
 import { LikeModalComponent } from '../like-modal/like-modal.component';
 import { LoggerUtils } from '@shared/utils/logger.utills';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -22,7 +23,10 @@ export class SuggestionComponent implements OnInit {
   visibleComments = false;
   comments: Comment[] = [];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private _toast: ToastService
+  ) {}
 
   ngOnInit(): void {
     const fake = this.fake().comments;
@@ -42,7 +46,7 @@ export class SuggestionComponent implements OnInit {
 
   openLikeDialog(): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
-      width: '90vw',
+      width: '94vw',
       data: {
         title: 'Que bom que gostou!',
         icon: 'fa fa-heart text-danger'
@@ -50,13 +54,14 @@ export class SuggestionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this._toast.show('Você curtiu uma publicação');
       LoggerUtils.log(result);
     });
   }
 
   openDisikeDialog(): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
-      width: '90vw',
+      width: '94vw',
       data: {
         title: 'Ah! Que pena! :(',
         icon: 'fa fa-heart-broken text-danger'
@@ -64,6 +69,7 @@ export class SuggestionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this._toast.show('Você curtiu uma publicação!');
       LoggerUtils.log(result);
     });
   }

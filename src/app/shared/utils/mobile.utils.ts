@@ -17,6 +17,7 @@ export class MobileUtils {
   }
 
   public static onResize(callbackFn: (event: Event) => void) {
+    // * Não abusar deste método
     this._resizingFunctions.push(callbackFn);
   }
 
