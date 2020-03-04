@@ -86,14 +86,14 @@ export class TimelineComponent implements OnInit {
 
   hackings() {
     return [
-      this._hackingFactory('product', /(produto)\:\s(?<value>.+)/ig, 'Produto'),
-      this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag'),
-      this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
-      this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
       this._hackingFactory('problem', /(problema)\:\s(?<value>.+)/ig, 'Problema a ser resolvido'),
       this._hackingFactory('suggestion', /(sugestao)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
       this._hackingFactory('suggestion', /(sugestão)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
-      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado')
+      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado'),
+      this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
+      this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
+      this._hackingFactory('product', /(produto)\:\s(?<value>.+)/ig, 'Produto'),
+      this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag')
     ];
   }
 

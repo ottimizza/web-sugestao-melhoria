@@ -73,7 +73,6 @@ export class SuggestionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this._toast.show('Você deu um dislike em uma publicação!');
-
       }
       LoggerUtils.log(result);
     });

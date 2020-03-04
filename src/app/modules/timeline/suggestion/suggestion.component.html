@@ -52,7 +52,7 @@
 
   <a class="text-info clickeable" (click)="isSelected = !isSelected">{{ button }}</a>
 
-  <div class="comments-area p-4" *ngIf="visibleComments">
+  <div class="comments-area p-4 text-left" *ngIf="visibleComments">
     <div class="comment" *ngFor="let com of comments">
       <strong>{{ com.userId }}</strong>
       <br>

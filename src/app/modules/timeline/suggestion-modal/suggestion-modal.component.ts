@@ -35,7 +35,7 @@ export class SuggestionModalComponent {
 
   submit() {
     if (this.problem && this.problem.length && this.improvement && this.improvement.length && this.hype && this.hype.length) {
-      this.dialogRef.close();
+      this.dialogRef.close(this.getResult());
     } else {
       this.errorLabel = this.pattern;
       this.errorBorder = this.pattern;
