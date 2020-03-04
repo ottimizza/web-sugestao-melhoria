@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DOCUMENT } from '@angular/common';
 import { LoggerUtils } from '@shared/utils/logger.utills';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   templateUrl: './like-modal.component.html',
@@ -22,9 +23,9 @@ export class LikeModalComponent {
 
   get info() {
     return {
-      bad: 'Pouco',
-      meh: 'Médio',
-      top: 'Muito'
+      bad: 'Não',
+      meh: 'Não sei',
+      top: 'Sim'
     };
   }
 

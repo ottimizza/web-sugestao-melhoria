@@ -47,8 +47,8 @@ export class ArrayUtils {
 
     let returningArray: string[];
 
-    divisors.forEach(divisor => {
-      if (divisors.indexOf(divisor) === 0) {
+    divisors.forEach((divisor, id) => {
+      if (id === 0) {
         returningArray = text.split(divisor);
       } else {
         const counting: string[] = [];

@@ -54,7 +54,9 @@ export class SuggestionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this._toast.show('Você curtiu uma publicação');
+      if (result) {
+        this._toast.show('Você curtiu uma publicação');
+      }
       LoggerUtils.log(result);
     });
   }
@@ -69,7 +71,10 @@ export class SuggestionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this._toast.show('Você curtiu uma publicação!');
+      if (result) {
+        this._toast.show('Você deu um dislike em uma publicação!');
+
+      }
       LoggerUtils.log(result);
     });
   }
@@ -108,7 +113,7 @@ export class SuggestionComponent implements OnInit {
       const comments: Comment[] = [];
       for (let i = 0; i < 5; i++) {
         const comment = new Comment();
-        // tslint:disable-next-line: max-line-length
+        // tslint:disable
         comment.comment = 'Gostaria de enfatizar que a revolução dos costumes obstaculiza a apreciação da importância dos níveis de motivação departamental.';
         comment.userId = Math.round(Math.random() * 100);
         comments.push(comment);

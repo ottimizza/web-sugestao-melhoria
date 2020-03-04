@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PipesModule } from '@shared/pipes/pipes.module';
-import { ComplexSearchInputComponent } from '@shared/components/search/complex-search.component';
+import { NgModule } from '@angular/core';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+import { ComplexSearchInputComponent } from '@shared/components/search/complex-search.component';
+import { PipesModule } from '@shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
