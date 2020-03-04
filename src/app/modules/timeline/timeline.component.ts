@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Suggestion } from '@shared/models/Suggestion';
-import { SearchRule } from '@shared/components/search/models/SearchRule';
+
+import { MatDialog } from '@angular/material';
+
+import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
+import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
-import { MobileUtils } from '@shared/utils/mobile.utils';
-import { MatDialog } from '@angular/material';
-import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
+import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { LoggerUtils } from '@shared/utils/logger.utills';
+import { MobileUtils } from '@shared/utils/mobile.utils';
+import { Suggestion } from '@shared/models/Suggestion';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -48,6 +51,16 @@ export class TimelineComponent implements OnInit {
     });
   }
 
+  openSuggestionModal() {
+    const dialogRef = this.dialog.open(SuggestionModalComponent, {
+      width: '94vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      LoggerUtils.log(result);
+    });
+  }
+
   get info() {
     return {
       new: 'Deseja dizer alguma coisa?',
@@ -80,7 +93,7 @@ export class TimelineComponent implements OnInit {
       this._hackingFactory('problem', /(problema)\:\s(?<value>.+)/ig, 'Problema a ser resolvido'),
       this._hackingFactory('suggestion', /(sugestao)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
       this._hackingFactory('suggestion', /(sugestão)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
-      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado'),
+      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado')
     ];
   }
 

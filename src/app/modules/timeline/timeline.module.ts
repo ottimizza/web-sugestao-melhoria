@@ -5,12 +5,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { ComplexSearchModule } from '@shared/components/search/complex-search.module';
+import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
+import { OutflowModalModule } from './outflow-modal/outflow-modal.module';
 import { LikeModalComponent } from './like-modal/like-modal.component';
 import { SuggestionModule } from './suggestion/suggestion.module';
 import { LikeModalModule } from './like-modal/like-modal.module';
 import { TimelineComponent } from './timeline.component';
-import { OutflowModalModule } from './outflow-modal/outflow-modal.module';
-import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
+import { SuggestionModalModule } from './suggestion-modal/suggestion-modal.module';
+import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,11 +25,13 @@ import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
     ComplexSearchModule,
     SuggestionModule,
     LikeModalModule,
-    OutflowModalModule
+    OutflowModalModule,
+    SuggestionModalModule
   ],
   entryComponents: [
     LikeModalComponent,
-    OutflowModalComponent
+    OutflowModalComponent,
+    SuggestionModalComponent
   ],
   exports: [TimelineComponent]
 })

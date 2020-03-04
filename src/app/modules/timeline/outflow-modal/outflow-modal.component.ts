@@ -8,6 +8,8 @@ import { MatDialogRef } from '@angular/material';
 export class OutflowModalComponent {
 
   outflow = '';
+  clazz: string;
+  labelError: string;
 
   constructor(
     public dialogRef: MatDialogRef<OutflowModalComponent>
@@ -15,6 +17,15 @@ export class OutflowModalComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  submit() {
+    if (this.outflow && this.outflow.length) {
+      this.dialogRef.close(this.outflow);
+    } else {
+      this.clazz = 'border-danger';
+      this.labelError = 'labelred';
+    }
   }
 
 }

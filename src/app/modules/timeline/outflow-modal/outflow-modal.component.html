@@ -1,14 +1,14 @@
 <h1 mat-dialog-title><i class="fal fa-frown text-danger mr-4"></i>Desabafo!</h1>
 <div mat-dialog-content>
 
-  <strong>Deixe sua opinião:</strong>
+  <strong [ngClass]="labelError">Deixe sua opinião:</strong>
   <span>Descreva aqui seu desabafo e entraremos em contato com você</span>
   <br>
-  <textarea placeholder="Escreva aqui..." [(ngModel)]="outflow" maxlength="500"></textarea>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="outflow" maxlength="500" [ngClass]="clazz"></textarea>
   <span class="text-right">{{ outflow.length }} / 500</span>
 
 </div>
 <div mat-dialog-actions>
-  <button mat-button>Enviar</button>
+  <button mat-button (click)="submit()">Enviar</button>
   <button mat-button (click)="onNoClick()">Cancelar</button>
 </div>

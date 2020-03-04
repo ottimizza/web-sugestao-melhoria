@@ -1,0 +1,30 @@
+<h1 mat-dialog-title><i class="fal fa-lightbulb-on text-info mr-4"></i>Sua sugestão é sempre bem vinda!</h1>
+<div mat-dialog-content>
+
+  <strong [ngClass]="errorLabel.improvement">Sugestão de melhoria:</strong>
+  <span>Descreva como podemos melhorar sua experiência no aplicativo</span>
+  <br>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="improvement" maxlength="140" [ngClass]="errorBorder.improvement"></textarea>
+  <span class="text-right">{{ improvement.length }} / 140</span>
+
+  <br>
+
+  <strong [ngClass]="errorLabel.problem">Problema a ser resolvido:</strong>
+  <span>Descreva como a sua sugestão pode nos ajudar a resolver um problema existente.</span>
+  <br>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="problem" maxlength="140" [ngClass]="errorBorder.problem"></textarea>
+  <span class="text-right">{{ problem.length }} / 140</span>
+
+  <br>
+
+  <strong [ngClass]="errorLabel.hype">Resultado esperado:</strong>
+  <span>Descreva o resultado ou ganho que você espera ter com esta sugestão.</span>
+  <br>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="hype" maxlength="140" [ngClass]="errorBorder.hype"></textarea>
+  <span class="text-right">{{ hype.length }} / 140</span>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="submit()">Enviar</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+</div>

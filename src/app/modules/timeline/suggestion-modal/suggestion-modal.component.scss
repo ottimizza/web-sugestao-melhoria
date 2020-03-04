@@ -1,0 +1,28 @@
+strong, span, textarea {
+  display: block;
+}
+
+span {
+  font-size: 80%;
+  color: gray;
+}
+
+textarea {
+  margin: 0 auto;
+  width: 100%;
+  max-height: 500px;
+  height: 13vh;
+  padding: 5px;
+  border-radius: 4px;
+  border: solid 1px rgb(187, 187, 187);
+}
+
+.border-danger {
+  border-color: red;
+}
+
+.labelred {
+  color: red;
+  font-weight: bold;
+}
+

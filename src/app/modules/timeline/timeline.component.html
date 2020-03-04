@@ -14,7 +14,7 @@
     <i class="fal fa-frown mr-1"></i>
     TENHO UM DESABAFO!
   </button>
-  <button class="col" id="sugestao">
+  <button class="col" id="sugestao" (click)="openSuggestionModal()">
     <i class="fal fa-lightbulb-on mr-1"></i>
     TENHO UMA SUGESTÃO!
   </button>
@@ -42,7 +42,7 @@
   <i class="fal fa-plus-circle fa-2x"></i>
 </div>
 
-<div *ngIf="isSelecting && !isMobile" class="new-post-sugestao clickeable" [matTooltip]="info.suggestion" matTooltipShowDelay="300" matTooltipHideDelay="500">
+<div *ngIf="isSelecting && !isMobile" (click)="openSuggestionModal()" class="new-post-sugestao clickeable" [matTooltip]="info.suggestion" matTooltipShowDelay="300" matTooltipHideDelay="500">
   <i class="fa fa-lightbulb-on"></i>
 </div>
 
