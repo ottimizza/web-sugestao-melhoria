@@ -22,7 +22,7 @@ export class MobileUtils {
   }
 
   public static windowIsResizing(event: Event) {
-    // ! Este método deve ser chamado SOMENTE pelo app.component
+    // ! Este método deve ser chamado SOMENTE pelo AppComponent
     this._resizingFunctions.forEach(cbfn => cbfn(event));
   }
 

@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { UpdateService } from '@app/services/update.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
+import { MessagingService } from '@app/services/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private events: RxEvent,
-    private updateService: UpdateService
+    private updateService: UpdateService,
+    private messagingService: MessagingService
   ) {
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {
@@ -42,11 +44,14 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-    if (MobileUtils.isMobile) {
-      LoggerUtils.log(`Dispositivo MOBILE`);
-    } else {
-      LoggerUtils.log(`Dispositivo DESKTOP`);
-    }
+    // if (MobileUtils.isMobile) {
+    //   LoggerUtils.log(`Dispositivo MOBILE`);
+    // } else {
+    //   LoggerUtils.log(`Dispositivo DESKTOP`);
+    // }
+
+    this.messagingService.requestPermission();
+    this.messagingService.receiveMessage();
   }
 
 }
