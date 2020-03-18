@@ -13,6 +13,8 @@ import { LikeModalModule } from './like-modal/like-modal.module';
 import { TimelineComponent } from './timeline.component';
 import { SuggestionModalModule } from './suggestion-modal/suggestion-modal.module';
 import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
+import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
+import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.co
     SuggestionModule,
     LikeModalModule,
     OutflowModalModule,
-    SuggestionModalModule
+    SuggestionModalModule,
+    BreadcrumbModule,
+    ActionButtonsModule
   ],
   entryComponents: [
     LikeModalComponent,

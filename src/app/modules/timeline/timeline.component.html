@@ -1,24 +1,5 @@
-<div class="row w-100 m-0 p-2 pl-4" id="product-container">
-  <div class="col-4"><span class="float-left">{{ product }}</span></div>
-  <div class="col-4"></div>
-  <div class="col-4">
-    <div class="float-right orderBy clickeable" (click)="sortBy()">
-      <i class="fa fa-sort-alpha-up-alt mr-2"></i>
-      Ordenar por: {{ sortingType }}
-    </div>
-  </div>
-
-</div>
-<div class="row w-100 m-0" id="suggestion-container" *ngIf="isMobile">
-  <button class="col" id="desabafo" (click)="openOutflowDialog()">
-    <i class="fal fa-frown mr-1"></i>
-    TENHO UM DESABAFO!
-  </button>
-  <button class="col" id="sugestao" (click)="openSuggestionModal()">
-    <i class="fal fa-lightbulb-on mr-1"></i>
-    TENHO UMA SUGESTÃO!
-  </button>
-</div>
+<app-breadcrumb></app-breadcrumb>
+<app-actions [buttons]="buttons" (clicked)="onClick($event)"></app-actions>
 
 <div class="m-4 mb-0">
   <app-complex-search-input
@@ -37,7 +18,7 @@
 
 </section>
 
-
+<!--
 <div (click)="isSelecting = !isSelecting" class="new-post clickeable" [matTooltip]="info.new" matTooltipShowDelay="300" matTooltipHideDelay="500" *ngIf="!isMobile">
   <i class="fal fa-plus-circle fa-2x"></i>
 </div>
@@ -48,4 +29,4 @@
 
 <div *ngIf="isSelecting && !isMobile" (click)="openOutflowDialog()" class="new-post-desabafo clickeable" [matTooltip]="info.outflow" matTooltipShowDelay="300" matTooltipHideDelay="500">
   <i class="fal fa-frown"></i>
-</div>
+</div> -->

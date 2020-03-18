@@ -10,6 +10,7 @@ import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Suggestion } from '@shared/models/Suggestion';
+import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -27,6 +28,20 @@ export class TimelineComponent implements OnInit {
   sortingType = SortingType.RELEVANCIA;
   isSelecting: boolean;
 
+  buttons: ActionButton[] = [
+    {
+      id: 'suggestion',
+      icon: 'fal fa-lightbulb-on',
+      label: 'Tenho uma sugestão!'
+    },
+    {
+      id: 'outflow',
+      icon: 'fal fa-frown',
+      label: 'Tenho um desabafo!',
+      color: 'btn-light'
+    }
+  ];
+
   filters = [
     SearchOption.builder()
       .id('product')
@@ -39,6 +54,17 @@ export class TimelineComponent implements OnInit {
 
   ngOnInit(): void {
     this.fake();
+  }
+
+  onClick(id: string) {
+    switch (id) {
+      case 'outflow':
+        this.openOutflowDialog();
+        break;
+      case 'suggestion':
+        this.openSuggestionModal();
+        break;
+    }
   }
 
   openOutflowDialog() {

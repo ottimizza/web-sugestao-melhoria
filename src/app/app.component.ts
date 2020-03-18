@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
     //   LoggerUtils.log(`Dispositivo DESKTOP`);
     // }
 
-    this.messagingService.requestPermission();
     this.messagingService.receiveMessage();
   }
 

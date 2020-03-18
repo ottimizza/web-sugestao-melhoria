@@ -38,16 +38,32 @@ strong, a {
 }
 
 .action-button {
-  margin: 10px;
+  margin: 6px;
+  transition: 200ms;
+  &:hover {
+    color: rgb(73, 73, 73);
+  }
 }
 
 .load-more {
   margin: 0 auto
 }
 
+.mobile {
+  display: none;
+}
+
 @media (max-width: 767px) {
 
   .tags-area {
+    display: none;
+  }
+
+  .mobile {
+    display: inline;
+  }
+
+  .desktop {
     display: none;
   }
 

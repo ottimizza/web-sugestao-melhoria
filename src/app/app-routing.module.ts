@@ -18,6 +18,9 @@ const routes: Routes = [
     path: 'timeline',
     component: ContentLayoutComponent,
     canActivate: [AuthGuard], // Should be replaced with actual auth guard
+    data: {
+      breadcrumb: 'Timeline'
+    },
     children: [
       {
         path: '',

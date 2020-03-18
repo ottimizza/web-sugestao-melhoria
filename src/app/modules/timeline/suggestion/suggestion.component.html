@@ -50,7 +50,7 @@
     </div>
   </ng-template>
 
-  <a class="text-info clickeable" (click)="isSelected = !isSelected">{{ button }}</a>
+  <a class="text-info cursor-pointer" (click)="isSelected = !isSelected">{{ button }}</a>
 
   <div class="comments-area p-4 text-left" *ngIf="visibleComments">
     <div class="comment" *ngFor="let com of comments">
@@ -64,22 +64,20 @@
 
   </div>
 
-  <div class="row w-100 m-0 mb-3 mt-4" *ngIf="isMobile; else desktopbuttons">
-    <div (click)="visibleComments = !visibleComments" class="comments clickeable" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
-    <div class="likes clickeable" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
-    <div class="dislikes clickeable" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
+  <div class="row w-100 m-0 mb-3 mt-4 mobile">
+    <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
+    <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
+    <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
   </div>
 
-  <ng-template #desktopbuttons>
-    <div class="row w-100 m-0 mb-3 mt-4">
-      <div class="col-3"></div>
-      <div class="col-6">
-        <div (click)="visibleComments = !visibleComments" class="comments clickeable action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
-        <div class="likes clickeable action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
-        <div class="dislikes clickeable action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
-      </div>
-      <div class="col-3"></div>
+  <div class="row w-100 m-0 mb-3 mt-4 desktop">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
+      <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
+      <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
     </div>
-  </ng-template>
+    <div class="col-3"></div>
+  </div>
 
 </div>

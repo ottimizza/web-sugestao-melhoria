@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { User } from '@shared/models/User';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 import { StorageService } from '@app/services/storage.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { MessagingService } from '@app/services/messaging.service';
 // import { OverlayContainer } from '@angular/cdk/overlay';
 
 // import { ThemeService } from '@app/service/theme.service';
@@ -22,9 +24,12 @@ export class NavbarLayoutComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
+    public dialog: MatDialog,
     public router: Router,
     public storageService: StorageService,
-    public authorizationService: AuthenticationService) { }
+    public authorizationService: AuthenticationService,
+    public messagingService: MessagingService
+  ) { }
 
   public toggleSidebar() {
     const body = this.document.getElementsByTagName('body')[0];
@@ -34,6 +39,16 @@ export class NavbarLayoutComponent implements OnInit {
     sidebar.focus();
   }
 
+  toggleSidebarStyle() {
+    const body = this.document.getElementsByTagName('body')[0];
+    if (body.classList.contains('compact-sidebar')) {
+      body.classList.remove('compact-sidebar');
+      body.classList.add('default-sidebar');
+    } else {
+      body.classList.add('compact-sidebar');
+      body.classList.remove('default-sidebar');
+    }
+  }
 
   public shouldShowAccountingDetailsPage() {
     return [User.Type.ADMINISTRATOR, User.Type.ACCOUNTANT].includes(this.currentUser.type);
@@ -47,6 +62,10 @@ export class NavbarLayoutComponent implements OnInit {
     //     this.authorizationService.authorize();
     //   });
     // });
+  }
+
+  allowNotifications() {
+    this.messagingService.requestPermission();
   }
 
   ngOnInit() {

@@ -12,7 +12,6 @@ import { NgModule } from '@angular/core';
 
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 import { SidebarLayoutComponent } from './layout/sidebar-layout/sidebar-layout.component';
-import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { NavbarLayoutModule } from './layout/navbar-layout/navbar-layout.module';
 import { ErrorInterceptorProvider } from '@app/interceptor/http.interceptor';
@@ -59,7 +58,6 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
     // Global Components
     AvatarModule,
     BrandModule,
-    BreadcrumbModule,
 
     // Firebase
     AngularFireDatabaseModule,
