@@ -7,6 +7,8 @@ export const environment = {
   storageApplicationId: 'accounts-avatar',
   storageAccountingId: 'ottimizza',
   applicationId: 'ottimizza',
+  portalBaseUrl: 'https://accounts.ottimizza.com.br',
+
   firebase: {
     apiKey: 'AIzaSyA64z6wB13NbuQBYeA3pyyljWoOFR4URXI',
     authDomain: 'sugestao-de-melhoria.firebaseapp.com',
