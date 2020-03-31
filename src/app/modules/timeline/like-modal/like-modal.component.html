@@ -12,48 +12,16 @@
     <strong>Classifique em relação ao ganho que você terá com esta sugestão:</strong>
     <br>
 
-    <strong class="mb-3">Você acha que esta solução pode nos ajudar a diminuir o suporte?</strong>
-    <div class="row text-center">
-      <div class="col-4 text-danger" (click)="select('diminuicao-suporte*bad', 'diminuicao-suporte')">
-        <i class="cursor-pointer fal fa-frown fa-4x diminuicao-suporte" id="diminuicao-suporte*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-warning" (click)="select('diminuicao-suporte*meh', 'diminuicao-suporte')">
-        <i class="cursor-pointer fal fa-meh fa-4x diminuicao-suporte" id="diminuicao-suporte*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-success" (click)="select('diminuicao-suporte*top', 'diminuicao-suporte')">
-        <i class="cursor-pointer fal fa-grin fa-4x diminuicao-suporte" id="diminuicao-suporte*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-    </div>
+    <app-emote question="Você acha que esta solução pode nos ajudar a diminuir o suporte?" (evaluation)="diminuicaoSuporte = $event"></app-emote>
 
     <br><br>
 
-    <strong class="mb-3">Você acha que esta solução pode ajudar a automatizar algum processo?</strong>
-    <div class="row text-center">
-      <div class="col-4 text-danger" (click)="select('automacao-processo*bad', 'automacao-processo')">
-        <i class="cursor-pointer fal fa-frown fa-4x automacao-processo" id="automacao-processo*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-warning" (click)="select('automacao-processo*meh', 'automacao-processo')">
-        <i class="cursor-pointer fal fa-meh fa-4x automacao-processo" id="automacao-processo*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-success" (click)="select('automacao-processo*top', 'automacao-processo')">
-        <i class="cursor-pointer fal fa-grin fa-4x automacao-processo" id="automacao-processo*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-    </div>
+    <app-emote question="Você acha que esta solução pode ajudar a automatizar algum processo?" (evaluation)="automacaoProcesso = $event"></app-emote>
 
     <br><br>
 
-    <strong class="mb-3">Você acha que esta sugestão pode lhe ajudar a aumentar a produtividade?</strong>
-    <div class="row text-center">
-      <div class="col-4 text-danger" (click)="select('aumento-produtividade*bad', 'aumento-produtividade')">
-        <i class="cursor-pointer fal fa-frown fa-4x aumento-produtividade" id="aumento-produtividade*bad" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-warning" (click)="select('aumento-produtividade*meh', 'aumento-produtividade')">
-        <i class="cursor-pointer fal fa-meh fa-4x aumento-produtividade" id="aumento-produtividade*meh" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-      <div class="col-4 text-success" (click)="select('aumento-produtividade*top', 'aumento-produtividade')">
-        <i class="cursor-pointer fal fa-grin fa-4x aumento-produtividade" id="aumento-produtividade*top" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
-      </div>
-    </div>
+    <app-emote question="Você acha que esta sugestão pode lhe ajudar a aumentar a produtividade?" (evaluation)="aumentoProdutividade = $event"></app-emote>
+
 
 </div>
 <div mat-dialog-actions>

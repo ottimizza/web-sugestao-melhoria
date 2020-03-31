@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
 
+import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
 import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
 import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
@@ -10,7 +11,6 @@ import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Suggestion } from '@shared/models/Suggestion';
-import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',

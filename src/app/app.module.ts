@@ -24,8 +24,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
-import { MessagingService } from '@app/services/messaging.service';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
 @NgModule({
   declarations: [

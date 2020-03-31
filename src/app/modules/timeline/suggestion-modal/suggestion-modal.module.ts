@@ -3,6 +3,7 @@ import { SuggestionModalComponent } from './suggestion-modal.component';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmoteEvaluationModule } from '@shared/components/emote-evaluation/emote-evaluation.module';
 
 @NgModule({
   declarations: [SuggestionModalComponent],
@@ -11,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    EmoteEvaluationModule
   ],
   exports: [SuggestionModalComponent]
 })

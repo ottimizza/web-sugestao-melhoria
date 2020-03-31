@@ -10,6 +10,9 @@ export class SuggestionModalComponent {
   problem = '';
   improvement = '';
   hype = '';
+  diminuicaoSuporte: number;
+  automacaoProcesso: number;
+  aumentoProdutividade: number;
   errorLabel = this.pattern;
   errorBorder = this.pattern;
 
@@ -34,7 +37,8 @@ export class SuggestionModalComponent {
   }
 
   submit() {
-    if (this.problem && this.problem.length && this.improvement && this.improvement.length && this.hype && this.hype.length) {
+    if (this.problem && this.problem.length && this.improvement && this.improvement.length && this.hype && this.hype.length &&
+        this.aumentoProdutividade !== undefined && this.diminuicaoSuporte !== undefined && this.automacaoProcesso !== undefined) {
       this.dialogRef.close(this.getResult());
     } else {
       this.errorLabel = this.pattern;

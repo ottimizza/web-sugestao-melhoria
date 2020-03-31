@@ -1,0 +1,13 @@
+<strong>{{ question }}</strong>
+<br><br>
+<div class="row text-center">
+  <div class="col-4 text-danger">
+    <i class="cursor-pointer fa-frown fa-4x diminuicao-suporte" (click)="select('bad')" [class]="selected === 'bad' ? 'fa': 'fal'" [matTooltip]="info.bad" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
+  </div>
+  <div class="col-4 text-warning">
+    <i class="cursor-pointer fa-meh fa-4x diminuicao-suporte" (click)="select('meh')" [class]="selected === 'meh' ? 'fa': 'fal'" [matTooltip]="info.meh" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
+  </div>
+  <div class="col-4 text-success">
+    <i class="cursor-pointer fa-grin fa-4x diminuicao-suporte" (click)="select('top')" [class]="selected === 'top' ? 'fa': 'fal'" [matTooltip]="info.top" matTooltipShowDelay="300" matTooltipHideDelay="500"></i>
+  </div>
+</div>

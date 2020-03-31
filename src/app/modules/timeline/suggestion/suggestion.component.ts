@@ -1,14 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Suggestion } from '@shared/models/Suggestion';
-import { User } from '@shared/models/User';
-import { MobileUtils } from '@shared/utils/mobile.utils';
-import { Comment } from '@shared/models/Comment';
-import { ArrayUtils } from '@shared/utils/array.utils';
-import { StringUtils } from '@shared/utils/string.utils';
+
 import { MatDialog } from '@angular/material/dialog';
+
 import { LikeModalComponent } from '../like-modal/like-modal.component';
-import { LoggerUtils } from '@shared/utils/logger.utills';
 import { ToastService } from '@shared/services/toast.service';
+import { LoggerUtils } from '@shared/utils/logger.utills';
+import { StringUtils } from '@shared/utils/string.utils';
+import { Suggestion } from '@shared/models/Suggestion';
+import { ArrayUtils } from '@shared/utils/array.utils';
+import { Comment } from '@shared/models/Comment';
+import { User } from '@shared/models/User';
 
 @Component({
   selector: 'app-suggestion',
@@ -31,12 +32,10 @@ export class SuggestionComponent implements OnInit {
   ngOnInit(): void {
     const fake = this.fake().comments;
     this.comments = this.comments.concat(fake);
-    MobileUtils.onResize(event => this.isMobile);
   }
 
   get title(): string {
-    const divisor = MobileUtils.isMobile ? 48 : 90;
-    return StringUtils.cut(this.suggestion.titulo, divisor);
+    return StringUtils.cut(this.suggestion.titulo, 50);
   }
 
   nextPage() {
@@ -79,26 +78,18 @@ export class SuggestionComponent implements OnInit {
   }
 
   get content() {
-    const divisor = MobileUtils.isMobile ? 100 : 500;
     return StringUtils.cut(
-      `${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, divisor
+      `${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 280
     );
   }
 
   get button() {
-    if (this.isSelected) {
-      return 'Mostrar menos';
-    } else {
-      return 'Continuar lendo';
-    }
+    return this.isSelected ? 'Mostrar menos' : 'Continuar lendo';
   }
+
 
   get hour() {
     return this.fake().hour;
-  }
-
-  get isMobile() {
-    return MobileUtils.isMobile;
   }
 
   get name() {

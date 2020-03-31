@@ -32,4 +32,21 @@ export class DateUtils {
 
   }
 
+  public static getDateString(date: Date) {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    let fullDay = `${day}`;
+    let fullMonth = `${month}`;
+    if (day < 10) {
+      fullDay = '0' + fullDay;
+    }
+    if (month < 10) {
+      fullMonth = '0' + fullMonth;
+    }
+
+    return `${fullDay}/${fullMonth}/${year}`;
+  }
+
 }

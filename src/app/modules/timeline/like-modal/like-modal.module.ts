@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LikeModalComponent } from './like-modal.component';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EmoteEvaluationModule } from '@shared/components/emote-evaluation/emote-evaluation.module';
 
 @NgModule({
   declarations: [LikeModalComponent],
@@ -16,7 +17,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatFormFieldModule,
     MatTooltipModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    EmoteEvaluationModule
   ],
   exports: [LikeModalComponent]
 })
