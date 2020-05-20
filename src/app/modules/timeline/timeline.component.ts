@@ -14,6 +14,8 @@ import { Suggestion } from '@shared/models/Suggestion';
 import { SuggestionService } from '@app/http/suggestion.service';
 import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { environment } from '@env';
+import { ToastService } from '@shared/services/toast.service';
+import { PopulatorService } from '@app/services/populator.service';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -29,10 +31,11 @@ export class TimelineComponent implements OnInit {
   product: string;
   suggestions: Suggestion[] = [];
   sortingType = SortingType.RELEVANCIA;
-  isSelecting: boolean;
 
   pageInfo: PageInfo;
   isFetching: boolean;
+
+  counter = 0;
 
   buttons: ActionButton[] = [
     {
@@ -53,10 +56,19 @@ export class TimelineComponent implements OnInit {
       .id('topic')
       .value({ topicoId: environment.topic.id })
       .description(`Produto: ${environment.topic.name}`)
+      .build(),
+    SearchOption.builder()
+      .id('status')
+      .value({ status: 1 })
+      .description('Estado: Aberta')
       .build()
   ];
 
-  constructor(public dialog: MatDialog, public suggestionService: SuggestionService) { }
+  constructor(
+    public dialog: MatDialog,
+    public suggestionService: SuggestionService,
+    public toastService: ToastService,
+  ) { }
 
   ngOnInit(): void {
     this.nextPage();
@@ -87,8 +99,9 @@ export class TimelineComponent implements OnInit {
     this.filters.forEach(fil => Object.assign(filter, fil.value));
     Object.assign(filter, pageCriteria);
 
-    if (!this.pageInfo || this.pageInfo.hasNext) {
+    if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
       this.isFetching = true;
+      this.toastService.showSnack('Buscando sugestões');
       this.suggestionService.getSuggestions(filter).subscribe((results: any) => {
         this.isFetching = false;
         if (results.content) {
@@ -97,6 +110,14 @@ export class TimelineComponent implements OnInit {
         if (results.records) {
           this.suggestions = this.suggestions.concat(results.records);
           this.pageInfo = results.pageInfo;
+        }
+        if (!this.suggestions?.length) {
+          this.toastService.show(
+            `Não há sugestões aplicáveis para ${this.filters.length === 1 ? 'este produto' : 'a pesquisa'}`,
+            'warning'
+          );
+        } else {
+          this.toastService.hideSnack();
         }
       });
     }

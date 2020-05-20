@@ -12,6 +12,9 @@ import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { DateUtils } from '@shared/utils/date-utils';
 import { SuggestionService } from '@app/http/suggestion.service';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
+import { CommentService } from '@app/http/comment.service';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-suggestion',
@@ -24,14 +27,22 @@ export class SuggestionComponent implements OnInit {
 
   isSelected = false;
   visibleComments = false;
+  error = false;
+
   comments: Comment[] = [];
+  ownComment = ''
+
+  pageInfo: PageInfo;
+  isFetching: boolean;
 
   constructor(
     public dialog: MatDialog,
+    public commentService: CommentService,
     private _toast: ToastService
   ) {}
 
   ngOnInit(): void {
+    this.nextPage();
   }
 
   getDate(date: string) {
@@ -60,6 +71,41 @@ export class SuggestionComponent implements OnInit {
   }
 
   nextPage() {
+    const searchCriteria = {
+      pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
+      pageSize: 10,
+      sugestaoId: this.suggestion.id
+    };
+    this.isFetching = true;
+    this.commentService.getComments(searchCriteria).subscribe(results => {
+      this.isFetching = false;
+      this.comments = this.comments.concat(results.records);
+      this.pageInfo = results.pageInfo;
+    }, err => {
+      this._toast.show(`Falha ao obter comentários para a sugestão "${this.suggestion.titulo}"`, 'danger');
+      LoggerUtils.throw(err);
+      this.isFetching = false;
+    });
+  }
+
+  submit() {
+    if (this.ownComment?.length) {
+      this.error = false;
+      const user = User.fromLocalStorage();
+      const comment = { sugestaoId: this.suggestion.id, texto: this.ownComment, usuario: `${user.firstName} ${user.lastName ?? ''}` };
+      this.ownComment = '';
+      this.commentService
+        .create(comment)
+        .subscribe((result: Comment) => {
+          this.pageInfo.totalElements++;
+          this.comments = [result].concat(this.comments);
+        }, err => {
+          this._toast.show('Falha ao enviar comentário');
+          LoggerUtils.throw(err);
+        });
+    } else {
+      this.error = true;
+    }
   }
 
   openLikeDialog(): void {
