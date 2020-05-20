@@ -1,40 +1,19 @@
-import { StringUtils } from '@shared/utils/string.utils';
+import { EmoteEvaluation } from './EmoteEvaluation';
 
 export class Suggestion {
-
-  private _tags: string[] = [];
-
-  constructor(
-    public id: number,
-    public produto: string,
-    public titulo: string,
-    public problema: string,
-    public sugestaoMelhoria: string,
-    public resultadoEsperado: string,
-    public diminuicaoSuporte: boolean,
-    public automacaoProcesso: boolean,
-    public aumentoProdutividade: boolean,
-    public userId: string,
-    public comments: number,
-    public likes: number,
-    public dislikes: number,
-    public createdIn: Date
-  ) { }
-
-  public addTag(tag: string) {
-    if (this._tags.length < 5 && tag.length < 12) {
-      this._tags.push(`#${StringUtils.normalize(tag.toUpperCase())}`);
-    }
-    return this;
-  }
-
-  public removeTag(tag: string) {
-    this._tags.splice(this._tags.indexOf(tag), 1);
-    return this;
-  }
-
-  public get tags() {
-    return this._tags;
-  }
-
+  id: number;
+  dataCriacao: string;
+  dataAtualizacao: string;
+  topicoId: number;
+  usuario: string;
+  titulo: string;
+  descricaoSugestao: string; // sugestão de melhoria
+  problemaResolvido: string; // problema a ser resolvido
+  resultadoSuporte: EmoteEvaluation;
+  resultadoProdutividade: EmoteEvaluation;
+  resultadoAutomacao: EmoteEvaluation;
+  status: number;
+  numeroComentarios: number;
+  numeroLikes: number;
+  numeroDislikes: number;
 }

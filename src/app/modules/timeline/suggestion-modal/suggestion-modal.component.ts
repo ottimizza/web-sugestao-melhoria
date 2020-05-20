@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { ToastService } from '@shared/services/toast.service';
+import { Suggestion } from '@shared/models/Suggestion';
+import { DateUtils } from '@shared/utils/date-utils';
+import { User } from '@shared/models/User';
+import { environment } from '@env';
+import { LoggerUtils } from '@shared/utils/logger.utills';
 
 @Component({
   templateUrl: './suggestion-modal.component.html',
@@ -9,7 +16,7 @@ export class SuggestionModalComponent {
 
   problem = '';
   improvement = '';
-  hype = '';
+  title = '';
   diminuicaoSuporte: number;
   automacaoProcesso: number;
   aumentoProdutividade: number;
@@ -18,17 +25,18 @@ export class SuggestionModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<SuggestionModalComponent>,
+    public suggestionService: SuggestionService,
+    public toastService: ToastService,
   ) {}
 
   private get pattern() {
-    return { problem: '', improvement: '', hype: '' };
+    return { problem: '', improvement: '', title: '' };
   }
 
   getResult() {
     return {
       problem: this.problem,
       improvement: this.improvement,
-      hype: this.hype
     };
   }
 
@@ -37,9 +45,35 @@ export class SuggestionModalComponent {
   }
 
   submit() {
-    if (this.problem && this.problem.length && this.improvement && this.improvement.length && this.hype && this.hype.length &&
+    if (this.problem && this.improvement && this.title &&
         this.aumentoProdutividade !== undefined && this.diminuicaoSuporte !== undefined && this.automacaoProcesso !== undefined) {
-      this.dialogRef.close(this.getResult());
+
+      const currentUser = User.fromLocalStorage();
+      const suggestion: any = {
+        dataAtualizacao: DateUtils.getTracedDate(new Date()),
+        dataCriacao: DateUtils.getTracedDate(new Date()),
+        descricaoSugestao: this.improvement,
+        problemaResolvido: this.problem,
+        resultadoAutomacao: this.automacaoProcesso,
+        resultadoProdutividade: this.aumentoProdutividade,
+        resultadoSuporte: this.diminuicaoSuporte,
+        status: 1,
+        numeroComentarios: 0,
+        numeroDislikes: 0,
+        numeroLikes: 0,
+        titulo: this.title,
+        topicoId: environment.topic.id,
+        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
+      };
+
+      this.suggestionService.create(suggestion).subscribe(() => {
+        this.toastService.show('Sugestão criada com sucesso', 'success');
+        this.dialogRef.close(this.getResult());
+      }, err => {
+        this.toastService.show('Falha ao criar sugestão');
+        LoggerUtils.throw(err);
+      });
+
     } else {
       this.errorLabel = this.pattern;
       this.errorBorder = this.pattern;
@@ -52,9 +86,9 @@ export class SuggestionModalComponent {
         this.errorLabel.improvement = 'labelred';
         this.errorBorder.improvement = 'border-danger';
       }
-      if (!this.hype || !this.hype.length) {
-        this.errorLabel.hype = 'labelred';
-        this.errorBorder.hype = 'border-danger';
+      if (!this.title || !this.title.length) {
+        this.errorLabel.title = 'labelred';
+        this.errorBorder.title = 'border-danger';
       }
     }
 

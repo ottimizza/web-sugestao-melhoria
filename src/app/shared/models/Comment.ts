@@ -1,6 +1,5 @@
 export class Comment {
-
-  userId: number;
-  comment: string;
-
+  usuario: string;
+  sugestaoId: string;
+  texto: string;
 }

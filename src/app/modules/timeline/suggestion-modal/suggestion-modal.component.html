@@ -1,6 +1,10 @@
 <h1 mat-dialog-title><i class="fal fa-lightbulb-on text-info mr-4"></i>Sua sugestão é sempre bem vinda!</h1>
 <div mat-dialog-content>
 
+  <strong [ngClass]="errorLabel.title">Título:</strong>
+  <br>
+  <input type="text" placeholder="Escreva aqui..." [(ngModel)]="title" maxlength="40" [ngClass]="errorBorder.title">
+  <span class="text-right">{{ title.length }} / 40</span>
 
   <strong [ngClass]="errorLabel.improvement">Sugestão de melhoria:</strong>
   <span>Descreva como podemos melhorar sua experiência no aplicativo</span>
@@ -15,14 +19,6 @@
   <br>
   <textarea placeholder="Escreva aqui..." [(ngModel)]="problem" maxlength="140" [ngClass]="errorBorder.problem"></textarea>
   <span class="text-right">{{ problem.length }} / 140</span>
-
-  <br>
-
-  <strong [ngClass]="errorLabel.hype">Resultado esperado:</strong>
-  <span>Descreva o resultado ou ganho que você espera ter com esta sugestão.</span>
-  <br>
-  <textarea placeholder="Escreva aqui..." [(ngModel)]="hype" maxlength="140" [ngClass]="errorBorder.hype"></textarea>
-  <span class="text-right">{{ hype.length }} / 140</span>
 
   <br><br>
   <strong>Classifique em relação ao ganho que você terá com esta sugestão:</strong>
@@ -45,7 +41,7 @@
     <span *ngIf="aumentoProdutividade === undefined || diminuicaoSuporte === undefined || automacaoProcesso === undefined" class="labelred">Responda a todos os questionamentos</span>
   </div>
   <div class="row w-100 m-0">
-    <span *ngIf="!problem.length || !improvement.length || !hype.length" class="labelred">Preencha todos os campos</span>
+    <span *ngIf="!problem?.length || !improvement?.length || !title?.length" class="labelred">Preencha todos os campos</span>
   </div>
   <button mat-button (click)="submit()">Enviar</button>
   <button mat-button (click)="onNoClick()">Cancelar</button>

@@ -8,6 +8,13 @@
     [hackings]="hackings()"
     (filterApplied)="filterApply($event)"
     ></app-complex-search-input>
+
+    <mat-chip-list>
+      <mat-chip *ngFor="let f of filters" [selectable]="true" [removable]="f.id !== 'topic'" (removed)="removeFilter(f)">
+        {{ f.description }}
+        <mat-icon matChipRemove *ngIf="f.id !== 'topic'">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
 </div>
 
 <section>
