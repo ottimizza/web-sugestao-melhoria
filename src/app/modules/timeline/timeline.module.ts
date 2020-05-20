@@ -15,6 +15,7 @@ import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.co
 import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
 import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 import { LikeModalComponent } from './like-modal/like-modal.component';
+import { MatChipsModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { LikeModalComponent } from './like-modal/like-modal.component';
   imports: [
     MatTooltipModule,
     MatDialogModule,
+    MatChipsModule,
+    MatIconModule,
     CommonModule,
     ComplexSearchModule,
     SuggestionModule,

@@ -6,8 +6,8 @@
       <img src="../../../../assets/icons/icon-72x72.png">
     </div>
     <div class="col p-0 pl-2 text-left">
-      <span class="name">{{ name }}</span>
-      <span class="hour">{{ hour }}</span>
+      <span class="name">{{ suggestion.usuario }}</span>
+      <span class="hour">{{ getDate(suggestion.dataCriacao) }}</span>
     </div>
   </div>
 
@@ -16,7 +16,7 @@
     <br>
     <span class="content">{{ content }}</span>
     <div class="m-3 mb-4 mt-4 text-left tags-area">
-      <app-tag [tags]="suggestion.tags"></app-tag>
+      <!-- <app-tag [tags]="suggestion.tags"></app-tag> -->
     </div>
   </div>
 
@@ -28,22 +28,17 @@
       <div class="text-left mt-3">
         <strong>Problema a ser Resolvido:</strong>
         <br>
-        <span>{{ suggestion.problema }}</span>
+        <span>{{ suggestion.problemaResolvido }}</span>
         <br><br>
 
         <strong>Sugestão de Melhoria:</strong>
         <br>
-        <span>{{ suggestion.sugestaoMelhoria }}</span>
-        <br><br>
-
-        <strong>Resultado esperado:</strong>
-        <br>
-        <span>{{ suggestion.resultadoEsperado }}</span>
+        <span>{{ suggestion.descricaoSugestao }}</span>
         <br><br>
 
         <div class="ml-3">
-          <strong *ngIf="suggestion.tags.length">Tags:</strong>
-          <app-tag [tags]="suggestion.tags"></app-tag>
+          <!-- <strong *ngIf="suggestion.tags.length">Tags:</strong>
+          <app-tag [tags]="suggestion.tags"></app-tag> -->
         </div>
       </div>
 
@@ -54,9 +49,9 @@
 
   <div class="comments-area p-4 text-left" *ngIf="visibleComments">
     <div class="comment" *ngFor="let com of comments">
-      <strong>{{ com.userId }}</strong>
+      <strong>{{ com.usuario }}</strong>
       <br>
-      <span>{{ com.comment }}</span>
+      <span>{{ com.texto }}</span>
       <br><br><br>
     </div>
 
@@ -65,17 +60,17 @@
   </div>
 
   <div class="row w-100 m-0 mb-3 mt-4 mobile">
-    <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
-    <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
-    <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
+    <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.numeroComentarios }}</div>
+    <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.numeroLikes }}</div>
+    <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.numeroDislikes }}</div>
   </div>
 
   <div class="row w-100 m-0 mb-3 mt-4 desktop">
     <div class="col-3"></div>
     <div class="col-6">
-      <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.comments }}</div>
-      <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.likes }}</div>
-      <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.dislikes }}</div>
+      <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ suggestion.numeroComentarios }}</div>
+      <div class="likes cursor-pointer action-button" (click)="openLikeDialog()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.numeroLikes }}</div>
+      <div class="dislikes cursor-pointer action-button" (click)="openDisikeDialog()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.numeroDislikes }}</div>
     </div>
     <div class="col-3"></div>
   </div>
