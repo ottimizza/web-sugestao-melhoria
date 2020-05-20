@@ -1,5 +1,5 @@
 export class Comment {
   usuario: string;
-  sugestaoId: string;
+  sugestaoId: number;
   texto: string;
 }

@@ -16,6 +16,7 @@ import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.modul
 import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 import { LikeModalComponent } from './like-modal/like-modal.component';
 import { MatChipsModule, MatIconModule } from '@angular/material';
+import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MatChipsModule, MatIconModule } from '@angular/material';
     OutflowModalModule,
     SuggestionModalModule,
     BreadcrumbModule,
-    ActionButtonsModule
+    ActionButtonsModule,
+    ScrollTrackerModule
   ],
   entryComponents: [
     LikeModalComponent,

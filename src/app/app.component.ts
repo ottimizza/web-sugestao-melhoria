@@ -7,6 +7,7 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 import { MessagingService } from '@app/services/messaging.service';
 import { OutflowService } from '@app/http/outflow.service';
 import { SuggestionService } from '@app/http/suggestion.service';
+import { PopulatorService } from '@app/services/populator.service';
 
 @Component({
   selector: 'app-root',

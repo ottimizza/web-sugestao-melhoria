@@ -2,6 +2,12 @@
 DEFAULT PROPERTIES
 */
 
+section {
+  overflow: auto;
+  height: calc(100vh - 70px);
+  margin: 0;
+}
+
 #product-container {
   background-color: #E9ECEF;
   margin-bottom: 0;

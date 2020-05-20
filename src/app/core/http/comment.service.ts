@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 import { environment } from '@env';
 import { Comment } from '@shared/models/Comment';
+import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -21,7 +22,7 @@ export class CommentService {
   getComments(searchCriteria: any) {
     const params = this._encode(searchCriteria);
     const url = `${BASE_URL}/api/comentario?${params}`;
-    return this.http.get(url, this._headers);
+    return this.http.get<GenericPageableResponse<Comment>>(url, this._headers);
   }
 
   create(comment: Comment) {
