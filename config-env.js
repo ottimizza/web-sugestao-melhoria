@@ -19,7 +19,7 @@ function createEnvironementFile() {
   topic: {
     id: '${getEnvironmentVariable('TOPIC_ID')}',
     name: '${getEnvironmentVariable('TOPIC_NAME')}'
-  }
+  },
   firebase: {
     apiKey: '${getEnvironmentVariable('FIREBASE_API_KEY')}',
     authDomain: '${getEnvironmentVariable('FIREBASE_AUTH_DOMAIN')}',
