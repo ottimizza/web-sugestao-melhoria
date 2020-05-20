@@ -36,7 +36,7 @@ export class OutflowModalComponent {
       const outflow: Outflow = {
         dataRetornoCliente: undefined,
         texto: this.outflow,
-        topicoId: environment.topic.id,
+        topicoId: +environment.topic.id,
         usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
       };
       this.outflowService.create(outflow).subscribe(() => {
