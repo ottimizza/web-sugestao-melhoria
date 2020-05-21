@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
 
     this.messagingService.receiveMessage();
     this.messagingService.currentMessage.subscribe();
+
   }
 
 }

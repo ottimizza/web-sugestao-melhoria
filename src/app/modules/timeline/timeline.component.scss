@@ -58,6 +58,12 @@ MOBILE SIZING
 
 @media (max-width: 767px) {
 
+  .buttons {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+  }
+
   .suggestion-card {
     margin: auto;
     margin: 5vw;
@@ -187,3 +193,4 @@ DESKTOP SIZING
     transform: scale(1.1);
   }
 }
+

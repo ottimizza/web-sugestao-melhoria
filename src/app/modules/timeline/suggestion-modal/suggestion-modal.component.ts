@@ -66,9 +66,9 @@ export class SuggestionModalComponent {
         usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
       };
 
-      this.suggestionService.create(suggestion).subscribe(() => {
+      this.suggestionService.create(suggestion).subscribe(result => {
         this.toastService.show('Sugestão criada com sucesso', 'success');
-        this.dialogRef.close(this.getResult());
+        this.dialogRef.close(result);
       }, err => {
         this.toastService.show('Falha ao criar sugestão');
         LoggerUtils.throw(err);

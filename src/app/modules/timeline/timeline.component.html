@@ -1,7 +1,8 @@
 <section appScrollTracker (scrollEnd)="nextPage()">
 <app-breadcrumb></app-breadcrumb>
-<app-actions [buttons]="buttons" (clicked)="onClick($event)"></app-actions>
-
+<div class="buttons m-0 p-0">
+  <app-actions [buttons]="buttons" (clicked)="onClick($event)"></app-actions>
+</div>
 
   <div class="m-4 mb-0">
     <app-complex-search-input

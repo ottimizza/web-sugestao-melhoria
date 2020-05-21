@@ -7,14 +7,12 @@ import { ToastService } from '@shared/services/toast.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
 import { Suggestion } from '@shared/models/Suggestion';
-import { ArrayUtils } from '@shared/utils/array.utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { DateUtils } from '@shared/utils/date-utils';
-import { SuggestionService } from '@app/http/suggestion.service';
 import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { CommentService } from '@app/http/comment.service';
-import { map, tap } from 'rxjs/operators';
+import { ArrayUtils } from '@shared/utils/array.utils';
 
 @Component({
   selector: 'app-suggestion',
@@ -30,7 +28,7 @@ export class SuggestionComponent implements OnInit {
   error = false;
 
   comments: Comment[] = [];
-  ownComment = ''
+  ownComment = '';
 
   pageInfo: PageInfo;
   isFetching: boolean;
@@ -79,7 +77,7 @@ export class SuggestionComponent implements OnInit {
     this.isFetching = true;
     this.commentService.getComments(searchCriteria).subscribe(results => {
       this.isFetching = false;
-      this.comments = this.comments.concat(results.records);
+      this.comments = ArrayUtils.concatDifferentiatingProperty(this.comments, results.records, 'id');
       this.pageInfo = results.pageInfo;
     }, err => {
       this._toast.show(`Falha ao obter comentários para a sugestão "${this.suggestion.titulo}"`, 'danger');
