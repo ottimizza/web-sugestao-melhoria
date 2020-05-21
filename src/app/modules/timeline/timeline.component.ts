@@ -16,6 +16,7 @@ import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { environment } from '@env';
 import { ToastService } from '@shared/services/toast.service';
 import { PopulatorService } from '@app/services/populator.service';
+import { ArrayUtils } from '@shared/utils/array.utils';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -95,22 +96,23 @@ export class TimelineComponent implements OnInit {
       pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
       pageSize: 15
     };
+    const sorting = {
+      orderBy: 'numeroLikes'
+    };
     const filter: any = {};
     this.filters.forEach(fil => Object.assign(filter, fil.value));
     Object.assign(filter, pageCriteria);
+    Object.assign(filter, sorting);
 
     if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
       this.isFetching = true;
       this.toastService.showSnack('Buscando sugestões');
       this.suggestionService.getSuggestions(filter).subscribe((results: any) => {
+
         this.isFetching = false;
-        if (results.content) {
-          this.suggestions = this.suggestions.concat(results.content);
-        }
-        if (results.records) {
-          this.suggestions = this.suggestions.concat(results.records);
-          this.pageInfo = results.pageInfo;
-        }
+        this.suggestions = ArrayUtils.concatDifferentiatingProperty(this.suggestions, results.records, 'id');
+        this.pageInfo = results.pageInfo;
+
         if (!this.suggestions?.length) {
           this.toastService.show(
             `Não há sugestões aplicáveis para ${this.filters.length === 1 ? 'este produto' : 'a pesquisa'}`,
@@ -150,7 +152,7 @@ export class TimelineComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      LoggerUtils.log(result);
+      this.suggestions = [result].concat(this.suggestions);
     });
   }
 
