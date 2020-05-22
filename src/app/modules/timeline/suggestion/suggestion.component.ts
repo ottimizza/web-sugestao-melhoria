@@ -3,11 +3,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { LikeModalComponent } from '../like-modal/like-modal.component';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { ToastService } from '@shared/services/toast.service';
+import { CommentService } from '@app/http/comment.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
-import { Suggestion } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
+import { Suggestion } from '@shared/models/Suggestion';
+import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 
@@ -22,16 +25,43 @@ export class SuggestionComponent implements OnInit {
 
   isSelected = false;
   visibleComments = false;
+  error = false;
+
   comments: Comment[] = [];
+  ownComment = '';
+
+  pageInfo: PageInfo;
+  isFetching: boolean;
 
   constructor(
     public dialog: MatDialog,
+    public commentService: CommentService,
     private _toast: ToastService
   ) {}
 
   ngOnInit(): void {
-    const fake = this.fake().comments;
-    this.comments = this.comments.concat(fake);
+    this.nextPage();
+  }
+
+  getDate(date: string) {
+    // @ts-ignore
+    const postDate = new Date(date.split('-')).getTime();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
+
+    const beforeYesterday = new Date(yesterday.getTime() - (24 * 60 * 60 * 1000));
+
+    if (postDate === today.getTime()) {
+      return 'Hoje';
+    } else if (postDate === yesterday.getTime()) {
+      return 'Ontem';
+    } else if (postDate === beforeYesterday.getTime()) {
+      return 'Anteontem';
+    }
+    return DateUtils.getDateString(new Date(postDate));
   }
 
   get title(): string {
@@ -39,8 +69,46 @@ export class SuggestionComponent implements OnInit {
   }
 
   nextPage() {
-    const fake = this.fake().comments;
-    this.comments = ArrayUtils.sum(this.comments, fake);
+    const searchCriteria = {
+      pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
+      pageSize: 10,
+      sugestaoId: this.suggestion.id
+    };
+    this.isFetching = true;
+    this.commentService.getComments(searchCriteria).subscribe(results => {
+      this.isFetching = false;
+      this.comments = ArrayUtils.concatDifferentiatingProperty(this.comments, results.records, 'id');
+      this.pageInfo = results.pageInfo;
+    }, err => {
+      this._toast.show(`Falha ao obter comentários para a sugestão "${this.suggestion.titulo}"`, 'danger');
+      LoggerUtils.throw(err);
+      this.isFetching = false;
+    });
+  }
+
+  submit() {
+    if (this.ownComment?.length) {
+      this.error = false;
+      const user = User.fromLocalStorage();
+      const comment = {
+        sugestaoId: this.suggestion.id,
+        texto: this.ownComment,
+        usuario: `${user.firstName} ${user.lastName ?? ''}`,
+        userId: user.id
+      };
+      this.ownComment = '';
+      this.commentService
+        .create(comment)
+        .subscribe((result: Comment) => {
+          this.pageInfo.totalElements++;
+          this.comments = [result].concat(this.comments);
+        }, err => {
+          this._toast.show('Falha ao enviar comentário');
+          LoggerUtils.throw(err);
+        });
+    } else {
+      this.error = true;
+    }
   }
 
   openLikeDialog(): void {
@@ -48,16 +116,13 @@ export class SuggestionComponent implements OnInit {
       width: '94vw',
       data: {
         title: 'Que bom que gostou!',
-        icon: 'fa fa-heart text-danger'
+        icon: 'fa fa-heart text-danger',
+        aprovado: true,
+        id: this.suggestion.id
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this._toast.show('Você curtiu uma publicação');
-      }
-      LoggerUtils.log(result);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   openDisikeDialog(): void {
@@ -65,56 +130,24 @@ export class SuggestionComponent implements OnInit {
       width: '94vw',
       data: {
         title: 'Ah! Que pena! :(',
-        icon: 'fa fa-heart-broken text-danger'
+        icon: 'fa fa-heart-broken text-danger',
+        aprovado: false,
+        id: this.suggestion.id
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this._toast.show('Você deu um dislike em uma publicação!');
-      }
-      LoggerUtils.log(result);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
   get content() {
     return StringUtils.cut(
-      `${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 280
+      // `${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 280
+      `${this.suggestion.problemaResolvido} ${this.suggestion.descricaoSugestao}`, 280
     );
   }
 
   get button() {
     return this.isSelected ? 'Mostrar menos' : 'Continuar lendo';
-  }
-
-
-  get hour() {
-    return this.fake().hour;
-  }
-
-  get name() {
-    const user = User.fromLocalStorage();
-    return `${user.firstName} ${user.lastName}`;
-  }
-
-  fake() {
-
-    const a = () => {
-      const comments: Comment[] = [];
-      for (let i = 0; i < 5; i++) {
-        const comment = new Comment();
-        // tslint:disable
-        comment.comment = 'Gostaria de enfatizar que a revolução dos costumes obstaculiza a apreciação da importância dos níveis de motivação departamental.';
-        comment.userId = Math.round(Math.random() * 100);
-        comments.push(comment);
-      }
-      return comments;
-    };
-
-    return {
-      comments: a(),
-      hour: '3 horas atrás'
-    };
   }
 
 }

@@ -2,6 +2,12 @@
 DEFAULT PROPERTIES
 */
 
+section {
+  overflow: auto;
+  height: calc(100vh - 70px);
+  margin: 0;
+}
+
 #product-container {
   background-color: #E9ECEF;
   margin-bottom: 0;
@@ -51,6 +57,12 @@ MOBILE SIZING
 */
 
 @media (max-width: 767px) {
+
+  .buttons {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+  }
 
   .suggestion-card {
     margin: auto;
@@ -181,3 +193,4 @@ DESKTOP SIZING
     transform: scale(1.1);
   }
 }
+

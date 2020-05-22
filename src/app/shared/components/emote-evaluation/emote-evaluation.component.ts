@@ -23,11 +23,11 @@ export class EmoteEvaluationComponent {
   select(val: 'bad' | 'meh' | 'top') {
     this.selected = val;
     if (val === 'bad') {
-      this.evaluation.emit(0);
-    } else if (val === 'meh') {
       this.evaluation.emit(1);
-    } else if (val === 'top') {
+    } else if (val === 'meh') {
       this.evaluation.emit(2);
+    } else if (val === 'top') {
+      this.evaluation.emit(3);
     }
   }
 

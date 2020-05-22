@@ -5,6 +5,10 @@ import { UpdateService } from '@app/services/update.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
 import { MessagingService } from '@app/services/messaging.service';
+import { OutflowService } from '@app/http/outflow.service';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { PopulatorService } from '@app/services/populator.service';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +23,7 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) public document: Document,
     private events: RxEvent,
     private updateService: UpdateService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
   ) {
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {
@@ -51,6 +55,8 @@ export class AppComponent implements OnInit {
     // }
 
     this.messagingService.receiveMessage();
+    this.messagingService.currentMessage.subscribe();
+
   }
 
 }

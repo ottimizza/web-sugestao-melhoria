@@ -3,11 +3,15 @@ export const environment = {
   oauthBaseUrl: 'https://development-oauth-server.herokuapp.com',
   oauthClientId: '58a94562a7a7502d4c1b',
   imageCompressionBaseUrl: 'https://development-image-compression.herokuapp.com',
-  storageBaseUrl: 'https://s4.ottimizzacontabil.com:55325',
+  storageBaseUrl: 'https://development-api-sugestao.herokuapp.com',
   storageApplicationId: 'account-avatar',
   storageAccountingId: 'ottimizza',
   applicationId: 'ottimizza',
   portalBaseUrl: 'https://development-accounts.ottimizza.com.br',
+  topic: {
+    id: 1,
+    name: 'Bússola'
+  },
   firebase: {
     apiKey: 'AIzaSyA64z6wB13NbuQBYeA3pyyljWoOFR4URXI',
     authDomain: 'sugestao-de-melhoria.firebaseapp.com',
