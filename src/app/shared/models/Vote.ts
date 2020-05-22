@@ -9,5 +9,6 @@ export class Vote {
   resultadoSuporte: EmoteEvaluation;
   resultadoProdutividade: EmoteEvaluation;
   resultadoAutomacao: EmoteEvaluation;
+  userId: number;
 
 }
