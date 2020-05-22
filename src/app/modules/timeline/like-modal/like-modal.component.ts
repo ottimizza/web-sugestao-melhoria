@@ -44,7 +44,8 @@ export class LikeModalComponent {
       resultadoProdutividade: this.aumentoProdutividade,
       resultadoSuporte: this.diminuicaoSuporte,
       sugestaoId: this.data.id,
-      usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
+      usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`,
+      userId: currentUser.id
     };
     if (!this.isPosting) {
       this.isPosting = true;
