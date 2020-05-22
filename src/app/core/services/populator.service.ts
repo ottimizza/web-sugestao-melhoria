@@ -47,6 +47,7 @@ export class PopulatorService {
           LoggerUtils.log(`Comentário ${quantity + 1}:`)
           LoggerUtils.log(result);
           LoggerUtils.log('--------------');
+          array.push(result);
           returning(i);
         }, err => {
           LoggerUtils.error(`Comentário ${quantity + 1}:`)

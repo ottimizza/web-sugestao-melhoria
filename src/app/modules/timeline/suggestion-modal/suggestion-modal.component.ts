@@ -7,6 +7,7 @@ import { DateUtils } from '@shared/utils/date-utils';
 import { User } from '@shared/models/User';
 import { environment } from '@env';
 import { LoggerUtils } from '@shared/utils/logger.utills';
+import { EmoteEvaluation } from '@shared/models/EmoteEvaluation';
 
 @Component({
   templateUrl: './suggestion-modal.component.html',
@@ -17,9 +18,9 @@ export class SuggestionModalComponent {
   problem = '';
   improvement = '';
   title = '';
-  diminuicaoSuporte: number;
-  automacaoProcesso: number;
-  aumentoProdutividade: number;
+  diminuicaoSuporte: EmoteEvaluation;
+  automacaoProcesso: EmoteEvaluation;
+  aumentoProdutividade: EmoteEvaluation;
   errorLabel = this.pattern;
   errorBorder = this.pattern;
 
@@ -31,6 +32,22 @@ export class SuggestionModalComponent {
 
   private get pattern() {
     return { problem: '', improvement: '', title: '' };
+  }
+
+  errorText() {
+    if (!this.title) {
+      return 'Informe um título';
+    } else if (!this.improvement) {
+      return 'Informe a sua sugestão';
+    } else if (!this.problem) {
+      return 'Informe o problema a ser resolvido';
+    } else if (!this.diminuicaoSuporte) {
+      return 'Informe se você acha que isto ajudará a diminuir o suporte';
+    } else if (!this.automacaoProcesso) {
+      return 'Informe se você acha que isto ajudará a automatizar algum processo';
+    } else if (!this.aumentoProdutividade) {
+      return 'Informe se você acha que isto irá aumentar a produtividade';
+    }
   }
 
   getResult() {
