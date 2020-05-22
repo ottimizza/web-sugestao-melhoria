@@ -41,7 +41,7 @@ export class SuggestionModalComponent {
   }
 
   onNoClick(): void {
-    this.dialogRef.close(this.getResult());
+    this.dialogRef.close();
   }
 
   submit() {
@@ -63,14 +63,15 @@ export class SuggestionModalComponent {
         numeroLikes: 0,
         titulo: this.title,
         topicoId: environment.topic.id,
-        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
+        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`,
+        userId: currentUser.id
       };
 
       this.suggestionService.create(suggestion).subscribe(result => {
         this.toastService.show('Sugestão criada com sucesso', 'success');
         this.dialogRef.close(result);
       }, err => {
-        this.toastService.show('Falha ao criar sugestão');
+        this.toastService.show('Falha ao criar sugestão', 'danger');
         LoggerUtils.throw(err);
       });
 

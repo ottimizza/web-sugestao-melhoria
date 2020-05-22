@@ -37,7 +37,8 @@ export class OutflowModalComponent {
         dataRetornoCliente: undefined,
         texto: this.outflow,
         topicoId: +environment.topic.id,
-        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`
+        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`,
+        userId: currentUser.id
       };
       this.outflowService.create(outflow).subscribe(() => {
         this.toastService.show('Desabafo criado com sucesso!', 'success');

@@ -3,16 +3,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { LikeModalComponent } from '../like-modal/like-modal.component';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { ToastService } from '@shared/services/toast.service';
+import { CommentService } from '@app/http/comment.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
+import { ArrayUtils } from '@shared/utils/array.utils';
 import { Suggestion } from '@shared/models/Suggestion';
+import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
-import { DateUtils } from '@shared/utils/date-utils';
-import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { CommentService } from '@app/http/comment.service';
-import { ArrayUtils } from '@shared/utils/array.utils';
 
 @Component({
   selector: 'app-suggestion',
@@ -90,7 +90,12 @@ export class SuggestionComponent implements OnInit {
     if (this.ownComment?.length) {
       this.error = false;
       const user = User.fromLocalStorage();
-      const comment = { sugestaoId: this.suggestion.id, texto: this.ownComment, usuario: `${user.firstName} ${user.lastName ?? ''}` };
+      const comment = {
+        sugestaoId: this.suggestion.id,
+        texto: this.ownComment,
+        usuario: `${user.firstName} ${user.lastName ?? ''}`,
+        userId: user.id
+      };
       this.ownComment = '';
       this.commentService
         .create(comment)

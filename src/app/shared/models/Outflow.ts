@@ -3,4 +3,5 @@ export class Outflow {
   texto: string;
   usuario: string;
   dataRetornoCliente: string;
+  userId: number;
 }

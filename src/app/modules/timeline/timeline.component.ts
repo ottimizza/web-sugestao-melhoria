@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '@env';
 
 import { MatDialog } from '@angular/material';
 
@@ -8,14 +9,12 @@ import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
 import { SearchRule } from '@shared/components/search/models/SearchRule';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { ToastService } from '@shared/services/toast.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
-import { Suggestion } from '@shared/models/Suggestion';
-import { SuggestionService } from '@app/http/suggestion.service';
-import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { environment } from '@env';
-import { ToastService } from '@shared/services/toast.service';
-import { PopulatorService } from '@app/services/populator.service';
+import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 
 enum SortingType {
@@ -96,13 +95,9 @@ export class TimelineComponent implements OnInit {
       pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
       pageSize: 15
     };
-    const sorting = {
-      orderBy: 'numeroLikes'
-    };
     const filter: any = {};
     this.filters.forEach(fil => Object.assign(filter, fil.value));
     Object.assign(filter, pageCriteria);
-    Object.assign(filter, sorting);
 
     if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
       this.isFetching = true;
@@ -152,7 +147,9 @@ export class TimelineComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.suggestions = [result].concat(this.suggestions);
+      if (result) {
+        this.suggestions = [result].concat(this.suggestions);
+      }
     });
   }
 
@@ -189,6 +186,29 @@ export class TimelineComponent implements OnInit {
       this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título', { titulo: '' }),
       this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título', { titulo: '' }),
       // this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag', {})
+    ];
+  }
+
+  filteringRules() {
+    return [
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.ABERTO })
+        .description('Estado: Aberta')
+        .keywords(['aberta', 'abertas', 'aberto', 'abertos', 'open'])
+        .build(),
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.ARQUIVADO })
+        .description('Estado: Arquivada')
+        .keywords(['arquivada', 'arquivadas', 'arquivado', 'arquivados'])
+        .build(),
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.APROVADO })
+        .description('Estado: Aprovada')
+        .keywords(['aprovada', 'aprovadas', 'aprovado', 'aprovados', 'fechada'])
+        .build(),
     ];
   }
 

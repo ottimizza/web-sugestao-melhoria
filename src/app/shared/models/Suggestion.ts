@@ -1,5 +1,13 @@
 import { EmoteEvaluation } from './EmoteEvaluation';
 
+export enum SuggestionStatus {
+
+  ABERTO = 1,
+  ARQUIVADO,
+  APROVADO
+
+}
+
 export class Suggestion {
   id: number;
   dataCriacao: string;
@@ -12,8 +20,9 @@ export class Suggestion {
   resultadoSuporte: EmoteEvaluation;
   resultadoProdutividade: EmoteEvaluation;
   resultadoAutomacao: EmoteEvaluation;
-  status: number;
+  status: SuggestionStatus;
   numeroComentarios: number;
   numeroLikes: number;
   numeroDislikes: number;
+  userId: number;
 }
