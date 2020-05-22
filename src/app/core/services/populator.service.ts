@@ -8,6 +8,7 @@ import { User } from '@shared/models/User';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { CommentService } from '@app/http/comment.service';
 import { Comment } from '@shared/models/Comment';
+import { Subject } from 'rxjs';
 
 // tslint:disable
 @Injectable({
@@ -21,12 +22,23 @@ export class PopulatorService {
   ) {}
 
   public populateComments(suggestionId: number, quantity: number) {
+
+    const $retorno = new Subject<Comment[]>();
+    const array = [];
+
     if (this._verify(quantity, 'comentários')) {
 
       const comment: Comment = {
         sugestaoId: suggestionId,
         texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie nisl a molestie dignissim. Donec sit amet lorem non magna efficitur.',
-        usuario: `Comentário criado por script utilizando o usuário ${User.fromLocalStorage().email}`
+        usuario: `Comentário criado por script utilizando o usuário ${User.fromLocalStorage().email}`,
+        userId: User.fromLocalStorage().id
+      }
+
+      const returning = (index: number) => {
+        if (index === quantity - 1) {
+          $retorno.next(array);
+        }
       }
 
       for (let i = 0; i < quantity; i++) {
@@ -35,15 +47,20 @@ export class PopulatorService {
           LoggerUtils.log(`Comentário ${quantity + 1}:`)
           LoggerUtils.log(result);
           LoggerUtils.log('--------------');
+          returning(i);
         }, err => {
           LoggerUtils.error(`Comentário ${quantity + 1}:`)
           LoggerUtils.throw(err);
           LoggerUtils.error('--------------');
+          returning(i);
         })
 
       }
 
     }
+
+    return $retorno
+
   }
 
   public populateSuggestions(quantity: number) {
@@ -64,6 +81,7 @@ export class PopulatorService {
           titulo: 'Lorem ipsum dolor sit amet orci aliquam.',
           topicoId: environment.topic.id,
           usuario: `Sugestão criada por script utilizando o usuário ${User.fromLocalStorage().email}`,
+          userId: User.fromLocalStorage().id
         };
 
         for (let i = 0; i < quantity; i++) {

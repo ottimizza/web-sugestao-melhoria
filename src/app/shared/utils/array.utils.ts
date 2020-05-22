@@ -25,14 +25,14 @@ export class ArrayUtils {
      */
     let verify = true;
 
-    if (!array) {
+    if (!array || !arr) {
       verify = false;
     }
     if (array.length !== arr.length) {
       verify = false;
     }
     array.forEach(arrayItem => {
-      if (arr[array.indexOf(arrayItem)] !== arrayItem) {
+      if (JSON.stringify(arr[array.indexOf(arrayItem)]) !== JSON.stringify(arrayItem)) {
         verify = false;
       }
     });
@@ -72,17 +72,15 @@ export class ArrayUtils {
      * Verifica se todos os elementos de um array são true
      */
 
-    let verify = true;
-    array.forEach(arr => {
-      if (arr !== true) {
-        verify = false;
-      }
-    });
-    return verify;
+    return array.filter(arr => arr !== true).length === 0;
 
   }
 
   static concatDifferentiatingProperty(array1: any[], array2: any[], property: string) {
+    /*
+     * Concatena dois arrays ignorando elementos que tenham determinada propriedade repetida
+     */
+
     const props = array1.map(arrItem => arrItem[property]);
     array2 = array2.filter(arrItem => !props.includes(arrItem[property]));
     return array1.concat(array2);
