@@ -35,7 +35,7 @@ export class VoteService {
   }
 
   deleteByUserIdAndSuggestionId(userId: number, suggestionId: number) {
-    const url = `${BASE_URL}/api/voto/seila`;
+    const url = `${BASE_URL}/api/voto/${suggestionId}/${userId}`;
     return this._http.delete(url, this._headers);
   }
 
