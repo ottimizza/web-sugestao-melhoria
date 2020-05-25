@@ -25,4 +25,6 @@ export class Suggestion {
   numeroLikes: number;
   numeroDislikes: number;
   userId: number;
+  deuLike: boolean;
+  deuDislike: boolean;
 }
