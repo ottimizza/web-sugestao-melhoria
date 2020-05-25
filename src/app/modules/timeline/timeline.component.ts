@@ -16,6 +16,7 @@ import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
+import { User } from '@shared/models/User';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -95,9 +96,13 @@ export class TimelineComponent implements OnInit {
       pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
       pageSize: 15
     };
+    const user = {
+      userId: User.fromLocalStorage().id
+    };
     const filter: any = {};
     this.filters.forEach(fil => Object.assign(filter, fil.value));
     Object.assign(filter, pageCriteria);
+    Object.assign(filter, user);
 
     if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
       this.isFetching = true;
