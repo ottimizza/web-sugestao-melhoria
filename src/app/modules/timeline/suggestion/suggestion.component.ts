@@ -114,8 +114,9 @@ export class SuggestionComponent implements OnInit {
   }
 
   like() {
+    const userId = User.fromLocalStorage().id;
     if (this.suggestion.deuLike) {
-      this.voteService.deleteByUserIdAndSuggestionId(User.fromLocalStorage().id, this.suggestion.id).subscribe(() => {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuLike = false;
         this.suggestion.numeroLikes--;
       }, err => {
@@ -123,7 +124,7 @@ export class SuggestionComponent implements OnInit {
         LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuDislike) {
-      this.voteService.deleteByUserIdAndSuggestionId(User.fromLocalStorage().id, this.suggestion.id).subscribe(() => {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuDislike = false;
         this.suggestion.numeroDislikes--;
         this.openLikeDialog();
@@ -137,8 +138,9 @@ export class SuggestionComponent implements OnInit {
   }
 
   dislike() {
+    const userId = User.fromLocalStorage().id;
     if (this.suggestion.deuDislike) {
-      this.voteService.deleteByUserIdAndSuggestionId(User.fromLocalStorage().id, this.suggestion.id).subscribe(() => {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuDislike = false;
         this.suggestion.numeroDislikes--;
       }, err => {
@@ -146,7 +148,7 @@ export class SuggestionComponent implements OnInit {
         LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuLike) {
-      this.voteService.deleteByUserIdAndSuggestionId(User.fromLocalStorage().id, this.suggestion.id).subscribe(() => {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuLike = false;
         this.suggestion.numeroLikes--;
         this.openDislikeDialog();
