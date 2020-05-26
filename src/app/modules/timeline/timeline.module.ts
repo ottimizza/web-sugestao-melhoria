@@ -17,12 +17,14 @@ import { ActionButtonsModule } from '@shared/components/action-buttons/action-bu
 import { LikeModalComponent } from './like-modal/like-modal.component';
 import { MatChipsModule, MatIconModule } from '@angular/material';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
+import { TimelineRoutingModule } from './timeline.routing';
 
 @NgModule({
   declarations: [
     TimelineComponent,
   ],
   imports: [
+    TimelineRoutingModule,
     MatTooltipModule,
     MatDialogModule,
     MatChipsModule,

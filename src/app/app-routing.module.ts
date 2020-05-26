@@ -24,7 +24,22 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TimelineComponent
+        redirectTo: 'sugestoes',
+        pathMatch: 'full'
+      },
+      {
+        path: 'sugestoes',
+        data: {
+          breadcrumb: null
+        },
+        loadChildren: () => import('@modules/timeline/timeline.module').then(m => m.TimelineModule)
+      },
+      {
+        path: 'desabafos',
+        data: {
+          breadcrumb: 'Desabafos'
+        },
+        loadChildren: () => import('@modules/outflow/outflow.module').then(m => m.OutflowModule)
       }
     ]
   },

@@ -1,0 +1,12 @@
+section {
+  height: calc(100vh - 70px);
+  overflow: auto;
+}
+
+@media (max-width: 767px) {
+  .buttons {
+    position: sticky;
+    top: 0;
+    z-index: 8;
+  }
+}
