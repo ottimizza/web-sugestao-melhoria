@@ -34,6 +34,11 @@ export class VoteService {
     return this._http.delete(url, this._headers);
   }
 
+  deleteByUserIdAndSuggestionId(userId: number, suggestionId: number) {
+    const url = `${BASE_URL}/api/voto/${suggestionId}/${userId}`;
+    return this._http.delete(url, this._headers);
+  }
+
   private _encode(params: any): string {
     return Object.keys(params).map((key) => {
       return [key, params[key]].map(encodeURIComponent).join('=');

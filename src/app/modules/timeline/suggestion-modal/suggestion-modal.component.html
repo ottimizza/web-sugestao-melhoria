@@ -21,8 +21,6 @@
   <span class="text-right">{{ problem.length }} / 140</span>
 
   <br><br>
-  <strong>Classifique em relação ao ganho que você terá com esta sugestão:</strong>
-  <br>
 
   <app-emote question="Você acha que esta solução pode nos ajudar a diminuir o suporte?" (evaluation)="diminuicaoSuporte = $event"></app-emote>
 
@@ -36,13 +34,10 @@
 
 
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="d-block">
   <div class="row w-100 m-0">
-    <span *ngIf="aumentoProdutividade === undefined || diminuicaoSuporte === undefined || automacaoProcesso === undefined" class="labelred">Responda a todos os questionamentos</span>
+    <span class="labelred">{{ errorText() }}</span>
   </div>
-  <div class="row w-100 m-0">
-    <span *ngIf="!problem?.length || !improvement?.length || !title?.length" class="labelred">Preencha todos os campos</span>
-  </div>
-  <button mat-button (click)="submit()">Enviar</button>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="submit()" class="btn btn-primary float-right">Enviar</button>
+  <button mat-button (click)="onNoClick()" class="btn btn-secondary float-right">Cancelar</button>
 </div>

@@ -36,7 +36,7 @@ fs.writeFile(`./src/environments/environment.ts`, environmentFile, (err) => {
 //
 let PACKAGE_NAME = getEnvironmentVariable('npm_package_name');
 
-PACKAGE_NAME = 'ng-accounts';
+PACKAGE_NAME = 'cs-sugestao-melhoria';
 
 
 const forceSSL = function () {
@@ -54,7 +54,7 @@ const forceSSL = function () {
 //
 //
 
-app.disable('etag'); // 
+app.disable('etag'); //
 
 app.use(forceSSL()); // enforces SSL connection.
 

@@ -13,6 +13,7 @@ import { Suggestion } from '@shared/models/Suggestion';
 import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
+import { VoteService } from '@app/http/vote.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -34,9 +35,10 @@ export class SuggestionComponent implements OnInit {
   isFetching: boolean;
 
   constructor(
+    private _toast: ToastService,
     public dialog: MatDialog,
     public commentService: CommentService,
-    private _toast: ToastService
+    public voteService: VoteService
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +113,54 @@ export class SuggestionComponent implements OnInit {
     }
   }
 
+  like() {
+    const userId = User.fromLocalStorage().id;
+    if (this.suggestion.deuLike) {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+        this.suggestion.deuLike = false;
+        this.suggestion.numeroLikes--;
+      }, err => {
+        this._toast.show('Falha ao deletar like', 'danger');
+        LoggerUtils.throw(err);
+      });
+    } else if (this.suggestion.deuDislike) {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+        this.suggestion.deuDislike = false;
+        this.suggestion.numeroDislikes--;
+        this.openLikeDialog();
+      }, err => {
+        this._toast.show('Falha ao deletar dislike', 'danger');
+        LoggerUtils.throw(err);
+      });
+    } else {
+      this.openLikeDialog();
+    }
+  }
+
+  dislike() {
+    const userId = User.fromLocalStorage().id;
+    if (this.suggestion.deuDislike) {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+        this.suggestion.deuDislike = false;
+        this.suggestion.numeroDislikes--;
+      }, err => {
+        this._toast.show('Falha ao deletar dislike', 'danger');
+        LoggerUtils.throw(err);
+      });
+    } else if (this.suggestion.deuLike) {
+      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+        this.suggestion.deuLike = false;
+        this.suggestion.numeroLikes--;
+        this.openDislikeDialog();
+      }, err => {
+        this._toast.show('Falha ao deletar like', 'danger');
+        LoggerUtils.throw(err);
+      });
+    } else {
+      this.openDislikeDialog();
+    }
+  }
+
   openLikeDialog(): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
       width: '94vw',
@@ -122,10 +172,16 @@ export class SuggestionComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe(ok => {
+      if (ok) {
+        this.suggestion.numeroLikes++;
+        this.suggestion.deuLike = true;
+        this.suggestion.deuDislike = false;
+      }
+    });
   }
 
-  openDisikeDialog(): void {
+  openDislikeDialog(): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
       width: '94vw',
       data: {
@@ -136,7 +192,13 @@ export class SuggestionComponent implements OnInit {
       }
     });
 
-    dialogRef.afterClosed().subscribe();
+    dialogRef.afterClosed().subscribe(ok => {
+      if (ok) {
+        this.suggestion.numeroDislikes++;
+        this.suggestion.deuLike = false;
+        this.suggestion.deuDislike = true;
+      }
+    });
   }
 
   get content() {

@@ -1,14 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { RxEvent } from '@app/services/rx-event.service';
 import { DOCUMENT } from '@angular/common';
-import { UpdateService } from '@app/services/update.service';
-import { LoggerUtils } from '@shared/utils/logger.utills';
-import { MobileUtils } from '@shared/utils/mobile.utils';
+
 import { MessagingService } from '@app/services/messaging.service';
-import { OutflowService } from '@app/http/outflow.service';
-import { SuggestionService } from '@app/http/suggestion.service';
+import { UpdateService } from '@app/services/update.service';
+import { RxEvent } from '@app/services/rx-event.service';
+import { MobileUtils } from '@shared/utils/mobile.utils';
 import { PopulatorService } from '@app/services/populator.service';
-import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
