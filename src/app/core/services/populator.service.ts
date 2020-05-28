@@ -34,7 +34,7 @@ export class PopulatorService {
       const outflow: Outflow = {
         dataRetornoCliente: null,
         texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim nisl id quam efficitur lacinia. Proin tincidunt nunc eu lacinia vulputate. Nam massa sem, pretium non lacus at, pretium tincidunt elit. Mauris pellentesque sollicitudin mi sit amet sodales. Proin ullamcorper eu metus id mollis. Integer aliquet vulputate elit sit amet accumsan. Pellentesque accumsan placerat turpis quis sollicitudin. Praesent varius tortor sit amet velit dictum, ac finibus ex tempor. Pellentesque vel justo.',
-        topicoId: environment.topic.id,
+        topicoId: +environment.topic.id,
         userId: this._getUser().id,
         usuario: `Desabafo criado por script utilizando o usuário ${this._getUser().username}`,
       }
@@ -121,7 +121,7 @@ export class PopulatorService {
           resultadoSuporte: EmoteEvaluation.SIM,
           status: 1,
           titulo: 'Lorem ipsum dolor sit amet orci aliquam.',
-          topicoId: environment.topic.id,
+          topicoId: +environment.topic.id,
           usuario: `Sugestão criada por script utilizando o usuário ${this._getUser().email}`,
           userId: this._getUser().id
         };
