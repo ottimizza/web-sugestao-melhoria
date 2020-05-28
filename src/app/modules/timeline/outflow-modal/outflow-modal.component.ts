@@ -40,9 +40,9 @@ export class OutflowModalComponent {
         usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`,
         userId: currentUser.id
       };
-      this.outflowService.create(outflow).subscribe(() => {
+      this.outflowService.create(outflow).subscribe(result => {
         this.toastService.show('Desabafo criado com sucesso!', 'success');
-        this.dialogRef.close(this.outflow);
+        this.dialogRef.close(result);
       }, err => {
         this.toastService.show('Falha ao enviar o desabafo', 'danger');
         LoggerUtils.throw(err);
