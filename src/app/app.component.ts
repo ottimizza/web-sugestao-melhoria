@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
     private events: RxEvent,
     private updateService: UpdateService,
     private messagingService: MessagingService,
+    private populatorService: PopulatorService
   ) {
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {

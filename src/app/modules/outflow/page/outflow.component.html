@@ -1,10 +1,52 @@
-<section appScrollTracker>
+<section appScrollTracker (scrollEnd)="nextPage()">
 
   <app-breadcrumb></app-breadcrumb>
   <div class="buttons">
     <app-actions [buttons]="button" (clicked)="openDialog()"></app-actions>
   </div>
 
-  <div class="m-4 mb-0"></div>
+  <div class="m-4 mb-0">
+    <app-complex-search-input
+    [debounceTime]="100"
+    [defaultRule]="defaultRule"
+    [hackings]="hackings()"
+    (filterApplied)="filterApply($event)"
+    ></app-complex-search-input>
+
+    <mat-chip-list>
+      <mat-chip *ngFor="let f of filters" [selectable]="false" [removable]="f.id !== 'topic' || currentUser.type === 0" (removed)="removeFilter(f)">
+        {{ f.description }}
+        <mat-icon matChipRemove *ngIf="f.id !== 'topic' || currentUser.type === 0">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="suggestion-card mt-0 text-center">
+
+    <div class="card p-2" *ngFor="let o of outflows">
+
+      <div class="row w-100 m-0">
+        <div class="col-2 p-0">
+          <!-- Substituir pela imagem oficial -->
+          <img src="../../../../assets/icons/icon-72x72.png">
+        </div>
+        <div class="col p-0 pl-2 text-left">
+          <span class="name">{{ o.usuario }}</span>
+          <span class="hour">{{ getDate(o.dataCriacao) }}</span>
+        </div>
+      </div>
+
+      <div class="useless class mt-3" *ngIf="!isSelected; else complete">
+        <br>
+        <span class="content">{{ o.texto }}</span>
+        <div class="m-3 mb-4 mt-4 text-left tags-area">
+          <!-- <app-tag [tags]="suggestion.tags"></app-tag> -->
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
 
 </section>
