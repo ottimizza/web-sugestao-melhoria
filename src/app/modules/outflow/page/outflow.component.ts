@@ -153,7 +153,7 @@ export class OutflowComponent implements OnInit {
       this.outflowService.getOutflows(filter).subscribe(results => {
         this.isFetching = false;
         this.toastService.hideSnack();
-        this.outflows = ArrayUtils.concatDifferentiatingProperty(results.records, this.outflows, 'id');
+        this.outflows = ArrayUtils.concatDifferentiatingProperty(this.outflows, results.records, 'id');
         this.pageInfo = results.pageInfo;
       }, err => {
         this.isFetching = false;
