@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 import { environment } from '@env';
 import { Outflow } from '@shared/models/Outflow';
+import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -16,7 +17,7 @@ export class OutflowService {
   public getOutflows(searchCriteria: any) {
     const params = this._encode(searchCriteria);
     const url = `${BASE_URL}/api/desabafo?${params}`;
-    return this._http.get(url, this._headers);
+    return this._http.get<GenericPageableResponse<Outflow>>(url, this._headers);
   }
 
   public create(outflow: Outflow) {

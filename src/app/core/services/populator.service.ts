@@ -9,6 +9,8 @@ import { LoggerUtils } from '@shared/utils/logger.utills';
 import { CommentService } from '@app/http/comment.service';
 import { Comment } from '@shared/models/Comment';
 import { Subject } from 'rxjs';
+import { Outflow } from '@shared/models/Outflow';
+import { OutflowService } from '@app/http/outflow.service';
 
 // tslint:disable
 @Injectable({
@@ -16,10 +18,49 @@ import { Subject } from 'rxjs';
 })
 export class PopulatorService {
 
+  private _user: User;
+
   constructor(
     private suggestionService: SuggestionService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private outflowService: OutflowService
   ) {}
+
+  public populateOutflows(quantity: number) {
+    const $retorno = new Subject<any>();
+
+    if (this._verify(quantity, 'desabafos')) {
+
+      const outflow: Outflow = {
+        dataRetornoCliente: null,
+        texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim nisl id quam efficitur lacinia. Proin tincidunt nunc eu lacinia vulputate. Nam massa sem, pretium non lacus at, pretium tincidunt elit. Mauris pellentesque sollicitudin mi sit amet sodales. Proin ullamcorper eu metus id mollis. Integer aliquet vulputate elit sit amet accumsan. Pellentesque accumsan placerat turpis quis sollicitudin. Praesent varius tortor sit amet velit dictum, ac finibus ex tempor. Pellentesque vel justo.',
+        topicoId: +environment.topic.id,
+        userId: this._getUser().id,
+        usuario: `Desabafo criado por script utilizando o usuário ${this._getUser().username}`,
+      }
+
+      const returning = (index: number) => {
+        if (index === quantity - 1) {
+          $retorno.next();
+        }
+      }
+
+      for (let i = 0; i < quantity; i++) {
+        this.outflowService.create(outflow).subscribe(result => {
+          LoggerUtils.log(i);
+          LoggerUtils.log(result);
+          returning(i);
+        }, err => {
+          LoggerUtils.throw(err);
+          returning(i)
+        })
+      }
+
+    }
+
+    return $retorno;
+
+  }
 
   public populateComments(suggestionId: number, quantity: number) {
 
@@ -31,8 +72,8 @@ export class PopulatorService {
       const comment: Comment = {
         sugestaoId: suggestionId,
         texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie nisl a molestie dignissim. Donec sit amet lorem non magna efficitur.',
-        usuario: `Comentário criado por script utilizando o usuário ${User.fromLocalStorage().email}`,
-        userId: User.fromLocalStorage().id
+        usuario: `Comentário criado por script utilizando o usuário ${this._getUser().email}`,
+        userId: this._getUser().id
       }
 
       const returning = (index: number) => {
@@ -80,9 +121,9 @@ export class PopulatorService {
           resultadoSuporte: EmoteEvaluation.SIM,
           status: 1,
           titulo: 'Lorem ipsum dolor sit amet orci aliquam.',
-          topicoId: environment.topic.id,
-          usuario: `Sugestão criada por script utilizando o usuário ${User.fromLocalStorage().email}`,
-          userId: User.fromLocalStorage().id
+          topicoId: +environment.topic.id,
+          usuario: `Sugestão criada por script utilizando o usuário ${this._getUser().email}`,
+          userId: this._getUser().id
         };
 
         for (let i = 0; i < quantity; i++) {
@@ -105,6 +146,14 @@ export class PopulatorService {
 
   private _verify(quantity: number, item: string): boolean {
     return confirm(`Você está prestes a criar ${quantity} ${item}. Deseja continuar?`);
+  }
+
+  private _getUser() {
+    if (this._user) {
+      return this._user;
+    }
+    this._user = User.fromLocalStorage();
+    return this._user;
   }
 
 }

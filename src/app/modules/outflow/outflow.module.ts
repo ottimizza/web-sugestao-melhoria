@@ -6,6 +6,8 @@ import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.modul
 import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 import { OutflowModalModule } from '@modules/timeline/outflow-modal/outflow-modal.module';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
+import { ComplexSearchModule } from '@shared/components/search/complex-search.module';
+import { MatChipsModule, MatIconModule } from '@angular/material';
 
 @NgModule({
   declarations: [OutflowComponent],
@@ -15,7 +17,10 @@ import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tr
     BreadcrumbModule,
     ActionButtonsModule,
     OutflowModalModule,
-    ScrollTrackerModule
+    ScrollTrackerModule,
+    ComplexSearchModule,
+    MatChipsModule,
+    MatIconModule
   ],
   entryComponents: [
     OutflowModalModule

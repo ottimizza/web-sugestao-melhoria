@@ -3,10 +3,30 @@ section {
   overflow: auto;
 }
 
+.name {
+  font-size: 14px;
+  display: block;
+}
+
+.hour {
+  font-size: 12px;
+}
+
 @media (max-width: 767px) {
   .buttons {
     position: sticky;
     top: 0;
     z-index: 8;
+  }
+
+  .suggestion-card {
+    margin: auto;
+    margin: 5vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .suggestion-card {
+    margin: 1vh 8% 0 8%;
   }
 }
