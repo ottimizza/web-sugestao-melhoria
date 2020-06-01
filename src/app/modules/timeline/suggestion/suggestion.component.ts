@@ -10,10 +10,10 @@ import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { Suggestion } from '@shared/models/Suggestion';
+import { VoteService } from '@app/http/vote.service';
 import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
-import { VoteService } from '@app/http/vote.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -124,13 +124,9 @@ export class SuggestionComponent implements OnInit {
         LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuDislike) {
-      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+      this.openLikeDialog(() => {
         this.suggestion.deuDislike = false;
         this.suggestion.numeroDislikes--;
-        this.openLikeDialog();
-      }, err => {
-        this._toast.show('Falha ao deletar dislike', 'danger');
-        LoggerUtils.throw(err);
       });
     } else {
       this.openLikeDialog();
@@ -148,20 +144,16 @@ export class SuggestionComponent implements OnInit {
         LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuLike) {
-      this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
+      this.openDislikeDialog(() => {
         this.suggestion.deuLike = false;
         this.suggestion.numeroLikes--;
-        this.openDislikeDialog();
-      }, err => {
-        this._toast.show('Falha ao deletar like', 'danger');
-        LoggerUtils.throw(err);
       });
     } else {
       this.openDislikeDialog();
     }
   }
 
-  openLikeDialog(): void {
+  openLikeDialog(callbackFn?: () => void): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
       width: '94vw',
       data: {
@@ -177,11 +169,14 @@ export class SuggestionComponent implements OnInit {
         this.suggestion.numeroLikes++;
         this.suggestion.deuLike = true;
         this.suggestion.deuDislike = false;
+        if (callbackFn) {
+          callbackFn();
+        }
       }
     });
   }
 
-  openDislikeDialog(): void {
+  openDislikeDialog(callbackFn?: () => void): void {
     const dialogRef = this.dialog.open(LikeModalComponent, {
       width: '94vw',
       data: {
@@ -197,6 +192,9 @@ export class SuggestionComponent implements OnInit {
         this.suggestion.numeroDislikes++;
         this.suggestion.deuLike = false;
         this.suggestion.deuDislike = true;
+        if (callbackFn) {
+          callbackFn();
+        }
       }
     });
   }

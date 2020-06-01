@@ -49,10 +49,15 @@ export class LikeModalComponent {
     };
     if (!this.isPosting) {
       this.isPosting = true;
-      this.voteService.create(vote).subscribe(results => {
-        this.dialogRef.close(true);
+      this.voteService.deleteByUserIdAndSuggestionId(currentUser.id, this.data.id).subscribe(() => {
+        this.voteService.create(vote).subscribe(results => {
+          this.dialogRef.close(true);
+        }, err => {
+          this.toastService.show(`Falha ao registrar ${this.data.aprovado ? 'like' : 'dislike'}`, 'danger');
+          LoggerUtils.throw(err);
+        });
       }, err => {
-        this.toastService.show(`Falha ao registrar ${this.data.aprovado ? 'like' : 'dislike'}`, 'danger');
+        this.toastService.show(`Falha ao registrar ${this.data.aprovado ? 'like' : 'dislike'}`, 'danger')
         LoggerUtils.throw(err);
       });
     }
