@@ -8,6 +8,7 @@ export const environment = {
   storageAccountingId: 'ottimizza',
   applicationId: 'ottimizza',
   portalBaseUrl: 'https://development-accounts.ottimizza.com.br',
+  defaultColor: '#004ecb',
   topic: {
     id: 1,
     name: 'Bússola'
