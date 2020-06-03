@@ -5,6 +5,7 @@ import { MessagingService } from '@app/services/messaging.service';
 import { UpdateService } from '@app/services/update.service';
 import { RxEvent } from '@app/services/rx-event.service';
 import { MobileUtils } from '@shared/utils/mobile.utils';
+import { PopulatorService } from '@app/services/populator.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     private events: RxEvent,
     private updateService: UpdateService,
     private messagingService: MessagingService,
+    public populatorService: PopulatorService
   ) {
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {

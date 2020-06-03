@@ -3,7 +3,7 @@ import { environment } from '@env';
 
 import { MatDialog } from '@angular/material';
 
-import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
+import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';
 import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
 import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
@@ -42,7 +42,8 @@ export class TimelineComponent implements OnInit {
     {
       id: 'suggestion',
       icon: 'fal fa-lightbulb-on',
-      label: 'Tenho uma sugestão!'
+      label: 'Tenho uma sugestão!',
+      color: new HexColor(environment.defaultColor)
     },
     {
       id: 'outflow',
