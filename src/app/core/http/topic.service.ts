@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@app/authentication/authentication.service';
 import { environment } from '@env';
 import { Topic } from '@shared/models/Topic';
+import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -21,7 +22,7 @@ export class TopicService {
   getTopics(searchCriteria: any) {
     const params = this._encode(searchCriteria);
     const url = `${BASE_URL}/api/topico?${params}`;
-    return this._http.get(url, this._headers);
+    return this._http.get<GenericPageableResponse<{ id: number, nome: string, ativo: boolean }>>(url, this._headers);
   }
 
   create(topic: Topic) {
