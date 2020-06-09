@@ -18,7 +18,7 @@ function createEnvironementFile() {
   portalBaseUrl: '${getEnvironmentVariable('PORTAL_BASE_URL', 'https:///accounts.ottimizza.com.br')}',
   defaultColor: '${getEnvironmentVariable('DEFAULT_COLOR', '#004ecb')}',
   topic: {
-    id: '0',
+    id: 0,
     name: '${getEnvironmentVariable('TOPIC')}'
   },
   firebase: {
