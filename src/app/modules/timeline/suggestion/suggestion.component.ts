@@ -14,6 +14,7 @@ import { VoteService } from '@app/http/vote.service';
 import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
+import { UserService } from '@app/http/users.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -29,20 +30,31 @@ export class SuggestionComponent implements OnInit {
   error = false;
 
   comments: Comment[] = [];
+  avatar = './assets/images/Portrait_Placeholder.png';
   ownComment = '';
 
   pageInfo: PageInfo;
   isFetching: boolean;
 
+
   constructor(
     private _toast: ToastService,
     public dialog: MatDialog,
     public commentService: CommentService,
-    public voteService: VoteService
+    public voteService: VoteService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.nextPage();
+    this.userService.fetchById(this.suggestion.userId).subscribe(result => {
+      if (result.record.avatar) {
+        this.avatar = result.record.avatar;
+      }
+    }, err => {
+      this._toast.show('Falha ao obter avatar de usuário', 'danger');
+      LoggerUtils.throw(err);
+    });
   }
 
   getDate(date: string) {
