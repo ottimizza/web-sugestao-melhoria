@@ -6,6 +6,6 @@
     </button>
   </div>
 </div>
-<div class="page-container overflow-hidden h-100" (window:resize)="onResize($event)">
+<div class="page-container overflow-hidden h-100" *ngIf="!isFetchingTopic">
   <router-outlet></router-outlet>
 </div>

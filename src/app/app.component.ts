@@ -5,6 +5,11 @@ import { MessagingService } from '@app/services/messaging.service';
 import { UpdateService } from '@app/services/update.service';
 import { RxEvent } from '@app/services/rx-event.service';
 import { MobileUtils } from '@shared/utils/mobile.utils';
+import { PopulatorService } from '@app/services/populator.service';
+import { TopicService } from '@app/http/topic.service';
+import { environment } from '@env';
+import { ToastService } from '@shared/services/toast.service';
+import { Topic } from '@shared/models/Topic';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +19,17 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 export class AppComponent implements OnInit {
 
   public updateAvailable = false;
+  public isFetchingTopic = true;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private events: RxEvent,
     private updateService: UpdateService,
     private messagingService: MessagingService,
+    public topicService: TopicService,
+    public toastService: ToastService
   ) {
+    this._verifyTpoic();
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {
       this.updateAvailable = true;
@@ -39,20 +48,33 @@ export class AppComponent implements OnInit {
     window.location.reload();
   }
 
-  onResize(event: Event) {
-    MobileUtils.windowIsResizing(event);
-  }
-
   public ngOnInit() {
-    // if (MobileUtils.isMobile) {
-    //   LoggerUtils.log(`Dispositivo MOBILE`);
-    // } else {
-    //   LoggerUtils.log(`Dispositivo DESKTOP`);
-    // }
-
     this.messagingService.receiveMessage();
     this.messagingService.currentMessage.subscribe();
+  }
 
+  private _verifyTpoic() {
+    this.toastService.showSnack('Detectando produto...');
+    this.topicService.getTopics({ nome: environment.topic.name }).subscribe(result => {
+      if (result.records && result.records.length) {
+        environment.topic.id = result.records[0].id;
+        this.toastService.hideSnack();
+        this.isFetchingTopic = false;
+      } else {
+        this._createTopic();
+      }
+    });
+  }
+
+  private _createTopic() {
+    this.topicService.create({ ativo: true, nome: environment.topic.name }).subscribe((result: any) => {
+      environment.topic.id = result.id;
+      this.toastService.show(`Tópico relacionado ao produto ${environment.topic.name} criado com sucesso!`, 'success');
+      this.isFetchingTopic = false;
+    }, err => {
+      this.toastService.show(`Falha ao criar tópico relacionado ao produto ${environment.topic.name}`, 'danger');
+      throw err;
+    });
   }
 
 }
