@@ -17,6 +17,7 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { User } from '@shared/models/User';
+import { Router } from '@angular/router';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -73,7 +74,11 @@ export class TimelineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.nextPage();
+    if (environment.topic.id === 0) {
+      window.location.href = '/';
+    } else {
+      this.nextPage();
+    }
   }
 
   removeFilter(value: SearchOption) {

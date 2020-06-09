@@ -13,6 +13,8 @@ import { Topic } from '@shared/models/Topic';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { Router } from '@angular/router';
 import { User } from '@shared/models/User';
+import { UserService } from '@app/http/users.service';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,6 @@ export class AppComponent implements OnInit {
     private messagingService: MessagingService,
     public topicService: TopicService,
     public toastService: ToastService,
-    public router: Router
   ) {
     if (User.fromLocalStorage().email) {
       this._verifyTopic();

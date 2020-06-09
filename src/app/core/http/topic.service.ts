@@ -43,12 +43,8 @@ export class TopicService {
   }
 
   private get _headers() {
-    try {
-      const headers = this._authenticationService.getAuthorizationHeaders();
-      return { headers };
-    } catch (ex) {
-      return { headers: null };
-    }
+    const headers = this._authenticationService.getAuthorizationHeaders();
+    return { headers };
   }
 
 }

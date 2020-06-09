@@ -52,20 +52,6 @@ export class AuthCallbackComponent implements OnInit {
                 }
                 });
 
-              // const storeUserInfo = that.authenticationService.storeUserInfo();
-              // const storeTokenInfo = that.authenticationService.storeTokenInfo();
-
-              // return Promise.all([
-              //   storeUserInfo,
-              //   storeTokenInfo
-              // ]).then((values) => {
-
-
-
-              // that.router.navigate(['dashboard']);
-              // }).catch((e) => {
-              //   console.log(e);
-              // });
             });
           }
         });

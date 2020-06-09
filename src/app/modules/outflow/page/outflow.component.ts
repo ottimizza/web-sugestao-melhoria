@@ -52,8 +52,11 @@ export class OutflowComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = User.fromLocalStorage();
-    console.log(this.currentUser.type === 0);
-    this.fetch();
+    if (environment.topic.id === 0) {
+      window.location.href = '/';
+    } else {
+      this.fetch();
+    }
   }
 
   public get defaultRule() {
