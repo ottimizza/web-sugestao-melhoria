@@ -4,6 +4,7 @@ import { AuthenticationService } from '@app/authentication/authentication.servic
 import { environment } from '@env';
 import { Topic } from '@shared/models/Topic';
 import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
+import { RouterLink, Router } from '@angular/router';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -42,8 +43,12 @@ export class TopicService {
   }
 
   private get _headers() {
-    const headers = this._authenticationService.getAuthorizationHeaders();
-    return { headers };
+    try {
+      const headers = this._authenticationService.getAuthorizationHeaders();
+      return { headers };
+    } catch (ex) {
+      return { headers: null };
+    }
   }
 
 }
