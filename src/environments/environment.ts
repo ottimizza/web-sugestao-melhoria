@@ -10,7 +10,7 @@ export const environment = {
   portalBaseUrl: 'https://development-accounts.ottimizza.com.br',
   defaultColor: '#004ecb',
   topic: {
-    id: 1,
+    id: 0,
     name: 'Bússola'
   },
   firebase: {

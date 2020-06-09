@@ -10,6 +10,11 @@ import { TopicService } from '@app/http/topic.service';
 import { environment } from '@env';
 import { ToastService } from '@shared/services/toast.service';
 import { Topic } from '@shared/models/Topic';
+import { LoggerUtils } from '@shared/utils/logger.utills';
+import { Router } from '@angular/router';
+import { User } from '@shared/models/User';
+import { UserService } from '@app/http/users.service';
+import { AuthenticationService } from '@app/authentication/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -27,9 +32,13 @@ export class AppComponent implements OnInit {
     private updateService: UpdateService,
     private messagingService: MessagingService,
     public topicService: TopicService,
-    public toastService: ToastService
+    public toastService: ToastService,
   ) {
-    this._verifyTpoic();
+    if (User.fromLocalStorage().email) {
+      this._verifyTopic();
+    } else {
+      this.isFetchingTopic = false;
+    }
     this.updateService.checkForUpdates();
     this.events.subscribe('sw::update', () => {
       this.updateAvailable = true;
@@ -53,7 +62,7 @@ export class AppComponent implements OnInit {
     this.messagingService.currentMessage.subscribe();
   }
 
-  private _verifyTpoic() {
+  private _verifyTopic() {
     this.toastService.showSnack('Detectando produto...');
     this.topicService.getTopics({ nome: environment.topic.name }).subscribe(result => {
       if (result.records && result.records.length) {
@@ -67,9 +76,10 @@ export class AppComponent implements OnInit {
   }
 
   private _createTopic() {
-    this.topicService.create({ ativo: true, nome: environment.topic.name }).subscribe((result: any) => {
+    this.topicService.create({ ativo: true, nome: environment.topic.name }).subscribe(async (result: any) => {
       environment.topic.id = result.id;
       this.toastService.show(`Tópico relacionado ao produto ${environment.topic.name} criado com sucesso!`, 'success');
+      await new Promise(resolve => setTimeout(resolve, 3000));
       this.isFetchingTopic = false;
     }, err => {
       this.toastService.show(`Falha ao criar tópico relacionado ao produto ${environment.topic.name}`, 'danger');
