@@ -32,7 +32,17 @@ export class DateUtils {
 
   }
 
+  public static getTracedDate(date: Date) {
+    const dates = this._getDateInfos(date);
+    return `${dates[2]}-${dates[1]}-${dates[0]}`;
+  }
+
   public static getDateString(date: Date) {
+    const dates = this._getDateInfos(date);
+    return `${dates[0]}/${dates[1]}/${dates[2]}`;
+  }
+
+  private static _getDateInfos(date: Date) {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -46,7 +56,7 @@ export class DateUtils {
       fullMonth = '0' + fullMonth;
     }
 
-    return `${fullDay}/${fullMonth}/${year}`;
+    return [fullDay, fullMonth, year];
   }
 
 }

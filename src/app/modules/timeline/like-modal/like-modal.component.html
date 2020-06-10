@@ -9,9 +9,6 @@
 
     <br><br>
 
-    <strong>Classifique em relação ao ganho que você terá com esta sugestão:</strong>
-    <br>
-
     <app-emote question="Você acha que esta solução pode nos ajudar a diminuir o suporte?" (evaluation)="diminuicaoSuporte = $event"></app-emote>
 
     <br><br>
@@ -24,8 +21,8 @@
 
 
 </div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="evaluation">Confirmar</button>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
+<div mat-dialog-actions class="d-block">
+  <button mat-button (click)="vote()" class="btn btn-primary float-right">Enviar</button>
+  <button mat-button (click)="onNoClick()" class="btn btn-secondary float-right">Cancelar</button>
   <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
 </div>

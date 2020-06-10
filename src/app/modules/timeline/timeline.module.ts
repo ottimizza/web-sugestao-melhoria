@@ -15,14 +15,20 @@ import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.co
 import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
 import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 import { LikeModalComponent } from './like-modal/like-modal.component';
+import { MatChipsModule, MatIconModule } from '@angular/material';
+import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
+import { TimelineRoutingModule } from './timeline.routing';
 
 @NgModule({
   declarations: [
     TimelineComponent,
   ],
   imports: [
+    TimelineRoutingModule,
     MatTooltipModule,
     MatDialogModule,
+    MatChipsModule,
+    MatIconModule,
     CommonModule,
     ComplexSearchModule,
     SuggestionModule,
@@ -30,7 +36,8 @@ import { LikeModalComponent } from './like-modal/like-modal.component';
     OutflowModalModule,
     SuggestionModalModule,
     BreadcrumbModule,
-    ActionButtonsModule
+    ActionButtonsModule,
+    ScrollTrackerModule
   ],
   entryComponents: [
     LikeModalComponent,

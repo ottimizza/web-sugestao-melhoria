@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { ToastService } from '@shared/services/toast.service';
+import { Suggestion } from '@shared/models/Suggestion';
+import { DateUtils } from '@shared/utils/date-utils';
+import { User } from '@shared/models/User';
+import { environment } from '@env';
+import { LoggerUtils } from '@shared/utils/logger.utills';
+import { EmoteEvaluation } from '@shared/models/EmoteEvaluation';
 
 @Component({
   templateUrl: './suggestion-modal.component.html',
@@ -9,37 +17,81 @@ export class SuggestionModalComponent {
 
   problem = '';
   improvement = '';
-  hype = '';
-  diminuicaoSuporte: number;
-  automacaoProcesso: number;
-  aumentoProdutividade: number;
+  title = '';
+  diminuicaoSuporte: EmoteEvaluation;
+  automacaoProcesso: EmoteEvaluation;
+  aumentoProdutividade: EmoteEvaluation;
   errorLabel = this.pattern;
   errorBorder = this.pattern;
 
   constructor(
     public dialogRef: MatDialogRef<SuggestionModalComponent>,
+    public suggestionService: SuggestionService,
+    public toastService: ToastService,
   ) {}
 
   private get pattern() {
-    return { problem: '', improvement: '', hype: '' };
+    return { problem: '', improvement: '', title: '' };
+  }
+
+  errorText() {
+    if (!this.title) {
+      return 'Informe um título';
+    } else if (!this.improvement) {
+      return 'Informe a sua sugestão';
+    } else if (!this.problem) {
+      return 'Informe o problema a ser resolvido';
+    } else if (!this.diminuicaoSuporte) {
+      return 'Informe se você acha que isto ajudará a diminuir o suporte';
+    } else if (!this.automacaoProcesso) {
+      return 'Informe se você acha que isto ajudará a automatizar algum processo';
+    } else if (!this.aumentoProdutividade) {
+      return 'Informe se você acha que isto irá aumentar a produtividade';
+    }
   }
 
   getResult() {
     return {
       problem: this.problem,
       improvement: this.improvement,
-      hype: this.hype
     };
   }
 
   onNoClick(): void {
-    this.dialogRef.close(this.getResult());
+    this.dialogRef.close();
   }
 
   submit() {
-    if (this.problem && this.problem.length && this.improvement && this.improvement.length && this.hype && this.hype.length &&
+    if (this.problem && this.improvement && this.title &&
         this.aumentoProdutividade !== undefined && this.diminuicaoSuporte !== undefined && this.automacaoProcesso !== undefined) {
-      this.dialogRef.close(this.getResult());
+
+      const currentUser = User.fromLocalStorage();
+      const suggestion: any = {
+        dataAtualizacao: DateUtils.getTracedDate(new Date()),
+        dataCriacao: DateUtils.getTracedDate(new Date()),
+        descricaoSugestao: this.improvement,
+        problemaResolvido: this.problem,
+        resultadoAutomacao: this.automacaoProcesso,
+        resultadoProdutividade: this.aumentoProdutividade,
+        resultadoSuporte: this.diminuicaoSuporte,
+        status: 1,
+        numeroComentarios: 0,
+        numeroDislikes: 0,
+        numeroLikes: 0,
+        titulo: this.title,
+        topicoId: environment.topic.id,
+        usuario: `${currentUser.firstName} ${currentUser.lastName ?? ''}`,
+        userId: currentUser.id
+      };
+
+      this.suggestionService.create(suggestion).subscribe(result => {
+        this.toastService.show('Sugestão criada com sucesso', 'success');
+        this.dialogRef.close(result);
+      }, err => {
+        this.toastService.show('Falha ao criar sugestão', 'danger');
+        LoggerUtils.throw(err);
+      });
+
     } else {
       this.errorLabel = this.pattern;
       this.errorBorder = this.pattern;
@@ -52,9 +104,9 @@ export class SuggestionModalComponent {
         this.errorLabel.improvement = 'labelred';
         this.errorBorder.improvement = 'border-danger';
       }
-      if (!this.hype || !this.hype.length) {
-        this.errorLabel.hype = 'labelred';
-        this.errorBorder.hype = 'border-danger';
+      if (!this.title || !this.title.length) {
+        this.errorLabel.title = 'labelred';
+        this.errorBorder.title = 'border-danger';
       }
     }
 

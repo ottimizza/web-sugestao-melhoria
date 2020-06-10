@@ -1,16 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '@env';
 
 import { MatDialog } from '@angular/material';
 
-import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
+import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';
 import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';
 import { OutflowModalComponent } from './outflow-modal/outflow-modal.component';
 import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { HackingRule } from '@shared/components/search/models/HackingRule';
 import { SearchRule } from '@shared/components/search/models/SearchRule';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { ToastService } from '@shared/services/toast.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
 import { MobileUtils } from '@shared/utils/mobile.utils';
-import { Suggestion } from '@shared/models/Suggestion';
+import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
+import { ArrayUtils } from '@shared/utils/array.utils';
+import { User } from '@shared/models/User';
+import { Router } from '@angular/router';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -26,13 +33,18 @@ export class TimelineComponent implements OnInit {
   product: string;
   suggestions: Suggestion[] = [];
   sortingType = SortingType.RELEVANCIA;
-  isSelecting: boolean;
+
+  pageInfo: PageInfo;
+  isFetching: boolean;
+
+  counter = 0;
 
   buttons: ActionButton[] = [
     {
       id: 'suggestion',
       icon: 'fal fa-lightbulb-on',
-      label: 'Tenho uma sugestão!'
+      label: 'Tenho uma sugestão!',
+      color: new HexColor(environment.defaultColor)
     },
     {
       id: 'outflow',
@@ -44,16 +56,79 @@ export class TimelineComponent implements OnInit {
 
   filters = [
     SearchOption.builder()
-      .id('product')
-      .value({ product: 'Bussola' })
-      .description('Produto: Bussola')
+      .id('topic')
+      .value({ topicoId: environment.topic.id })
+      .description(`Produto: ${environment.topic.name}`)
+      .build(),
+    SearchOption.builder()
+      .id('status')
+      .value({ status: 1 })
+      .description('Estado: Aberta')
       .build()
   ];
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    public suggestionService: SuggestionService,
+    public toastService: ToastService,
+  ) { }
 
   ngOnInit(): void {
-    this.fake();
+    if (environment.topic.id === 0) {
+      window.location.href = '/';
+    } else {
+      this.nextPage();
+    }
+  }
+
+  removeFilter(value: SearchOption) {
+    const filter = this.filters.filter(el => el.id === value.id);
+    if (filter.length > 0) {
+      this.filters.splice(this.filters.indexOf(filter[0]), 1);
+    }
+    this.fetch();
+  }
+
+  fetch() {
+    if (!this.isFetching) {
+      this.pageInfo = null;
+      this.suggestions = [];
+      this.nextPage();
+    }
+  }
+
+  nextPage() {
+    const pageCriteria = {
+      pageIndex: this.pageInfo ? this.pageInfo.pageIndex + 1 : 0,
+      pageSize: 15
+    };
+    const user = {
+      userId: User.fromLocalStorage().id
+    };
+    const filter: any = {};
+    this.filters.forEach(fil => Object.assign(filter, fil.value));
+    Object.assign(filter, pageCriteria);
+    Object.assign(filter, user);
+
+    if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
+      this.isFetching = true;
+      this.toastService.showSnack('Buscando sugestões');
+      this.suggestionService.getSuggestions(filter).subscribe((results: any) => {
+
+        this.isFetching = false;
+        this.suggestions = ArrayUtils.concatDifferentiatingProperty(this.suggestions, results.records, 'id');
+        this.pageInfo = results.pageInfo;
+
+        if (!this.suggestions?.length) {
+          this.toastService.show(
+            `Não há sugestões aplicáveis para ${this.filters.length === 1 ? 'este produto' : 'a pesquisa'}`,
+            'warning'
+          );
+        } else {
+          this.toastService.hideSnack();
+        }
+      });
+    }
   }
 
   onClick(id: string) {
@@ -79,11 +154,13 @@ export class TimelineComponent implements OnInit {
 
   openSuggestionModal() {
     const dialogRef = this.dialog.open(SuggestionModalComponent, {
-      width: '94vw'
+      width: '94vw',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      LoggerUtils.log(result);
+      if (result) {
+        this.suggestions = [result].concat(this.suggestions);
+      }
     });
   }
 
@@ -101,8 +178,9 @@ export class TimelineComponent implements OnInit {
 
   public get defaultRule() {
     return SearchRule.builder()
-      .id('default')
-      .description('Procurar por "{0}"')
+      .id('title')
+      .description('Título: "{0}"')
+      .value({ titulo: '' })
       .build();
   }
 
@@ -112,22 +190,45 @@ export class TimelineComponent implements OnInit {
 
   hackings() {
     return [
-      this._hackingFactory('problem', /(problema)\:\s(?<value>.+)/ig, 'Problema a ser resolvido'),
-      this._hackingFactory('suggestion', /(sugestao)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
-      this._hackingFactory('suggestion', /(sugestão)\:\s(?<value>.+)/ig, 'Sugestão de melhoria'),
-      this._hackingFactory('result', /(resultado)\:\s(?<value>.+)/ig, 'Resultado esperado'),
-      this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
-      this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título'),
-      this._hackingFactory('product', /(produto)\:\s(?<value>.+)/ig, 'Produto'),
-      this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag')
+      this._hackingFactory('problem', /(problema)\:\s(?<value>.+)/ig, 'Problema a ser resolvido', { problemaResolvido: '' }),
+      this._hackingFactory('suggestion', /(sugestao)\:\s(?<value>.+)/ig, 'Sugestão de melhoria', { descricaoSugestao: '' }),
+      this._hackingFactory('suggestion', /(sugestão)\:\s(?<value>.+)/ig, 'Sugestão de melhoria', { descricaoSugestao: '' }),
+      this._hackingFactory('suggestion', /(melhoria)\:\s(?<value>.+)/ig, 'Sugestão de Melhoria', { descricaoSugestao: '' }),
+      this._hackingFactory('title', /(titulo)\:\s(?<value>.+)/ig, 'Buscar pelo título', { titulo: '' }),
+      this._hackingFactory('title', /(título)\:\s(?<value>.+)/ig, 'Buscar pelo título', { titulo: '' }),
+      // this._hackingFactory('tag', /(tag)\:\s(?<value>.+)/ig, 'Buscar pela tag', {})
     ];
   }
 
-  private _hackingFactory(id: string, regex: RegExp, description: string) {
+  filteringRules() {
+    return [
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.ABERTO })
+        .description('Estado: Aberta')
+        .keywords(['aberta', 'abertas', 'aberto', 'abertos', 'open'])
+        .build(),
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.ARQUIVADO })
+        .description('Estado: Arquivada')
+        .keywords(['arquivada', 'arquivadas', 'arquivado', 'arquivados'])
+        .build(),
+      SearchRule.builder()
+        .id('status')
+        .value({ status: SuggestionStatus.APROVADO })
+        .description('Estado: Aprovada')
+        .keywords(['aprovada', 'aprovadas', 'aprovado', 'aprovados', 'fechada'])
+        .build(),
+    ];
+  }
+
+  private _hackingFactory(id: string, regex: RegExp, description: string, value: any) {
     return HackingRule.builder()
       .id(id)
       .regex(regex)
       .description(`${description}: "{0}"`)
+      .value(value)
       .build();
   }
 
@@ -137,36 +238,7 @@ export class TimelineComponent implements OnInit {
       this.filters.splice(this.filters.indexOf(existingFilter[0]), 1);
     }
     this.filters.push(event);
-    // this.filterFetch();
-  }
-
-  fake() {
-    this.product = 'Bussola Contábil';
-
-    for (let i = 0; i < 20; i++) {
-      const s = new Suggestion(
-        Math.round(Math.random() * 10000),
-        'Bussola',
-        'URGENTE!',
-        // tslint:disable: max-line-length
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum hendrerit faucibus. Proin accumsan enim in eros pulvinar, sit posuere.',
-        false,
-        false,
-        true,
-        '321',
-        14,
-        4122,
-        22,
-        new Date()
-      ).addTag('bussola')
-       .addTag('urgente!')
-       .addTag('Cor')
-       .addTag('fundo');
-      this.suggestions.push(s);
-    }
-
+    this.fetch();
   }
 
 }
