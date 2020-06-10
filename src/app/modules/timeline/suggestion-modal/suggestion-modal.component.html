@@ -9,16 +9,16 @@
   <strong [ngClass]="errorLabel.improvement">Sugestão de melhoria:</strong>
   <span>Descreva como podemos melhorar sua experiência no aplicativo</span>
   <br>
-  <textarea placeholder="Escreva aqui..." [(ngModel)]="improvement" maxlength="140" [ngClass]="errorBorder.improvement"></textarea>
-  <span class="text-right">{{ improvement.length }} / 140</span>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="improvement" maxlength="500" [ngClass]="errorBorder.improvement"></textarea>
+  <span class="text-right">{{ improvement.length }} / 500</span>
 
   <br>
 
   <strong [ngClass]="errorLabel.problem">Problema a ser resolvido:</strong>
   <span>Descreva como a sua sugestão pode nos ajudar a resolver um problema existente.</span>
   <br>
-  <textarea placeholder="Escreva aqui..." [(ngModel)]="problem" maxlength="140" [ngClass]="errorBorder.problem"></textarea>
-  <span class="text-right">{{ problem.length }} / 140</span>
+  <textarea placeholder="Escreva aqui..." [(ngModel)]="problem" maxlength="500" [ngClass]="errorBorder.problem"></textarea>
+  <span class="text-right">{{ problem.length }} / 500</span>
 
   <br><br>
 
