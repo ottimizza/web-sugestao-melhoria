@@ -11,7 +11,7 @@ export const environment = {
   defaultColor: '#004ecb',
   topic: {
     id: 0,
-    name: 'Bússola'
+    name: 'Sugestão de Melhoria'
   },
   firebase: {
     apiKey: 'AIzaSyA64z6wB13NbuQBYeA3pyyljWoOFR4URXI',

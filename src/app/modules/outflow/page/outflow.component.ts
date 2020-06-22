@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionButton } from '@shared/components/action-buttons/action-buttons.component';
-import { MatDialog } from '@angular/material';
-import { OutflowModalComponent } from '@modules/timeline/outflow-modal/outflow-modal.component';
-import { SearchRule } from '@shared/components/search/models/SearchRule';
-import { HackingRule } from '@shared/components/search/models/HackingRule';
-import { SearchOption } from '@shared/components/search/models/SearchOption';
 import { environment } from '@env';
-import { User } from '@shared/models/User';
-import { Outflow } from '@shared/models/Outflow';
+
+import { MatDialog } from '@angular/material';
+
+import { OutflowModalComponent } from '@modules/timeline/outflow-modal/outflow-modal.component';
+import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';
+import { SearchOption } from '@shared/components/search/models/SearchOption';
+import { HackingRule } from '@shared/components/search/models/HackingRule';
+import { SearchRule } from '@shared/components/search/models/SearchRule';
 import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { OutflowService } from '@app/http/outflow.service';
-import { ArrayUtils } from '@shared/utils/array.utils';
 import { ToastService } from '@shared/services/toast.service';
+import { OutflowService } from '@app/http/outflow.service';
 import { LoggerUtils } from '@shared/utils/logger.utills';
+import { ArrayUtils } from '@shared/utils/array.utils';
 import { DateUtils } from '@shared/utils/date-utils';
+import { Outflow } from '@shared/models/Outflow';
+import { User } from '@shared/models/User';
 
 @Component({
   templateUrl: './outflow.component.html',
@@ -36,6 +38,7 @@ export class OutflowComponent implements OnInit {
       id: 'outflow',
       icon: 'fal fa-frown',
       label: 'Tenho um desabafo!',
+      color: new HexColor(environment.defaultColor)
     }
   ];
 
@@ -126,6 +129,7 @@ export class OutflowComponent implements OnInit {
 
   removeFilter(event: SearchOption) {
     this.filters.splice(this.filters.indexOf(event), 1);
+    this.fetch();
   }
 
   fetch() {

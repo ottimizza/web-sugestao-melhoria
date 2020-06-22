@@ -2,19 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { MessagingService } from '@app/services/messaging.service';
+import { ToastService } from '@shared/services/toast.service';
 import { UpdateService } from '@app/services/update.service';
 import { RxEvent } from '@app/services/rx-event.service';
-import { MobileUtils } from '@shared/utils/mobile.utils';
-import { PopulatorService } from '@app/services/populator.service';
 import { TopicService } from '@app/http/topic.service';
-import { environment } from '@env';
-import { ToastService } from '@shared/services/toast.service';
-import { Topic } from '@shared/models/Topic';
-import { LoggerUtils } from '@shared/utils/logger.utills';
-import { Router } from '@angular/router';
 import { User } from '@shared/models/User';
-import { UserService } from '@app/http/users.service';
-import { AuthenticationService } from '@app/authentication/authentication.service';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-root',
