@@ -4,9 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { LikeModalComponent } from '../like-modal/like-modal.component';
 import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { ToastService } from '@shared/services/toast.service';
 import { CommentService } from '@app/http/comment.service';
-import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { Suggestion } from '@shared/models/Suggestion';
@@ -39,7 +37,6 @@ export class SuggestionComponent implements OnInit {
 
 
   constructor(
-    private _toast: ToastService,
     public dialog: MatDialog,
     public commentService: CommentService,
     public voteService: VoteService,

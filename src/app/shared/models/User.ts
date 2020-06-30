@@ -33,7 +33,6 @@ export class User {
     if (storedUser !== null && typeof storedUser !== 'undefined') {
       if (storedUser.username !== null && typeof storedUser.username !== 'undefined') {
         user.id = storedUser.id;
-        user.id = storedUser.id;
         user.username = storedUser.username;
         user.password = storedUser.password;
         user.activated = storedUser.activated;

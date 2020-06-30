@@ -17,7 +17,6 @@ import { MobileUtils } from '@shared/utils/mobile.utils';
 import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { User } from '@shared/models/User';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 
 enum SortingType {
