@@ -74,9 +74,6 @@ export class AppComponent implements OnInit {
       this.toastService.show(`Tópico relacionado ao produto ${environment.topic.name} criado com sucesso!`, 'success');
       await new Promise(resolve => setTimeout(resolve, 3000));
       this.isFetchingTopic = false;
-    }, err => {
-      this.toastService.show(`Falha ao criar tópico relacionado ao produto ${environment.topic.name}`, 'danger');
-      throw err;
     });
   }
 

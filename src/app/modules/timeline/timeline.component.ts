@@ -18,6 +18,7 @@ import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { User } from '@shared/models/User';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -113,9 +114,10 @@ export class TimelineComponent implements OnInit {
     if ((!this.pageInfo || this.pageInfo.hasNext) && !this.isFetching) {
       this.isFetching = true;
       this.toastService.showSnack('Buscando sugestões');
-      this.suggestionService.getSuggestions(filter).subscribe((results: any) => {
+      this.suggestionService.getSuggestions(filter)
+        .pipe(finalize(() => this.isFetching = false))
+        .subscribe((results: any) => {
 
-        this.isFetching = false;
         this.suggestions = ArrayUtils.concatDifferentiatingProperty(this.suggestions, results.records, 'id');
         this.pageInfo = results.pageInfo;
 

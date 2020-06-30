@@ -43,9 +43,6 @@ export class OutflowModalComponent {
       this.outflowService.create(outflow).subscribe(result => {
         this.toastService.show('Desabafo criado com sucesso!', 'success');
         this.dialogRef.close(result);
-      }, err => {
-        this.toastService.show('Falha ao enviar o desabafo', 'danger');
-        LoggerUtils.throw(err);
       });
     } else {
       this.clazz = 'border-danger';
