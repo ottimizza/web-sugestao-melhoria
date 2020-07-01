@@ -27,7 +27,8 @@ export class AppComponent implements OnInit {
     public topicService: TopicService,
     public toastService: ToastService,
   ) {
-    if (User.fromLocalStorage().email) {
+    const authJson = localStorage.getItem('auth-session');
+    if (User.fromLocalStorage()?.email && authJson && authJson !== '{}') {
       this._verifyTopic();
     } else {
       this.isFetchingTopic = false;
@@ -74,9 +75,6 @@ export class AppComponent implements OnInit {
       this.toastService.show(`Tópico relacionado ao produto ${environment.topic.name} criado com sucesso!`, 'success');
       await new Promise(resolve => setTimeout(resolve, 3000));
       this.isFetchingTopic = false;
-    }, err => {
-      this.toastService.show(`Falha ao criar tópico relacionado ao produto ${environment.topic.name}`, 'danger');
-      throw err;
     });
   }
 

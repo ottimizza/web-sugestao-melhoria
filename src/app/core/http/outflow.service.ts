@@ -4,6 +4,7 @@ import { AuthenticationService } from '@app/authentication/authentication.servic
 import { environment } from '@env';
 import { Outflow } from '@shared/models/Outflow';
 import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
+import { HttpHandlerService } from '@app/services/http-handler.service';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -12,28 +13,16 @@ const BASE_URL = environment.storageBaseUrl;
 })
 export class OutflowService {
 
-  constructor(private _http: HttpClient, private _authenticationService: AuthenticationService) { }
+  constructor(private _http: HttpHandlerService) { }
 
   public getOutflows(searchCriteria: any) {
-    const params = this._encode(searchCriteria);
-    const url = `${BASE_URL}/api/desabafo?${params}`;
-    return this._http.get<GenericPageableResponse<Outflow>>(url, this._headers);
+    const url = `${BASE_URL}/api/desabafo`;
+    return this._http.get<GenericPageableResponse<Outflow>>([url, searchCriteria], 'Falha ao obter desabafos!');
   }
 
   public create(outflow: Outflow) {
     const url = `${BASE_URL}/api/desabafo`;
-    return this._http.post(url, outflow, this._headers);
-  }
-
-  private _encode(params: any): string {
-    return Object.keys(params).map((key) => {
-      return [key, params[key]].map(encodeURIComponent).join('=');
-    }).join('&');
-  }
-
-  private get _headers() {
-    const headers = this._authenticationService.getAuthorizationHeaders();
-    return { headers };
+    return this._http.post(url, outflow, 'Falha ao criar desabafo!');
   }
 
 }

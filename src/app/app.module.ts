@@ -14,7 +14,6 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 import { SidebarLayoutComponent } from './layout/sidebar-layout/sidebar-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { NavbarLayoutModule } from './layout/navbar-layout/navbar-layout.module';
-import { ErrorInterceptorProvider } from '@app/interceptor/http.interceptor';
 import { AvatarModule } from '@shared/components/avatar/avatar.module';
 import { BrandModule } from '@shared/components/brand/brand.module';
 import { TimelineModule } from '@modules/timeline/timeline.module';
@@ -24,6 +23,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
+import { GlobalHttpInterceptorProvider } from '@app/interceptor/http/http-interceptor.provider';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { AngularFireModule } from '@angular/fire';
 
   ],
   providers: [
-    ErrorInterceptorProvider,
+    GlobalHttpInterceptorProvider
     // MessagingService
   ],
   bootstrap: [AppComponent]

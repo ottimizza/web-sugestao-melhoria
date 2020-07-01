@@ -32,14 +32,16 @@ const routes: Routes = [
         data: {
           breadcrumb: null
         },
-        loadChildren: () => import('@modules/timeline/timeline.module').then(m => m.TimelineModule)
+        loadChildren: () => import('@modules/timeline/timeline.module').then(m => m.TimelineModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'desabafos',
         data: {
           breadcrumb: 'Desabafos'
         },
-        loadChildren: () => import('@modules/outflow/outflow.module').then(m => m.OutflowModule)
+        loadChildren: () => import('@modules/outflow/outflow.module').then(m => m.OutflowModule),
+        canActivate: [AuthGuard]
       }
     ]
   },
