@@ -8,6 +8,7 @@ export class User {
     static CUSTOMER = 2;
   };
 
+
   id: number;
   username: string;
   password: string;

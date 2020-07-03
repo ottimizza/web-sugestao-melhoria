@@ -17,6 +17,7 @@ function createEnvironementFile() {
   applicationId: '${getEnvironmentVariable('APPLICATION_ID', 'ottimizza')}',
   portalBaseUrl: '${getEnvironmentVariable('PORTAL_BASE_URL', 'https:///accounts.ottimizza.com.br')}',
   defaultColor: '${getEnvironmentVariable('DEFAULT_COLOR', '#004ecb')}',
+  supportUrl: '${getEnvironmentVariable('SUPPORT_URL', 'https://suporte.ottimizza.com.br')}',
   topic: {
     id: 0,
     name: '${getEnvironmentVariable('TOPIC')}'
