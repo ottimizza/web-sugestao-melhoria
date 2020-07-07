@@ -2,11 +2,13 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthSession } from '@shared/models/AuthSession';
-import { finalize } from 'rxjs/operators';
+import { finalize, catchError } from 'rxjs/operators';
 import { StorageService } from '@app/services/storage.service';
 
 import { environment } from '@env';
 import { SKIP_INTERCEPTOR } from '@app/interceptor/skip-interceptor';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 export const REFRESH_URL = '/auth/refresh';
 export const CALLBACK_URL = '/auth/callback';
@@ -25,7 +27,11 @@ export class AuthenticationService {
 
   public redirectURI = `${window.location.origin}/auth/callback`;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private http: HttpClient, public storageService: StorageService) { }
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private http: HttpClient,
+    public storageService: StorageService,
+    private router: Router) { }
 
   public store(authSession: AuthSession): Promise<{}> {
     return new Promise<boolean>((resolve, reject) => {
@@ -79,15 +85,26 @@ export class AuthenticationService {
           })
         ).subscribe((response: any) => {
           this.storageService.store(AuthenticationService.STORAGE_KEY_TOKENINFO, JSON.stringify(response));
-        }, err => {
-          if (err.status === 403) {
-            alert('Seu usuário não tem acesso a esta aplicação. Se você acha que isto é um erro, entre em contato com seu administrador!');
-            this.authorize();
-          }
         });
     }).then(() => { });
   }
 
+  public async verifyProduct() {
+    const headers = this.getAuthorizationHeaders();
+    headers.append(SKIP_INTERCEPTOR, '');
+    const url = `${environment.oauthBaseUrl}/api/v1/check_products/${environment.oauthClientId}`;
+    return new Promise((resolve, reject) => {
+      this.http.get(url, { headers })
+        .pipe(finalize(() => resolve()))
+        .subscribe(null, err => {
+          console.log(err);
+          if (err.status === 403) {
+            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seua administrador.');
+            this.authorize();
+          }
+        });
+    });
+  }
 
   public clearStorage() {
     localStorage.removeItem(AuthenticationService.STORAGE_KEY_USERINFO);
@@ -146,6 +163,10 @@ export class AuthenticationService {
       return JSON.parse(authSession);
     }
     return null;
+  }
+
+  private toLandingPage() {
+    this.router.navigate(['/landpage']);
   }
 
   genState() {
