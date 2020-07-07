@@ -34,7 +34,7 @@ export class OutflowComponent implements OnInit {
   ];
 
   currentUser: User;
-  AVATAR_PLACEHOLDER = './assets/images/Portrait_Placeholder.png'
+  AVATAR_PLACEHOLDER = './assets/images/Portrait_Placeholder.png';
 
   button: ActionButton[] = [
     {
