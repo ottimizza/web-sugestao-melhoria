@@ -7,12 +7,21 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 import { AuthGuard } from '@app/guard/auth.guard';
 import { NoAuthGuard } from '@app/guard/no-auth.guard';
 import { TimelineComponent } from '@modules/timeline/timeline.component';
+import { LandPageComponent } from '@modules/land-page/page/land-page.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'timeline',
     pathMatch: 'full'
+  },
+  {
+    path: 'landpage',
+    data: {
+      breadcrumb: null
+    },
+    component: LandPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'timeline',
@@ -32,14 +41,16 @@ const routes: Routes = [
         data: {
           breadcrumb: null
         },
-        loadChildren: () => import('@modules/timeline/timeline.module').then(m => m.TimelineModule)
+        loadChildren: () => import('@modules/timeline/timeline.module').then(m => m.TimelineModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'desabafos',
         data: {
           breadcrumb: 'Desabafos'
         },
-        loadChildren: () => import('@modules/outflow/outflow.module').then(m => m.OutflowModule)
+        loadChildren: () => import('@modules/outflow/outflow.module').then(m => m.OutflowModule),
+        canActivate: [AuthGuard]
       }
     ]
   },

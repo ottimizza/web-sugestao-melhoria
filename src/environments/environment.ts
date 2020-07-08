@@ -9,9 +9,10 @@ export const environment = {
   applicationId: 'ottimizza',
   portalBaseUrl: 'https://development-accounts.ottimizza.com.br',
   defaultColor: '#004ecb',
+  supportUrl: 'https://suporte.ottimizza.com.br',
   topic: {
     id: 0,
-    name: 'Sugestão de Melhoria'
+    name: 'Bússola'
   },
   firebase: {
     apiKey: 'AIzaSyA64z6wB13NbuQBYeA3pyyljWoOFR4URXI',

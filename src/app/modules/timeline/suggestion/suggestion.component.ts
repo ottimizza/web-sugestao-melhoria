@@ -4,9 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { LikeModalComponent } from '../like-modal/like-modal.component';
 import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { ToastService } from '@shared/services/toast.service';
 import { CommentService } from '@app/http/comment.service';
-import { LoggerUtils } from '@shared/utils/logger.utills';
 import { StringUtils } from '@shared/utils/string.utils';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { Suggestion } from '@shared/models/Suggestion';
@@ -15,6 +13,7 @@ import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { UserService } from '@app/http/users.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-suggestion',
@@ -38,7 +37,6 @@ export class SuggestionComponent implements OnInit {
 
 
   constructor(
-    private _toast: ToastService,
     public dialog: MatDialog,
     public commentService: CommentService,
     public voteService: VoteService,
@@ -51,9 +49,6 @@ export class SuggestionComponent implements OnInit {
       if (result.record.avatar) {
         this.avatar = result.record.avatar;
       }
-    }, err => {
-      this._toast.show('Falha ao obter avatar de usuário', 'danger');
-      LoggerUtils.throw(err);
     });
   }
 
@@ -89,14 +84,11 @@ export class SuggestionComponent implements OnInit {
       sugestaoId: this.suggestion.id
     };
     this.isFetching = true;
-    this.commentService.getComments(searchCriteria).subscribe(results => {
-      this.isFetching = false;
+    this.commentService.getComments(searchCriteria)
+      .pipe(finalize(() => this.isFetching = false))
+      .subscribe(results => {
       this.comments = ArrayUtils.concatDifferentiatingProperty(this.comments, results.records, 'id');
       this.pageInfo = results.pageInfo;
-    }, err => {
-      this._toast.show(`Falha ao obter comentários para a sugestão "${this.suggestion.titulo}"`, 'danger');
-      LoggerUtils.throw(err);
-      this.isFetching = false;
     });
   }
 
@@ -116,9 +108,6 @@ export class SuggestionComponent implements OnInit {
         .subscribe((result: Comment) => {
           this.pageInfo.totalElements++;
           this.comments = [result].concat(this.comments);
-        }, err => {
-          this._toast.show('Falha ao enviar comentário');
-          LoggerUtils.throw(err);
         });
     } else {
       this.error = true;
@@ -131,9 +120,6 @@ export class SuggestionComponent implements OnInit {
       this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuLike = false;
         this.suggestion.numeroLikes--;
-      }, err => {
-        this._toast.show('Falha ao deletar like', 'danger');
-        LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuDislike) {
       this.openLikeDialog(() => {
@@ -151,9 +137,6 @@ export class SuggestionComponent implements OnInit {
       this.voteService.deleteByUserIdAndSuggestionId(userId, this.suggestion.id).subscribe(() => {
         this.suggestion.deuDislike = false;
         this.suggestion.numeroDislikes--;
-      }, err => {
-        this._toast.show('Falha ao deletar dislike', 'danger');
-        LoggerUtils.throw(err);
       });
     } else if (this.suggestion.deuLike) {
       this.openDislikeDialog(() => {

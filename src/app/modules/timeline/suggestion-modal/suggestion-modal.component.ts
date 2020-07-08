@@ -87,9 +87,6 @@ export class SuggestionModalComponent {
       this.suggestionService.create(suggestion).subscribe(result => {
         this.toastService.show('Sugestão criada com sucesso', 'success');
         this.dialogRef.close(result);
-      }, err => {
-        this.toastService.show('Falha ao criar sugestão', 'danger');
-        LoggerUtils.throw(err);
       });
 
     } else {

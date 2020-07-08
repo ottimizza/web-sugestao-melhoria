@@ -4,6 +4,7 @@ import { AuthenticationService } from '@app/authentication/authentication.servic
 import { environment } from '@env';
 import { Comment } from '@shared/models/Comment';
 import { GenericPageableResponse } from '@shared/models/GenericPageableResponse';
+import { HttpHandlerService } from '@app/services/http-handler.service';
 
 const BASE_URL = environment.storageBaseUrl;
 
@@ -12,38 +13,26 @@ const BASE_URL = environment.storageBaseUrl;
 })
 export class CommentService {
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {}
+  constructor(private http: HttpHandlerService) {}
 
   getById(id: number) {
     const url = `${BASE_URL}/api/comentario/${id}`;
-    return this.http.get(url, this._headers);
+    return this.http.get(url, 'Falha ao detalhes do comentário!');
   }
 
   getComments(searchCriteria: any) {
-    const params = this._encode(searchCriteria);
-    const url = `${BASE_URL}/api/comentario?${params}`;
-    return this.http.get<GenericPageableResponse<Comment>>(url, this._headers);
+    const url = `${BASE_URL}/api/comentario`;
+    return this.http.get<GenericPageableResponse<Comment>>([url, searchCriteria], 'Falha ao obter comentários!');
   }
 
   create(comment: Comment) {
     const url = `${BASE_URL}/api/comentario`;
-    return this.http.post(url, comment, this._headers);
+    return this.http.post(url, comment, 'Falha ao criar comentário!');
   }
 
   delete(id: number) {
     const url = `${BASE_URL}/api/comentario/${id}`;
-    return this.http.delete(url, this._headers);
-  }
-
-  private _encode(params: any): string {
-    return Object.keys(params).map((key) => {
-      return [key, params[key]].map(encodeURIComponent).join('=');
-    }).join('&');
-  }
-
-  private get _headers() {
-    const headers = this.authenticationService.getAuthorizationHeaders();
-    return { headers };
+    return this.http.delete(url, 'Falha ao excluir comentário!');
   }
 
 }

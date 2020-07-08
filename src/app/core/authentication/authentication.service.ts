@@ -1,13 +1,17 @@
-
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthSession } from '@shared/models/AuthSession';
-import { finalize } from 'rxjs/operators';
+import { finalize, catchError } from 'rxjs/operators';
 import { StorageService } from '@app/services/storage.service';
 
 import { environment } from '@env';
+import { SKIP_INTERCEPTOR } from '@app/interceptor/skip-interceptor';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
+export const REFRESH_URL = '/auth/refresh';
+export const CALLBACK_URL = '/auth/callback';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +19,7 @@ import { Router } from '@angular/router';
 export class AuthenticationService {
 
   static REFRESH_URL = '/auth/refresh';
+  static CALLBACK_URL = '/auth/callback';
 
   static STORAGE_KEY_USERINFO = 'user-info';
   static STORAGE_KEY_TOKENINFO = 'token-info';
@@ -53,22 +58,25 @@ export class AuthenticationService {
     });
   }
 
-  public async storeUserInfo(): Promise<void> {
+  public async storeUserInfo(skipInterceptor = false): Promise<void> {
     const headers = this.getAuthorizationHeaders();
+    if (skipInterceptor) {
+      headers.append(SKIP_INTERCEPTOR, '');
+    }
     return new Promise<void>((resolve, reject) => {
       return this.http.get(`${environment.oauthBaseUrl}/oauth/userinfo`, { headers })
-        .pipe(
-          finalize(() => {
-            resolve();
-          })
-        ).subscribe((response: any) => {
-          this.storageService.store(AuthenticationService.STORAGE_KEY_USERINFO, JSON.stringify(response.record));
-        });
+        .pipe(finalize(() => resolve()))
+          .subscribe((response: any) => {
+            this.storageService.store(AuthenticationService.STORAGE_KEY_USERINFO, JSON.stringify(response.record));
+          });
     }).then(() => { });
   }
 
-  public async storeTokenInfo(): Promise<void> {
+  public async storeTokenInfo(skipInterceptor = false): Promise<void> {
     const headers = this.getAuthorizationHeaders();
+    if (skipInterceptor) {
+      headers.append(SKIP_INTERCEPTOR, '');
+    }
     return new Promise<void>((resolve, reject) => {
       return this.http.get(`${environment.oauthBaseUrl}/oauth/tokeninfo`, { headers })
         .pipe(
@@ -77,15 +85,26 @@ export class AuthenticationService {
           })
         ).subscribe((response: any) => {
           this.storageService.store(AuthenticationService.STORAGE_KEY_TOKENINFO, JSON.stringify(response));
-        }, err => {
-          if (err.status === 403) {
-            alert('Seu usuário não possue acesso a esta aplicação. Se você acha que isso está errado, fale com seu administrador.');
-          }
-          this.router.navigate(['auth', 'logout']);
         });
     }).then(() => { });
   }
 
+  public async verifyProduct() {
+    const headers = this.getAuthorizationHeaders();
+    headers.append(SKIP_INTERCEPTOR, '');
+    const url = `${environment.oauthBaseUrl}/api/v1/check_products/${environment.oauthClientId}`;
+    return new Promise((resolve, reject) => {
+      this.http.get(url, { headers })
+        .pipe(finalize(() => resolve()))
+        .subscribe(null, err => {
+          console.log(err);
+          if (err.status === 403) {
+            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seua administrador.');
+            this.authorize();
+          }
+        });
+    });
+  }
 
   public clearStorage() {
     localStorage.removeItem(AuthenticationService.STORAGE_KEY_USERINFO);
@@ -94,8 +113,7 @@ export class AuthenticationService {
   }
 
 
-  public authorize(responseType: string = 'code'): void {
-    const that = this;
+  public authorize(responseType = 'code'): void {
     const baseUrl = `${environment.oauthBaseUrl}/oauth/authorize`;
     const clientId = `${environment.oauthClientId}`;
     const url = `${baseUrl}?response_type=${responseType}&prompt=login&client_id=${clientId}&redirect_uri=${this.redirectURI}`;
@@ -103,14 +121,17 @@ export class AuthenticationService {
   }
 
   public exchange(code: string) {
-    const url = `${environment.oauthBaseUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
+    const url = `${environment.storageBaseUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
     return this.http.post(url, {}, {});
   }
 
   public refresh(refreshToken: string) {
+    const headers = new HttpHeaders({
+      'X-Skip-Interceptor': ''
+    });
     const clientId = `${environment.oauthClientId}`;
     const url = `${environment.oauthBaseUrl}/auth/refresh?refresh_token=${refreshToken}&client_id=${clientId}`;
-    return this.http.post(url, {}, {});
+    return this.http.post(url, {}, { headers });
   }
 
   public revokeToken() {
@@ -142,6 +163,10 @@ export class AuthenticationService {
       return JSON.parse(authSession);
     }
     return null;
+  }
+
+  private toLandingPage() {
+    this.router.navigate(['/landpage']);
   }
 
   genState() {

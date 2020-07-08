@@ -11,12 +11,13 @@ function createEnvironementFile() {
   oauthBaseUrl: '${getEnvironmentVariable('OAUTH2_BASE_URL')}',
   oauthClientId: '${getEnvironmentVariable('OAUTH2_CLIENT_ID')}',
   imageCompressionBaseUrl: '${getEnvironmentVariable('IMAGE_COMPRESSION_BASE_URL')}',
-  storageBaseUrl: '${getEnvironmentVariable('STORAGE_BASE_URL')}',
+  storageBaseUrl: '${getEnvironmentVariable('SERVICE_URL')}',
   storageApplicationId: '${getEnvironmentVariable('STORAGE_APPLICATION_ID', 'accounts-avatar')}',
   storageAccountingId: '${getEnvironmentVariable('STORAGE_ACCOUNTING_ID', 'ottimizza')}',
   applicationId: '${getEnvironmentVariable('APPLICATION_ID', 'ottimizza')}',
   portalBaseUrl: '${getEnvironmentVariable('PORTAL_BASE_URL', 'https:///accounts.ottimizza.com.br')}',
   defaultColor: '${getEnvironmentVariable('DEFAULT_COLOR', '#004ecb')}',
+  supportUrl: '${getEnvironmentVariable('SUPPORT_URL', 'https://suporte.ottimizza.com.br')}',
   topic: {
     id: 0,
     name: '${getEnvironmentVariable('TOPIC')}'

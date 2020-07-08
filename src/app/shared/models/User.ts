@@ -8,6 +8,7 @@ export class User {
     static CUSTOMER = 2;
   };
 
+
   id: number;
   username: string;
   password: string;
@@ -32,7 +33,6 @@ export class User {
     const user = new User();
     if (storedUser !== null && typeof storedUser !== 'undefined') {
       if (storedUser.username !== null && typeof storedUser.username !== 'undefined') {
-        user.id = storedUser.id;
         user.id = storedUser.id;
         user.username = storedUser.username;
         user.password = storedUser.password;

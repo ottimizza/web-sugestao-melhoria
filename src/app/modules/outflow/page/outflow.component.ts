@@ -16,6 +16,8 @@ import { ArrayUtils } from '@shared/utils/array.utils';
 import { DateUtils } from '@shared/utils/date-utils';
 import { Outflow } from '@shared/models/Outflow';
 import { User } from '@shared/models/User';
+import { UserService } from '@app/http/users.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   templateUrl: './outflow.component.html',
@@ -32,6 +34,7 @@ export class OutflowComponent implements OnInit {
   ];
 
   currentUser: User;
+  AVATAR_PLACEHOLDER = './assets/images/Portrait_Placeholder.png';
 
   button: ActionButton[] = [
     {
@@ -42,7 +45,7 @@ export class OutflowComponent implements OnInit {
     }
   ];
 
-  outflows: Outflow[];
+  outflows: any[];
 
   pageInfo: PageInfo;
   isFetching: boolean;
@@ -50,7 +53,8 @@ export class OutflowComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public outflowService: OutflowService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -155,19 +159,31 @@ export class OutflowComponent implements OnInit {
 
     if (!this.isFetching && (!this.pageInfo || this.pageInfo.hasNext)) {
       this.isFetching = true;
-      console.log(this.isFetching);
       this.toastService.showSnack('Obtendo desabafos');
-      this.outflowService.getOutflows(filter).subscribe(results => {
-        this.isFetching = false;
+      this.outflowService.getOutflows(filter)
+        .pipe(finalize(() => this.isFetching = false))
+        .subscribe(results => {
         this.toastService.hideSnack();
+        results.records = results.records.map(rec => {
+          const avatar = { avatar: this.AVATAR_PLACEHOLDER };
+          return Object.assign(rec, avatar);
+        });
         this.outflows = ArrayUtils.concatDifferentiatingProperty(this.outflows, results.records, 'id');
         this.pageInfo = results.pageInfo;
-      }, err => {
-        this.isFetching = false;
-        this.toastService.show('Falha ao obter desabafos!', 'danger');
-        LoggerUtils.throw(err);
+        this._getAvatars();
       });
     }
+  }
+
+  private _getAvatars() {
+    this.outflows.filter(out => out.avatar === this.AVATAR_PLACEHOLDER)
+      .forEach(outflow => {
+        this.userService.fetchById(outflow.userId).subscribe(user => {
+          if (user.record.avatar) {
+            this.outflows[this.outflows.indexOf(outflow)].avatar = user.record.avatar;
+          }
+        });
+      });
   }
 
 }

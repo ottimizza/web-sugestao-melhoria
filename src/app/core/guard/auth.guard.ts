@@ -28,7 +28,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (result) {
           Promise.all([
             this.authenticationService.storeUserInfo(),
-            this.authenticationService.storeTokenInfo()
+            this.authenticationService.storeTokenInfo(),
+            this.authenticationService.verifyProduct()
           ]).then(() => {
             resolve(true);
           });
@@ -45,6 +46,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                   AuthSession.fromOAuthResponse(response).store().then(async () => {
                     this.authenticationService.storeUserInfo();
                     this.authenticationService.storeTokenInfo();
+                    this.authenticationService.verifyProduct();
                   });
                 } else if (response.error) {
                   this.authorize();
