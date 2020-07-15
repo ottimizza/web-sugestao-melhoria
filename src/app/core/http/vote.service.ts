@@ -26,7 +26,7 @@ export class VoteService {
 
   create(vote: Vote) {
     const url = `${BASE_URL}/api/voto`;
-    return this._http.post(url, vote, 'Falha ao criar votos!');
+    return this._http.post(url, vote, 'Falha ao criar voto!');
   }
 
   delete(id: number) {

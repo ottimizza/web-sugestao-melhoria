@@ -99,7 +99,7 @@ export class AuthenticationService {
         .subscribe(null, err => {
           console.log(err);
           if (err.status === 403) {
-            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seua administrador.');
+            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seu administrador.');
             this.authorize();
           }
         });
