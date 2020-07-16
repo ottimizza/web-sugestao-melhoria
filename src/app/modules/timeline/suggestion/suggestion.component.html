@@ -11,7 +11,9 @@
   </div>
 
   <div class="mt-3" *ngIf="!isSelected; else complete">
-    <h4>{{ title }}</h4>
+    <div class="title-field">
+      <h4>{{ title }}</h4>
+    </div>
     <br>
     <div class="content">
       <span>
@@ -24,7 +26,9 @@
   <ng-template #complete>
     <div class="mt-3">
 
-      <h4>{{ suggestion.titulo }}</h4>
+      <div class="title-field">
+        <h4>{{ suggestion.titulo }}</h4>
+      </div>
 
       <div class="text-left mt-3">
         <strong>Sugestão de Melhoria:</strong>

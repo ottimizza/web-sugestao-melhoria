@@ -63,6 +63,11 @@ strong, a {
   display: none;
 }
 
+.title-field {
+  text-align: left;
+  padding-left: 20px;
+}
+
 @media (max-width: 767px) {
 
   .tags-area {
@@ -79,6 +84,11 @@ strong, a {
 
   .content {
     text-align: center !important;
+  }
+
+  .title-field {
+    text-align: center;
+    padding: 0;
   }
 
 }
