@@ -196,8 +196,7 @@ export class SuggestionComponent implements OnInit {
 
   get content() {
     return StringUtils.cut(
-      // `${this.suggestion.problema} ${this.suggestion.sugestaoMelhoria} ${this.suggestion.resultadoEsperado}`, 280
-      `${this.suggestion.problemaResolvido} ${this.suggestion.descricaoSugestao}`, 280
+      `${this.suggestion.descricaoSugestao} ${this.suggestion.problemaResolvido}`, 280
     );
   }
 

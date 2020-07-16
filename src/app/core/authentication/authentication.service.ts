@@ -121,7 +121,7 @@ export class AuthenticationService {
   }
 
   public exchange(code: string) {
-    const url = `${environment.storageBaseUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
+    const url = `${environment.serviceUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
     return this.http.post(url, {}, {});
   }
 
@@ -130,7 +130,7 @@ export class AuthenticationService {
       'X-Skip-Interceptor': ''
     });
     const clientId = `${environment.oauthClientId}`;
-    const url = `${environment.storageBaseUrl}/auth/refresh?refresh_token=${refreshToken}&client_id=${clientId}`;
+    const url = `${environment.serviceUrl}/auth/refresh?refresh_token=${refreshToken}&client_id=${clientId}`;
     return this.http.post(url, {}, { headers });
   }
 
