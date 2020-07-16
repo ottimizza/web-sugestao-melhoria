@@ -195,9 +195,7 @@ export class SuggestionComponent implements OnInit {
   }
 
   get content() {
-    return StringUtils.cut(
-      `${this.suggestion.descricaoSugestao} ${this.suggestion.problemaResolvido}`, 280
-    );
+    return StringUtils.cut(this.suggestion.descricaoSugestao, 280);
   }
 
   get button() {
