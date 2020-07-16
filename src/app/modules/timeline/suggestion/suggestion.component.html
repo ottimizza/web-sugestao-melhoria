@@ -1,5 +1,5 @@
-<div class="card p-2">
-
+<div class="card pt-2">
+  <!-- 
   <div class="row w-100 m-0">
     <div class="d-inline avatar-field">
       <img [src]="avatar" class="img-thumbnail rounded-circle" width="45" height="45">
@@ -21,36 +21,75 @@
         <a class="text-info cursor-pointer desktop" (click)="isSelected = true" *ngIf="!isSelected">{{ button }}</a>
       </span>
     </div>
+  </div> -->
+  <div class="card-header">
+    <div class="d-flex justify-content-between w-100">
+      <div class="d-flex">
+        <div class="d-none d-md-flex">
+          <img [src]="avatar" class="img-thumbnail rounded-circle" width="45" height="45">
+        </div>
+        <div class="d-flex flex-column p-0 pl-2">
+          <h4 class="m-0 mb-1">{{ title }}</h4>
+          <small class="m-0">{{ suggestion.usuario }}</small>
+          <span class="d-flex d-md-none hour m-0">{{ getDate(suggestion.dataCriacao) }}</span>
+        </div>
+      </div>
+      <span class="d-none d-md-flex hour m-0">{{ getDate(suggestion.dataCriacao) }}</span>
+    </div>
   </div>
 
-  <ng-template #complete>
-    <div class="mt-3">
 
-      <div class="title-field">
-        <h4>{{ suggestion.titulo }}</h4>
+  <div class="card-body">
+    <div class="" *ngIf="!isSelected; else complete">
+      <div class="">
+        <span>
+          {{ content }}
+          <a class="text-info cursor-pointer desktop" (click)="isSelected = true" *ngIf="!isSelected">{{ button }}</a>
+        </span>
       </div>
-
-      <div class="text-left mt-3">
-        <strong>Sugestão de Melhoria:</strong>
-        <br>
-        <span>{{ suggestion.descricaoSugestao }}</span>
-        <br><br>
-        <strong>Problema a ser Resolvido:</strong>
-        <br>
-        <span>{{ suggestion.problemaResolvido }}</span>
-        <br><br>
-      </div>
-
     </div>
-  </ng-template>
+    <ng-template #complete>
+      <div class="">
+        <div class="text-left ">
+          <strong>Sugestão de Melhoria:</strong>
+          <br>
+          <span>{{ suggestion.descricaoSugestao }}</span>
+          <br><br>
+          <strong>Problema a ser Resolvido:</strong>
+          <br>
+          <span>{{ suggestion.problemaResolvido }}</span>
+          <br><br>
+        </div>
 
-  <a class="text-info cursor-pointer" (click)="isSelected = !isSelected" [ngClass]="{ 'mobile': !isSelected }">{{ button }}</a>
+      </div>
+    </ng-template>
+    <a class="text-info cursor-pointer" (click)="isSelected = !isSelected"
+      [ngClass]="{ 'mobile': !isSelected }">{{ button }}</a>
+  </div>
 
+  <!-- Opções da Sugestões -->
+  <!-- Comentários, Likes & Dislikes -->
+  <div class="container justify-content-center border-bottom">
+    <div class="d-flex align-items-center w-100 m-0 mb-3 mt-4 justify-content-center">
+      <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button"
+        matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i
+          class="fa fa-comment-alt-lines mr-2"></i>{{ pageInfo ? pageInfo.totalElements : suggestion.numeroComentarios }}
+      </div>
+      <div class="likes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuLike }" (click)="like()"
+        matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i
+          class="fa fa-heart mr-2"></i>{{ suggestion.numeroLikes }}</div>
+      <div class="dislikes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuDislike }"
+        (click)="dislike()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i
+          class="fa fa-heart-broken mr-2"></i>{{ suggestion.numeroDislikes }}</div>
+    </div>
+  </div>
+
+  <!-- Comentários -->
   <div class="comments-area p-4 text-center" *ngIf="visibleComments">
-
-    <div class="comment-creator mt-5 mb-5 d-inline-block w-100">
+    <div class="comment-creator mb-5 d-inline-block w-100">
       <strong class="float-left" [ngClass]="{ 'text-danger': error }">Deixe seu comentário</strong>
-      <textarea placeholder="Escreva aqui..." [(ngModel)]="ownComment" maxlength="140" [ngClass]="{ 'border-danger': error }"></textarea>
+      <textarea placeholder="Escreva aqui..." [(ngModel)]="ownComment" maxlength="140"
+        [ngClass]="{ 'border-danger': error }"></textarea>
       <div class="row m-0 w-100">
         <div class="col p-0">
           <button class="btn btn-info float-left" (click)="submit()">Enviar</button>
@@ -68,24 +107,8 @@
       <br><br><br>
     </div>
 
-    <button mat-button class="load-more m-auto text-center" (click)="nextPage()" *ngIf="pageInfo?.hasNext && !isFetching">Carregar mais</button>
+    <button mat-button class="load-more m-auto text-center" (click)="nextPage()"
+      *ngIf="pageInfo?.hasNext && !isFetching">Carregar mais</button>
 
   </div>
-
-  <div class="row w-100 m-0 mb-3 mt-4 mobile">
-    <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ pageInfo ? pageInfo.totalElements : suggestion.numeroComentarios }}</div>
-    <div class="likes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuLike }" (click)="like()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.numeroLikes }}</div>
-    <div class="dislikes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuDislike }" (click)="dislike()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.numeroDislikes }}</div>
-  </div>
-
-  <div class="row w-100 m-0 mb-3 mt-4 desktop">
-    <div class="col-3"></div>
-    <div class="col-6">
-      <div (click)="visibleComments = !visibleComments" class="comments cursor-pointer action-button" matTooltip="Ver comentários" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-comment-alt-lines mr-2"></i>{{ pageInfo ? pageInfo.totalElements : suggestion.numeroComentarios }}</div>
-      <div class="likes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuLike }" (click)="like()" matTooltip="Marcar como gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart mr-2"></i>{{ suggestion.numeroLikes }}</div>
-      <div class="dislikes cursor-pointer action-button" [ngClass]="{ 'text-danger': suggestion.deuDislike }" (click)="dislike()" matTooltip="Marcar como não gostei" matTooltipShowDelay="300" matTooltipHideDelay="500"><i class="fa fa-heart-broken mr-2"></i>{{ suggestion.numeroDislikes }}</div>
-    </div>
-    <div class="col-3"></div>
-  </div>
-
 </div>
