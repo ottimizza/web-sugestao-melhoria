@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { Suggestion } from '@shared/models/Suggestion';
 import { HttpHandlerService } from '@app/services/http-handler.service';
 
-const BASE_URL = environment.storageBaseUrl;
+const BASE_URL = environment.serviceUrl;
 
 @Injectable({ providedIn: 'root' })
 export class SuggestionService {

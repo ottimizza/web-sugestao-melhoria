@@ -1,32 +1,31 @@
-<section appScrollTracker (scrollEnd)="nextPage()">
-<app-breadcrumb></app-breadcrumb>
-<div class="buttons m-0 p-0">
-  <app-actions [buttons]="buttons" (clicked)="onClick($event)"></app-actions>
-</div>
+<app-layout [buttons]="buttons" (buttonClicked)="onClick($event)" (scrollHasEnded)="nextPage()">
 
-  <div class="m-4 mb-0">
-    <app-complex-search-input
-      [debounceTime]="100"
-      [defaultRule]="defaultRule"
-      [hackings]="hackings()"
-      [rules]="filteringRules()"
-      (filterApplied)="filterApply($event)"
-      ></app-complex-search-input>
+  <app-complex-search-input
+    [debounceTime]="100"
+    [defaultRule]="defaultRule"
+    [hackings]="hackings()"
+    [rules]="filteringRules()"
+    (filterApplied)="filterApply($event)"
+  ></app-complex-search-input>
 
-      <mat-chip-list>
-        <mat-chip *ngFor="let f of filters" [selectable]="false" [removable]="f.id !== 'topic'" (removed)="removeFilter(f)">
-          {{ f.description }}
-          <mat-icon matChipRemove *ngIf="f.id !== 'topic'">cancel</mat-icon>
-        </mat-chip>
-      </mat-chip-list>
-  </div>
+  <mat-chip-list>
+    <mat-chip
+      *ngFor="let f of filters"
+      [selectable]="false"
+      [removable]="f.id !== 'topic'"
+      (removed)="removeFilter(f)"
+    >
+      {{ f.description }}
+      <mat-icon matChipRemove *ngIf="f.id !== 'topic'">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
 
   <div>
-
-    <div class="suggestion-card mt-0 text-center" *ngFor="let s of suggestions">
+    <div
+      class="suggestion-card mt-0"
+      *ngFor="let s of suggestions"
+    >
       <app-suggestion [suggestion]="s"></app-suggestion>
     </div>
-
   </div>
-
-</section>
+</app-layout>

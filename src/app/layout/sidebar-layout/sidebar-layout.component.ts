@@ -39,7 +39,7 @@ export class SidebarLayoutComponent implements OnInit {
     const userType = User.fromLocalStorage().type;
     this.items = [
       { icon: 'fad fa-stream', label: 'Timeline', url: '/timeline' },
-      { icon: 'fad fa-frown', label: userType === 0 ? 'Desabafos' : 'Meus desabafos', url: '/timeline/desabafos' }
+      // { icon: 'fad fa-frown', label: userType === 0 ? 'Desabafos' : 'Meus desabafos', url: '/timeline/desabafos' }
     ];
   }
 }

@@ -64,11 +64,6 @@ MOBILE SIZING
     z-index: 8;
   }
 
-  .suggestion-card {
-    margin: auto;
-    margin: 5vw;
-  }
-
   .orderBy {
     display: none;
   }
@@ -104,9 +99,6 @@ DESKTOP SIZING
 
 @media (min-width: 768px) {
 
-  .suggestion-card {
-    margin: 1vh 8% 0 8%;
-  }
 
   #product-container span {
     font-size: 110%;

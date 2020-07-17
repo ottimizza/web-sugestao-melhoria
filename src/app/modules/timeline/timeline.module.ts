@@ -18,6 +18,7 @@ import { LikeModalComponent } from './like-modal/like-modal.component';
 import { MatChipsModule, MatIconModule } from '@angular/material';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 import { TimelineRoutingModule } from './timeline.routing';
+import { NormalizedLayoutModule } from 'app/layout/normalized-layout/normalized-layout.module';
 
 @NgModule({
   declarations: [
@@ -35,9 +36,10 @@ import { TimelineRoutingModule } from './timeline.routing';
     LikeModalModule,
     OutflowModalModule,
     SuggestionModalModule,
-    BreadcrumbModule,
-    ActionButtonsModule,
-    ScrollTrackerModule
+    NormalizedLayoutModule
+    // BreadcrumbModule,
+    // ActionButtonsModule,
+    // ScrollTrackerModule
   ],
   entryComponents: [
     LikeModalComponent,
