@@ -5,7 +5,7 @@ import { environment } from '@env';
 import { Vote } from '@shared/models/Vote';
 import { HttpHandlerService } from '@app/services/http-handler.service';
 
-const BASE_URL = environment.storageBaseUrl;
+const BASE_URL = environment.serviceUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class VoteService {
 
   create(vote: Vote) {
     const url = `${BASE_URL}/api/voto`;
-    return this._http.post(url, vote, 'Falha ao criar votos!');
+    return this._http.post(url, vote, 'Falha ao criar voto!');
   }
 
   delete(id: number) {

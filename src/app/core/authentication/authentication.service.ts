@@ -99,7 +99,7 @@ export class AuthenticationService {
         .subscribe(null, err => {
           console.log(err);
           if (err.status === 403) {
-            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seua administrador.');
+            alert('Seu usuário não tem acesso a este produto! Se você acha que isto é um erro, entre em contato com seu administrador.');
             this.authorize();
           }
         });
@@ -121,7 +121,7 @@ export class AuthenticationService {
   }
 
   public exchange(code: string) {
-    const url = `${environment.storageBaseUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
+    const url = `${environment.serviceUrl}/auth/callback?code=${code}&redirect_uri=${this.redirectURI}`;
     return this.http.post(url, {}, {});
   }
 
@@ -130,7 +130,7 @@ export class AuthenticationService {
       'X-Skip-Interceptor': ''
     });
     const clientId = `${environment.oauthClientId}`;
-    const url = `${environment.oauthBaseUrl}/auth/refresh?refresh_token=${refreshToken}&client_id=${clientId}`;
+    const url = `${environment.serviceUrl}/auth/refresh?refresh_token=${refreshToken}&client_id=${clientId}`;
     return this.http.post(url, {}, { headers });
   }
 

@@ -3,7 +3,7 @@ export const environment = {
   oauthBaseUrl: 'https://development-oauth-server.herokuapp.com',
   oauthClientId: '58a94562a7a7502d4c1b',
   imageCompressionBaseUrl: 'https://development-image-compression.herokuapp.com',
-  storageBaseUrl: 'https://development-api-sugestao.herokuapp.com',
+  serviceUrl: 'https://development-api-sugestao.herokuapp.com',
   storageApplicationId: 'account-avatar',
   storageAccountingId: 'ottimizza',
   applicationId: 'ottimizza',

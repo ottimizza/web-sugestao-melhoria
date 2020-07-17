@@ -46,12 +46,12 @@ export class TimelineComponent implements OnInit {
       label: 'Tenho uma sugestão!',
       color: new HexColor(environment.defaultColor)
     },
-    {
-      id: 'outflow',
-      icon: 'fal fa-frown',
-      label: 'Tenho um desabafo!',
-      color: 'btn-light'
-    }
+    // {
+    //   id: 'outflow',
+    //   icon: 'fal fa-frown',
+    //   label: 'Tenho um desabafo!',
+    //   color: 'btn-light'
+    // }
   ];
 
   filters = [

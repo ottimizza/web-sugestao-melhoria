@@ -7,7 +7,7 @@ import { GenericPageableResponse } from '@shared/models/GenericPageableResponse'
 import { RouterLink, Router } from '@angular/router';
 import { HttpHandlerService } from '@app/services/http-handler.service';
 
-const BASE_URL = environment.storageBaseUrl;
+const BASE_URL = environment.serviceUrl;
 
 interface TopicWithId {
   id: number;
