@@ -24,7 +24,7 @@ export class ActionButton {
 }
 
 @Component({
-  selector: 'actions',
+  selector: 'app-actions',
   templateUrl: './action-buttons.component.html'
 })
 export class ActionButtonsComponent {
