@@ -53,8 +53,7 @@ export class SuggestionComponent implements OnInit {
   }
 
   getDate(date: string) {
-    // @ts-ignore
-    const postDate = new Date(date.split('-')).getTime();
+    const postDate = new Date(date.replace('-', ' ')).getTime();
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -70,7 +69,7 @@ export class SuggestionComponent implements OnInit {
     } else if (postDate === beforeYesterday.getTime()) {
       return 'Anteontem';
     }
-    return DateUtils.getDateString(new Date(postDate));
+    return DateUtils.format(new Date(postDate));
   }
 
   get title(): string {
