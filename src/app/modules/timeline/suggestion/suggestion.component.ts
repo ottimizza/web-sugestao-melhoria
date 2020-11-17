@@ -53,7 +53,7 @@ export class SuggestionComponent implements OnInit {
   }
 
   getDate(date: string) {
-    const postDate = new Date(date).getTime();
+    const postDate = new Date(date.replace('-', ' ')).getTime();
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
