@@ -15,7 +15,8 @@ import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.co
 import { BreadcrumbModule } from '@shared/components/breadcrumb/breadcrumb.module';
 import { ActionButtonsModule } from '@shared/components/action-buttons/action-buttons.module';
 import { LikeModalComponent } from './like-modal/like-modal.component';
-import { MatChipsModule, MatIconModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 import { TimelineRoutingModule } from './timeline.routing';
 import { NormalizedLayoutModule } from 'app/layout/normalized-layout/normalized-layout.module';

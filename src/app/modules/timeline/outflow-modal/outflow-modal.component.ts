@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { OutflowService } from '@app/http/outflow.service';
 import { ToastService } from '@shared/services/toast.service';
 import { Outflow } from '@shared/models/Outflow';

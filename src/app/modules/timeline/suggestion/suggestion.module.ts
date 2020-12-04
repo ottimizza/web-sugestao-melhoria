@@ -6,7 +6,7 @@ import { TagComponent } from './tag/tag.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({

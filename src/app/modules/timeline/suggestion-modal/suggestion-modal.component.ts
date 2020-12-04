@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SuggestionService } from '@app/http/suggestion.service';
 import { ToastService } from '@shared/services/toast.service';
 import { Suggestion } from '@shared/models/Suggestion';
