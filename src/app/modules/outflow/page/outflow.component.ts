@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { OutflowModalComponent } from '@modules/timeline/outflow-modal/outflow-modal.component';
 import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';

@@ -1,5 +1,16 @@
 export class DateUtils {
 
+  public static format(date: Date) {
+    let day = date.getDate().toString();
+    let month = (date.getMonth() + 1).toString();
+    const year = date.getFullYear().toString();
+
+    day = +day < 10 ? `0${day}` : day;
+    month = +month < 10 ? `0${month}` : month;
+
+    return `${day}/${month}/${year}`;
+  }
+
   public static ymdToDmy(date: string) {
     if (date.length !== 10) {
       throw new Error('The date passed to the method DateUtils.ymdToDmy() is not in the formate yyyy-mm-dd');

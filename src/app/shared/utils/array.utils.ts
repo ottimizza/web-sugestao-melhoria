@@ -86,4 +86,13 @@ export class ArrayUtils {
     return array1.concat(array2);
   }
 
+  public static async asyncForeach<T>(
+    array: T[],
+    callbackFn: (value?: T, index?: number, array?: T[]) => Promise<void>
+  ) {
+    for (let i = 0; i < array.length; i++) {
+      await callbackFn(array[i], i, array);
+    }
+  }
+
 }
