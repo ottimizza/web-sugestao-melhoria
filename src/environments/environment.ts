@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  storageBaseUrl: 'https://s3.tareffaapp.com.br:55325',
   oauthBaseUrl: 'https://development-oauth-server.herokuapp.com',
   oauthClientId: '58a94562a7a7502d4c1b',
   imageCompressionBaseUrl: 'https://development-image-compression.herokuapp.com',

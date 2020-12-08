@@ -13,6 +13,7 @@ function createEnvironementFile() {
   imageCompressionBaseUrl: '${getEnvironmentVariable('IMAGE_COMPRESSION_BASE_URL')}',
   serviceUrl: '${getEnvironmentVariable('SERVICE_URL')}',
   storageApplicationId: '${getEnvironmentVariable('STORAGE_APPLICATION_ID', 'accounts-avatar')}',
+  storageBaseUrl: '${getEnvironmentVariable('STORAGE_URL', 'https://s3.tareffaapp.com.br:55325')}',
   storageAccountingId: '${getEnvironmentVariable('STORAGE_ACCOUNTING_ID', 'ottimizza')}',
   applicationId: '${getEnvironmentVariable('APPLICATION_ID', 'ottimizza')}',
   portalBaseUrl: '${getEnvironmentVariable('PORTAL_BASE_URL', 'https:///accounts.ottimizza.com.br')}',
