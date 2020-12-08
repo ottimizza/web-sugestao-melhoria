@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from '@app/authentication/authentication.service';
 import { environment } from '@env';
 import { Suggestion } from '@shared/models/Suggestion';
 import { HttpHandlerService } from '@app/services/http-handler.service';

@@ -187,3 +187,11 @@ export class OutflowComponent implements OnInit {
   }
 
 }
+
+function expo(num: number, power: number) {
+  const initalNum = num;
+  for (let i = 1; i < power; i++) {
+    num *= initalNum;
+  }
+  return num;
+}
