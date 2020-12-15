@@ -86,25 +86,16 @@
 
   <!-- Comentários -->
   <div class="comments-area p-4 text-center" *ngIf="visibleComments">
-    <div class="comment-creator mb-5 d-inline-block w-100">
-      <strong class="float-left" [ngClass]="{ 'text-danger': error }">Deixe seu comentário</strong>
-      <textarea placeholder="Escreva aqui..." [(ngModel)]="ownComment" maxlength="500"
-        [ngClass]="{ 'border-danger': error }"></textarea>
-      <div class="row m-0 w-100">
-        <div class="col p-0">
-          <button class="btn btn-info float-left" (click)="upload()"><i class="fad fa-file-upload mr-3"></i> Anexar Arquivos</button>
-          <button class="btn btn-info float-left ml-3" (click)="submit()">Enviar</button>
-        </div>
-        <div class="col p-0">
-          <span class="float-right">{{ ownComment.length }} / 500</span>
-        </div>
-      </div>
-    </div>
+    <app-textfield
+    deep="height: 80px;"
+    [ableToAddFile]="false"
+    (submit)="submit($event)"
+  ></app-textfield>
 
     <div class="comment text-left" *ngFor="let com of comments">
       <strong>{{ com.usuario }}</strong>
       <br>
-      <span>{{ com.texto }}</span>
+      <div appInnerHtml [content]="com.texto"></div>
       <br><br><br>
     </div>
 

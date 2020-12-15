@@ -27,7 +27,7 @@ export class FileStorageService {
   }
 
   getResourceURL(resourceId: string): string {
-    return `${environment.storageBaseUrl}/storage/${resourceId}/download`;
+    return `${environment.storageBaseUrl}/storage/${resourceId}`;
   }
 
   // public fetch(resourceId: string): Observable<GenericResponse<any>> {

@@ -8,6 +8,8 @@ import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tr
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
+import { TextfieldModule } from '@shared/components/textfield/textfield.module';
+import { InnerHTMLModule } from '@shared/directives/inner-html/inner-html.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { FormsModule } from '@angular/forms';
     ScrollTrackerModule,
     MatButtonModule,
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
+    TextfieldModule,
+    InnerHTMLModule
   ],
   exports: [SuggestionComponent]
 })
