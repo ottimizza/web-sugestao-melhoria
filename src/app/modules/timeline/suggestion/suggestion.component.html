@@ -92,11 +92,12 @@
     (submit)="submit($event)"
   ></app-textfield>
 
+    <br>
     <div class="comment text-left" *ngFor="let com of comments">
       <strong>{{ com.usuario }}</strong>
       <br>
       <div appInnerHtml [content]="com.texto"></div>
-      <br><br><br>
+      <br>
     </div>
 
     <button mat-button class="load-more m-auto text-center" (click)="nextPage()"
