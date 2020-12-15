@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,6 +17,7 @@ import { finalize } from 'rxjs/operators';
 import { FileService } from '@app/services/file.service';
 import { FileStorageService } from '@app/http/file-storage.service';
 import { ToastService } from '@shared/services/toast.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-suggestion',
@@ -29,11 +30,9 @@ export class SuggestionComponent implements OnInit {
 
   isSelected = false;
   visibleComments = false;
-  error = false;
 
   comments: Comment[] = [];
   avatar = './assets/images/Portrait_Placeholder.png';
-  ownComment = '';
 
   pageInfo: PageInfo;
   isFetching: boolean;
@@ -45,6 +44,7 @@ export class SuggestionComponent implements OnInit {
     public voteService: VoteService,
     public userService: UserService,
     private fileService: FileService,
+    @Inject(DOCUMENT) private doc: Document
   ) {}
 
   ngOnInit(): void {
@@ -95,26 +95,20 @@ export class SuggestionComponent implements OnInit {
     });
   }
 
-  submit() {
-    if (this.ownComment?.length) {
-      this.error = false;
-      const user = User.fromLocalStorage();
-      const comment = {
-        sugestaoId: this.suggestion.id,
-        texto: this.ownComment,
-        usuario: `${user.firstName} ${user.lastName ?? ''}`,
-        userId: user.id
-      };
-      this.ownComment = '';
-      this.commentService
-        .create(comment)
-        .subscribe((result: Comment) => {
-          this.pageInfo.totalElements++;
-          this.comments = [result].concat(this.comments);
-        });
-    } else {
-      this.error = true;
-    }
+  submit(text: string) {
+    const user = User.fromLocalStorage();
+    const comment = {
+      sugestaoId: this.suggestion.id,
+      texto: text,
+      usuario: `${user.firstName} ${user.lastName ?? ''}`,
+      userId: user.id
+    };
+    this.commentService
+      .create(comment)
+      .subscribe((result: Comment) => {
+        this.pageInfo.totalElements++;
+        this.comments = [result].concat(this.comments);
+      });
   }
 
   like() {
@@ -195,11 +189,6 @@ export class SuggestionComponent implements OnInit {
         }
       }
     });
-  }
-
-  public upload() {
-    this.fileService.requestAndUpload()
-    .subscribe(url => this.ownComment = `${url} ${this.ownComment}`);
   }
 
   get content() {

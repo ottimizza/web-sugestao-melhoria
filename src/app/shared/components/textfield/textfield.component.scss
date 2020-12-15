@@ -1,0 +1,23 @@
+.textbox {
+  border: solid 1px lightgrey;
+  border-radius: 7px;
+  padding: 8px 16px 8px 16px;
+  margin: 8px 0 8px 0;
+  overflow: auto;
+  text-align: left;
+  &:focus {
+    border-color: rgb(22, 139, 160);
+  }
+}
+
+.wrong {
+  border-color: red !important;
+  color: firebrick !important;
+}
+
+.tools {
+  margin-bottom: 8px;
+  button {
+    margin-bottom: 8px;
+  }
+}

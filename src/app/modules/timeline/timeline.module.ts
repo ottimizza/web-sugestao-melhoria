@@ -37,7 +37,7 @@ import { NormalizedLayoutModule } from 'app/layout/normalized-layout/normalized-
     LikeModalModule,
     OutflowModalModule,
     SuggestionModalModule,
-    NormalizedLayoutModule
+    NormalizedLayoutModule,
     // BreadcrumbModule,
     // ActionButtonsModule,
     // ScrollTrackerModule
