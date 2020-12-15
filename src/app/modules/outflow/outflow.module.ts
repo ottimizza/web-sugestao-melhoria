@@ -7,7 +7,8 @@ import { ActionButtonsModule } from '@shared/components/action-buttons/action-bu
 import { OutflowModalModule } from '@modules/timeline/outflow-modal/outflow-modal.module';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 import { ComplexSearchModule } from '@shared/components/search/complex-search.module';
-import { MatChipsModule, MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [OutflowComponent],

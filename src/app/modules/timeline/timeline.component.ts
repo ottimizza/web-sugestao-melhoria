@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';
 import { SuggestionModalComponent } from './suggestion-modal/suggestion-modal.component';

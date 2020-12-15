@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@env';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 import { OutflowModalComponent } from '@modules/timeline/outflow-modal/outflow-modal.component';
 import { ActionButton, HexColor } from '@shared/components/action-buttons/action-buttons.component';
@@ -186,4 +186,12 @@ export class OutflowComponent implements OnInit {
       });
   }
 
+}
+
+function expo(num: number, power: number) {
+  const initalNum = num;
+  for (let i = 1; i < power; i++) {
+    num *= initalNum;
+  }
+  return num;
 }

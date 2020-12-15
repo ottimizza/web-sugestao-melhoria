@@ -14,6 +14,9 @@ import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { UserService } from '@app/http/users.service';
 import { finalize } from 'rxjs/operators';
+import { FileService } from '@app/services/file.service';
+import { FileStorageService } from '@app/http/file-storage.service';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   selector: 'app-suggestion',
@@ -40,7 +43,8 @@ export class SuggestionComponent implements OnInit {
     public dialog: MatDialog,
     public commentService: CommentService,
     public voteService: VoteService,
-    public userService: UserService
+    public userService: UserService,
+    private fileService: FileService,
   ) {}
 
   ngOnInit(): void {
@@ -191,6 +195,11 @@ export class SuggestionComponent implements OnInit {
         }
       }
     });
+  }
+
+  public upload() {
+    this.fileService.requestAndUpload()
+    .subscribe(url => this.ownComment = `${url} ${this.ownComment}`);
   }
 
   get content() {

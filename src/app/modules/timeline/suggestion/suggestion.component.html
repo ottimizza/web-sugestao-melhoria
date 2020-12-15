@@ -1,5 +1,5 @@
 <div class="card pt-2">
-  <!-- 
+  <!--
   <div class="row w-100 m-0">
     <div class="d-inline avatar-field">
       <img [src]="avatar" class="img-thumbnail rounded-circle" width="45" height="45">
@@ -88,14 +88,15 @@
   <div class="comments-area p-4 text-center" *ngIf="visibleComments">
     <div class="comment-creator mb-5 d-inline-block w-100">
       <strong class="float-left" [ngClass]="{ 'text-danger': error }">Deixe seu comentário</strong>
-      <textarea placeholder="Escreva aqui..." [(ngModel)]="ownComment" maxlength="140"
+      <textarea placeholder="Escreva aqui..." [(ngModel)]="ownComment" maxlength="500"
         [ngClass]="{ 'border-danger': error }"></textarea>
       <div class="row m-0 w-100">
         <div class="col p-0">
-          <button class="btn btn-info float-left" (click)="submit()">Enviar</button>
+          <button class="btn btn-info float-left" (click)="upload()"><i class="fad fa-file-upload mr-3"></i> Anexar Arquivos</button>
+          <button class="btn btn-info float-left ml-3" (click)="submit()">Enviar</button>
         </div>
         <div class="col p-0">
-          <span class="float-right">{{ ownComment.length }} / 140</span>
+          <span class="float-right">{{ ownComment.length }} / 500</span>
         </div>
       </div>
     </div>
