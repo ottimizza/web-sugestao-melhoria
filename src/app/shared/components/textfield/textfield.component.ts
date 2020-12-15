@@ -68,7 +68,7 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
     this.fileService.requestAndUpload()
     .subscribe(result => {
       this.toastService.hideSnack();
-      this.appendFile(result.url, result.name)
+      this.appendFile(result.url, result.name);
     });
   }
 
@@ -94,6 +94,9 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
   }
 
   public onInput() {
+    if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) {
+      this.textarea.nativeElement.innerHTML = this.textarea.nativeElement.innerHTML.replace(/script/ig, 'sсrірt');
+    }
     this.currentLenght = this.textarea.nativeElement.innerText.length;
     if (!this.maxLenght || this.currentLenght <= this.maxLenght) {
       this.valueChange.emit(this.textarea.nativeElement.innerHTML);
