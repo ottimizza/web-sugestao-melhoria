@@ -94,7 +94,7 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
   }
 
   public onInput() {
-    if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) {
+    if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) { // ! NECESSÁRIO PARA SEGURANÇA
       this.textarea.nativeElement.innerHTML = this.textarea.nativeElement.innerHTML.replace(/script/ig, 'sсrірt');
     }
     this.currentLenght = this.textarea.nativeElement.innerText.length;
@@ -105,6 +105,9 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
 
   public onClick() {
     if (!this.maxLenght || this.currentLenght <= this.maxLenght) {
+      if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) { // ! NECESSÁRIO PARA SEGURANÇA
+        this.textarea.nativeElement.innerHTML = this.textarea.nativeElement.innerHTML.replace(/script/ig, 'sсrірt');
+      }
       this.submit.emit(this.textarea.nativeElement.innerHTML);
       this.textarea.nativeElement.innerHTML = '';
     }
