@@ -29,10 +29,6 @@ export class AuthCallbackComponent implements OnInit {
     public authenticationService: AuthenticationService
   ) { }
 
-  public onLoad() {
-    const that = this;
-  }
-
   public ngOnInit() {
     const that = this;
     this.route.queryParamMap.subscribe(queryParams => {

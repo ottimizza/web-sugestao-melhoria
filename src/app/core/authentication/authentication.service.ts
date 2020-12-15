@@ -114,7 +114,7 @@ export class AuthenticationService {
 
 
   public authorize(responseType = 'code'): void {
-    const baseUrl = `${environment.oauthBaseUrl}/oauth/authorize`;
+    const baseUrl = `${environment.oauthBaseUrl}/oauth/authorize/oauthchooseaccount`;
     const clientId = `${environment.oauthClientId}`;
     const url = `${baseUrl}?response_type=${responseType}&prompt=login&client_id=${clientId}&redirect_uri=${this.redirectURI}`;
     this.document.location.href = url;

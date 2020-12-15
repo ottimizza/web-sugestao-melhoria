@@ -13,7 +13,7 @@ export const environment = {
   supportUrl: 'https://suporte.ottimizza.com.br',
   topic: {
     id: 0,
-    name: 'Bússola'
+    name: 'Banco limpo'
   },
   firebase: {
     apiKey: 'AIzaSyA64z6wB13NbuQBYeA3pyyljWoOFR4URXI',

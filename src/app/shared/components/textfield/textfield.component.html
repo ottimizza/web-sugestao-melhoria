@@ -1,0 +1,35 @@
+<div
+  contenteditable="true"
+  class="textbox"
+  [style]="deep"
+  #fakeTextarea
+  [ngClass]="{ 'wrong': maxLenght && currentLenght > maxLenght }"
+  (input)="onInput()">
+</div>
+<div class="tools" *ngIf="ableToAddFile || ableToAddImage || sendButton">
+
+  <div class="float-left" *ngIf="ableToAddFile || ableToAddImage">
+    <button class="btn btn-light mr-2" *ngIf="ableToAddFile" matTooltip="Anexar arquivo" (click)="sendFile()">
+      <i class="fad fa-link"></i>
+    </button>
+    <button class="btn btn-light" *ngIf="ableToAddImage" matTooltip="Adicionar imagem" (click)="sendImage()">
+      <i class="fad fa-images"></i>
+    </button>
+  </div>
+
+
+  <div class="float-right" *ngIf="sendButton || maxLenght">
+    <span *ngIf="maxLenght" class="mr-3" [ngClass]="{ 'wrong': maxLenght && currentLenght > maxLenght }">{{ currentLenght }} / {{ maxLenght }}</span>
+    <button
+      [disabled]="maxLenght && currentLenght > maxLenght"
+      *ngIf="sendButton"
+      [class]="sendButton.classes || defaultSendButton.classes"
+      [style.backgroundColor]="sendButton.color || defaultSendButton.color"
+      (click)="onClick()"
+    >
+    {{ sendButton.label || defaultSendButton.label }}
+  </button>
+</div>
+
+</div>
+<br><br>

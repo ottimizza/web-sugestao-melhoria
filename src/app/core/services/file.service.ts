@@ -4,6 +4,10 @@ import { FileStorageService } from '@app/http/file-storage.service';
 import { fromEvent, Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
+export enum FileFormat {
+  IMAGE = 'image/x-png,image/gif,image/jpeg'
+}
+
 @Injectable({ providedIn: 'root' })
 export class FileService {
 
@@ -35,9 +39,12 @@ export class FileService {
     );
   }
 
-  public requestFile(): Observable<File> {
+  public requestFile(accept?: string): Observable<File> {
     const input = this.doc.createElement('input');
     input.type = 'file';
+    if (accept) {
+      input.accept = accept;
+    }
     input.style.display = 'none';
 
     const file$ = fromEvent<any>(input, 'change');
@@ -50,11 +57,18 @@ export class FileService {
     );
   }
 
-  public requestAndUpload() {
-    return this.requestFile()
+  public requestAndUpload(accept?: string) {
+    let name: string;
+    return this.requestFile(accept)
     .pipe(
-      switchMap(file => this.fileStorageService.store(file)),
-      map(result => this.fileStorageService.getResourceURL(result.record.id))
+      switchMap(file => {
+        name = file.name;
+        return this.fileStorageService.store(file);
+      }),
+      map(result => ({
+        url: this.fileStorageService.getResourceURL(result.record.id),
+        name
+      }))
     );
   }
 
