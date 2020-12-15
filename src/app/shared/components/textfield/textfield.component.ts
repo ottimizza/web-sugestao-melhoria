@@ -96,6 +96,7 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
   public onInput() {
     if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) { // ! NECESSÁRIO PARA SEGURANÇA
       this.textarea.nativeElement.innerHTML = this.textarea.nativeElement.innerHTML.replace(/script/ig, 'sсrірt');
+      // O segundo "script" está escrito com alfabeto cirílico para que perca o efeito, mas pareça igual, NÃO MEXER.
     }
     this.currentLenght = this.textarea.nativeElement.innerText.length;
     if (!this.maxLenght || this.currentLenght <= this.maxLenght) {
@@ -107,6 +108,7 @@ export class TextfieldComponent implements AfterViewInit, OnChanges {
     if (!this.maxLenght || this.currentLenght <= this.maxLenght) {
       if (this.textarea.nativeElement.innerHTML.toUpperCase().includes('SCRIPT')) { // ! NECESSÁRIO PARA SEGURANÇA
         this.textarea.nativeElement.innerHTML = this.textarea.nativeElement.innerHTML.replace(/script/ig, 'sсrірt');
+        // O segundo "script" está escrito com alfabeto cirílico para que perca o efeito, mas pareça igual, NÃO MEXER.
       }
       this.submit.emit(this.textarea.nativeElement.innerHTML);
       this.textarea.nativeElement.innerHTML = '';
