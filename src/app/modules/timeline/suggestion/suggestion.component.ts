@@ -13,6 +13,7 @@ import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { UserService } from '@app/http/users.service';
+import { SuggestionService } from '@app/http/suggestion.service';
 import { finalize } from 'rxjs/operators';
 import { FileService } from '@app/services/file.service';
 import { FileStorageService } from '@app/http/file-storage.service';
@@ -44,6 +45,7 @@ export class SuggestionComponent implements OnInit {
     public voteService: VoteService,
     public userService: UserService,
     private fileService: FileService,
+    private suggestionService: SuggestionService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
 
@@ -108,6 +110,7 @@ export class SuggestionComponent implements OnInit {
       .subscribe((result: Comment) => {
         this.pageInfo.totalElements++;
         this.comments = [result].concat(this.comments);
+        this.suggestionService.notify(this.suggestion.id);
       });
   }
 
