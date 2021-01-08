@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
         const msg = notification?.notification;
         if (!msg) { return; }
 
+        alert('notificação ' + msg)
         console.log(msg);
 
         const audio = new Audio('assets/audios/notifications.mp3');
