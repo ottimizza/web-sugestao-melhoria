@@ -249,7 +249,7 @@ export class TimelineComponent implements OnInit {
     console.log('botão foi clicado')
     await new Promise(resolve => setTimeout(resolve, 5000));
     const notification = new PushNotification(
-      'rodrigo.moraes@ottimizza.com.br',
+      User.fromLocalStorage().email || User.fromLocalStorage().username,
       this.messagingService.APPLICATION_ID,
       'abc',
       'UMA NOTIFICAÇÃO',

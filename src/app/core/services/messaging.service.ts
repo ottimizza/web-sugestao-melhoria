@@ -16,14 +16,14 @@ export class MessagingService {
   currentMessage = new BehaviorSubject(null);
 
   constructor(public afm: AngularFireMessaging, private http: HttpHandlerService) {
-    this.afm.messaging.subscribe((messaging: any) => {
-      messaging.onMessage = messaging.onMessage.bind(messaging);
-      messaging._next = (payload: any) => {
-        console.log(payload);
-        this.currentMessage.next(payload);
-      };
-      messaging.onTokenRefresh = messaging.onTokenRefresh.bind(messaging);
-    });
+    // this.afm.messaging.subscribe((messaging: any) => {
+    //   messaging.onMessage = messaging.onMessage.bind(messaging);
+    //   messaging._next = (payload: any) => {
+    //     console.log(payload);
+    //     this.currentMessage.next(payload);
+    //   };
+    //   messaging.onTokenRefresh = messaging.onTokenRefresh.bind(messaging);
+    // });
   }
 
   public requestPermission() {
@@ -37,8 +37,13 @@ export class MessagingService {
   }
 
   public receiveMessage() {
-    this.afm.messages.subscribe(payload => {
-      this.currentMessage.next(payload);
+    this.afm.messages.subscribe((messaging: any) => {
+      messaging.onMessage = messaging.onMessage.bind(messaging);
+      messaging._next = (payload: any) => {
+        console.log(payload);
+        this.currentMessage.next(payload);
+      };
+      messaging.onTokenRefresh = messaging.onTokenRefresh.bind(messaging);
     });
   }
 
