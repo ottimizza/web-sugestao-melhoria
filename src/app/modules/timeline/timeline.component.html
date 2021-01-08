@@ -1,5 +1,5 @@
+<button (click)="testeNotifications()">Me Clique</button>
 <app-layout [buttons]="buttons" (buttonClicked)="onClick($event)" (scrollHasEnded)="nextPage()">
-
   <app-complex-search-input
     [debounceTime]="100"
     [defaultRule]="defaultRule"

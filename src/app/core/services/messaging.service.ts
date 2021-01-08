@@ -18,7 +18,10 @@ export class MessagingService {
   constructor(public afm: AngularFireMessaging, private http: HttpHandlerService) {
     this.afm.messaging.subscribe((messaging: any) => {
       messaging.onMessage = messaging.onMessage.bind(messaging);
-      messaging._next = (payload: any) => this.currentMessage.next(payload);
+      messaging._next = (payload: any) => {
+        console.log(payload);
+        this.currentMessage.next(payload);
+      };
       messaging.onTokenRefresh = messaging.onTokenRefresh.bind(messaging);
     });
   }

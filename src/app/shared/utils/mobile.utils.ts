@@ -1,6 +1,8 @@
+import { Subject } from 'rxjs';
+
 export class MobileUtils {
 
-  private static _resizingFunctions: ((event: Event) => void)[] = [];
+  private static resize$ = new Subject<unknown>();
 
   public static get isMobile() {
     const toMatch = [
@@ -16,14 +18,12 @@ export class MobileUtils {
     return toMatch.some(toMatchItem => navigator.userAgent.match(toMatchItem));
   }
 
-  public static onResize(callbackFn: (event: Event) => void) {
-    // * Não abusar deste método
-    this._resizingFunctions.push(callbackFn);
+  public static get onResize() {
+    return this.resize$.asObservable();
   }
 
-  public static windowIsResizing(event: Event) {
-    // ! Este método deve ser chamado SOMENTE pelo AppComponent
-    this._resizingFunctions.forEach(cbfn => cbfn(event));
+  public static windowIsResizing(event?: any) {
+    this.resize$.next(event);
   }
 
 }

@@ -53,21 +53,22 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // this.messagingService.requestPermission();
+    this.messagingService.requestPermission();
     this.messagingService.receiveMessage();
     this.messagingService.currentMessage.subscribe(notification => {
+      console.log(notification);
       this.zone.run(() => {
         const msg = notification?.notification;
         if (!msg) { return; }
 
         console.log(msg);
 
-        const audio = new Audio('assets/audios/notifications.mp3')
-        audio.play()
+        const audio = new Audio('assets/audios/notifications.mp3');
+        audio.play();
 
         this.toastService.show(msg.body, 'primary');
 
-      })
+      });
     });
   }
 

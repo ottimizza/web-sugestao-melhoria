@@ -18,6 +18,8 @@ import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { User } from '@shared/models/User';
 import { finalize } from 'rxjs/operators';
+import { PushNotification } from '@shared/models/Notification';
+import { MessagingService } from '@app/services/messaging.service';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -71,6 +73,7 @@ export class TimelineComponent implements OnInit {
     public dialog: MatDialog,
     public suggestionService: SuggestionService,
     public toastService: ToastService,
+    public messagingService: MessagingService
   ) { }
 
   ngOnInit(): void {
@@ -240,6 +243,19 @@ export class TimelineComponent implements OnInit {
     }
     this.filters.push(event);
     this.fetch();
+  }
+
+  public async testeNotifications() {
+    console.log('botão foi clicado')
+    await new Promise(resolve => setTimeout(resolve, 5000));
+    const notification = new PushNotification(
+      'rodrigo.moraes@ottimizza.com.br',
+      this.messagingService.APPLICATION_ID,
+      'abc',
+      'UMA NOTIFICAÇÃO',
+      'Eu sou uma notificação!!!'
+    );
+    this.messagingService.sendNotification(notification).subscribe(() => alert('notificação enviada'));
   }
 
 }
