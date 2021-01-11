@@ -14,7 +14,7 @@ import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { UserService } from '@app/http/users.service';
 import { SuggestionService } from '@app/http/suggestion.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, switchMap } from 'rxjs/operators';
 import { FileService } from '@app/services/file.service';
 import { FileStorageService } from '@app/http/file-storage.service';
 import { ToastService } from '@shared/services/toast.service';
@@ -115,6 +115,12 @@ export class SuggestionComponent implements OnInit {
         this.comments = [result].concat(this.comments);
         this.suggestionService.notify(this.suggestion.id);
       });
+    this.commentService.create(comment)
+    .pipe(switchMap((result: Comment) => {
+        this.pageInfo.totalElements++;
+        this.comments.unshift(result);
+        return this.suggestionService.notify(this.suggestion.id)
+    })).subscribe();
   }
 
   like() {

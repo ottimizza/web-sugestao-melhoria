@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { environment } from '@env';
-import { Suggestion } from '@shared/models/Suggestion';
-import { HttpHandlerService } from '@app/services/http-handler.service';
 import { map, switchMap } from 'rxjs/operators';
-import { GenericResponse } from '@shared/models/GenericResponse';
-import { MessagingService } from '@app/services/messaging.service';
+import { Injectable } from '@angular/core';
 import { forkJoin, from } from 'rxjs';
+import { environment } from '@env';
+
+import { HttpHandlerService } from '@app/services/http-handler.service';
+import { MessagingService } from '@app/services/messaging.service';
+import { PageInfo } from '@shared/models/GenericPageableResponse';
 import { PushNotification } from '@shared/models/Notification';
+import { Suggestion } from '@shared/models/Suggestion';
+import { CommentService } from './comment.service';
 import { UserService } from './users.service';
 import { User } from '@shared/models/User';
-import { PageInfo } from '@shared/models/GenericPageableResponse';
-import { CommentService } from './comment.service';
 
 const BASE_URL = environment.serviceUrl;
 
