@@ -108,13 +108,6 @@ export class SuggestionComponent implements OnInit {
       usuario: `${user.firstName} ${user.lastName ?? ''}`,
       userId: user.id
     };
-    this.commentService
-      .create(comment)
-      .subscribe((result: Comment) => {
-        this.pageInfo.totalElements++;
-        this.comments = [result].concat(this.comments);
-        this.suggestionService.notify(this.suggestion.id);
-      });
     this.commentService.create(comment)
     .pipe(switchMap((result: Comment) => {
         this.pageInfo.totalElements++;
