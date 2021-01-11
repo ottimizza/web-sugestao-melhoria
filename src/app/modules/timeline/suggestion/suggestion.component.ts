@@ -29,7 +29,10 @@ export class SuggestionComponent implements OnInit {
 
   @Input() suggestion: Suggestion;
 
+  @Input()
   isSelected = false;
+
+  @Input()
   visibleComments = false;
 
   comments: Comment[] = [];

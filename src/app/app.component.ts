@@ -56,12 +56,10 @@ export class AppComponent implements OnInit {
     this.messagingService.requestPermission();
     this.messagingService.receiveMessage();
     this.messagingService.currentMessage.subscribe(notification => {
-      console.log('notificação hard core', notification);
       this.zone.run(() => {
         const msg = notification?.notification;
         if (!msg) { return; }
 
-        alert('notificação ' + msg)
         console.log(msg);
 
         const audio = new Audio('assets/audios/notifications.mp3');

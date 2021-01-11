@@ -245,17 +245,4 @@ export class TimelineComponent implements OnInit {
     this.fetch();
   }
 
-  public async testeNotifications() {
-    console.log('botão foi clicado')
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    const notification = new PushNotification(
-      User.fromLocalStorage().email || User.fromLocalStorage().username,
-      this.messagingService.APPLICATION_ID,
-      'abc',
-      'UMA NOTIFICAÇÃO',
-      'Eu sou uma notificação!!!'
-    );
-    this.messagingService.sendNotification(notification).subscribe(() => alert('notificação enviada'));
-  }
-
 }

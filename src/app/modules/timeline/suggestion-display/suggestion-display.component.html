@@ -1,0 +1,7 @@
+<app-layout [breadcrumbAppend]="append">
+
+  <div *ngIf="suggestion">
+    <app-suggestion [suggestion]="suggestion" [isSelected]="true" [visibleComments]="true"></app-suggestion>
+  </div>
+
+</app-layout>

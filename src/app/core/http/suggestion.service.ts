@@ -31,7 +31,7 @@ export class SuggestionService {
 
   public getById(id: number) {
     const url = `${BASE_URL}/api/sugestao/${id}`;
-    return this._http.get<GenericResponse<Suggestion>>(url, 'Falha ao obter detalhes da sugestão!');
+    return this._http.get<Suggestion>(url, 'Falha ao obter detalhes da sugestão!');
   }
 
   public create(suggestion: Suggestion) {
@@ -58,7 +58,8 @@ export class SuggestionService {
             this.messaging.APPLICATION_ID,
             'ATUALIZACAO',
             'Novo comentário',
-            `${currentUser.firstName} ${currentUser.lastName ? currentUser.lastName + ' ' : ''}comentou em uma sugestão em que você está envolvido`
+            `${currentUser.firstName} ${currentUser.lastName ? currentUser.lastName + ' ' : ''}comentou em uma sugestão em que você está envolvido`,
+            `${window.location.origin}/timeline/sugestoes/${suggestionId}`
           );
           return this.messaging.sendNotification(notification);
         });
@@ -74,11 +75,11 @@ export class SuggestionService {
       const ids: number[] = [];
 
       const suggestion = await this.getById(id).toPromise();
-      ids.push(suggestion.record.userId);
+      ids.push(suggestion.userId);
 
       let pageInfo = new PageInfo({ hasNext: true, pageIndex: 0 });
       while (pageInfo.hasNext) {
-        const filter = { pageIndex: pageInfo.pageIndex, pageSize: 10, sugestaoId: suggestion.record.id };
+        const filter = { pageIndex: pageInfo.pageIndex, pageSize: 10, sugestaoId: suggestion.id };
         const comment = await this.commentService.getComments(filter).toPromise();
 
         ids.push(...comment.records.map(com => com.userId));

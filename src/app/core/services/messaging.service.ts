@@ -40,7 +40,6 @@ export class MessagingService {
     this.afm.messages.subscribe((messaging: any) => {
       messaging.onMessage = messaging.onMessage.bind(messaging);
       messaging._next = (payload: any) => {
-        console.log(payload);
         this.currentMessage.next(payload);
       };
       messaging.onTokenRefresh = messaging.onTokenRefresh.bind(messaging);

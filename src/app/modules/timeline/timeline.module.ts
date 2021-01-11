@@ -20,10 +20,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { ScrollTrackerModule } from '@shared/directives/scroll-tracker/scroll-tracker.module';
 import { TimelineRoutingModule } from './timeline.routing';
 import { NormalizedLayoutModule } from 'app/layout/normalized-layout/normalized-layout.module';
+import { SuggestionDisplayComponent } from './suggestion-display/suggestion-display.component';
 
 @NgModule({
   declarations: [
     TimelineComponent,
+    SuggestionDisplayComponent
   ],
   imports: [
     TimelineRoutingModule,
