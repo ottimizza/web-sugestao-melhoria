@@ -8,6 +8,7 @@ import { RxEvent } from '@app/services/rx-event.service';
 import { TopicService } from '@app/http/topic.service';
 import { User } from '@shared/models/User';
 import { environment } from '@env';
+import { ArrayUtils } from '@shared/utils/array.utils';
 
 @Component({
   selector: 'app-root',

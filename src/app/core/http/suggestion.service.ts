@@ -11,6 +11,7 @@ import { Suggestion } from '@shared/models/Suggestion';
 import { CommentService } from './comment.service';
 import { UserService } from './users.service';
 import { User } from '@shared/models/User';
+import { ArrayUtils } from '@shared/utils/array.utils';
 
 const BASE_URL = environment.serviceUrl;
 
@@ -72,7 +73,7 @@ export class SuggestionService {
   private envolvedUsers(id: number, user: User) {
     const promise = new Promise<number[]>(async resolve => {
 
-      const ids: number[] = [];
+      let ids: number[] = [];
 
       const suggestion = await this.getById(id).toPromise();
       ids.push(suggestion.userId);
@@ -89,7 +90,9 @@ export class SuggestionService {
 
       }
 
-      resolve(ids.filter(userId => userId !== user.id));
+      ids = ArrayUtils.reduce(ids);
+      ids = ids.filter(userId => userId !== user.id);
+      resolve(ids);
 
     });
     return from(promise);

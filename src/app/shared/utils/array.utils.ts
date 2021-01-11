@@ -100,4 +100,16 @@ export class ArrayUtils {
     return params[params.length - 1];
   }
 
+  public static reduce<T>(array: T[]): T[] {
+    for (const item of array) {
+      const firstIndex = array.indexOf(item);
+      const lastIndex = array.lastIndexOf(item);
+      if (firstIndex !== lastIndex) {
+        array.splice(firstIndex, 1);
+        return this.reduce(array);
+      }
+    }
+    return array;
+  }
+
 }
