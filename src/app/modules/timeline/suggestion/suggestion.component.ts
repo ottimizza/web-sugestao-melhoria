@@ -13,7 +13,8 @@ import { DateUtils } from '@shared/utils/date-utils';
 import { Comment } from '@shared/models/Comment';
 import { User } from '@shared/models/User';
 import { UserService } from '@app/http/users.service';
-import { finalize } from 'rxjs/operators';
+import { SuggestionService } from '@app/http/suggestion.service';
+import { finalize, switchMap } from 'rxjs/operators';
 import { FileService } from '@app/services/file.service';
 import { FileStorageService } from '@app/http/file-storage.service';
 import { ToastService } from '@shared/services/toast.service';
@@ -28,7 +29,10 @@ export class SuggestionComponent implements OnInit {
 
   @Input() suggestion: Suggestion;
 
+  @Input()
   isSelected = false;
+
+  @Input()
   visibleComments = false;
 
   comments: Comment[] = [];
@@ -44,6 +48,7 @@ export class SuggestionComponent implements OnInit {
     public voteService: VoteService,
     public userService: UserService,
     private fileService: FileService,
+    private suggestionService: SuggestionService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
 
@@ -103,12 +108,12 @@ export class SuggestionComponent implements OnInit {
       usuario: `${user.firstName} ${user.lastName ?? ''}`,
       userId: user.id
     };
-    this.commentService
-      .create(comment)
-      .subscribe((result: Comment) => {
+    this.commentService.create(comment)
+    .pipe(switchMap((result: Comment) => {
         this.pageInfo.totalElements++;
-        this.comments = [result].concat(this.comments);
-      });
+        this.comments.unshift(result);
+        return this.suggestionService.notify(this.suggestion.id)
+    })).subscribe();
   }
 
   like() {

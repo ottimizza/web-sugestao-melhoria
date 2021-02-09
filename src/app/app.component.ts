@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 import { MessagingService } from '@app/services/messaging.service';
@@ -8,6 +8,7 @@ import { RxEvent } from '@app/services/rx-event.service';
 import { TopicService } from '@app/http/topic.service';
 import { User } from '@shared/models/User';
 import { environment } from '@env';
+import { ArrayUtils } from '@shared/utils/array.utils';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
     private messagingService: MessagingService,
     public topicService: TopicService,
     public toastService: ToastService,
+    private zone: NgZone
   ) {
     const authJson = localStorage.getItem('auth-session');
     if (User.fromLocalStorage()?.email && authJson && authJson !== '{}') {
@@ -52,9 +54,22 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // this.messagingService.requestPermission();
+    this.messagingService.requestPermission();
     this.messagingService.receiveMessage();
-    this.messagingService.currentMessage.subscribe(msg => console.log(msg));
+    this.messagingService.currentMessage.subscribe(notification => {
+      this.zone.run(() => {
+        const msg = notification?.notification;
+        if (!msg) { return; }
+
+        console.log(msg);
+
+        const audio = new Audio('assets/audios/notifications.mp3');
+        audio.play();
+
+        this.toastService.show(msg.body, 'primary');
+
+      });
+    });
   }
 
   private _verifyTopic() {
