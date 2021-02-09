@@ -19,6 +19,7 @@ function createEnvironementFile() {
   portalBaseUrl: '${getEnvironmentVariable('PORTAL_BASE_URL', 'https:///accounts.ottimizza.com.br')}',
   defaultColor: '${getEnvironmentVariable('DEFAULT_COLOR', '#004ecb')}',
   supportUrl: '${getEnvironmentVariable('SUPPORT_URL', 'https://suporte.ottimizza.com.br')}',
+  messagingBaseUrl: '${getEnvironmentVariable('MESSAGING_BASE_URL', 'https://ottimizza-notification-service.herokuapp.com')}',
   topic: {
     id: 0,
     name: '${getEnvironmentVariable('TOPIC')}'

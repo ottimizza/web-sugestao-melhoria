@@ -18,6 +18,7 @@ export class ClipboardUtils {
 
     document.body.removeChild(textArea);
   }
+
   public static copyTextToClipboard(text: string) {
     if (!navigator.clipboard) {
       ClipboardUtils.fallbackCopyTextToClipboard(text);

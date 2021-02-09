@@ -18,6 +18,8 @@ import { Suggestion, SuggestionStatus } from '@shared/models/Suggestion';
 import { ArrayUtils } from '@shared/utils/array.utils';
 import { User } from '@shared/models/User';
 import { finalize } from 'rxjs/operators';
+import { PushNotification } from '@shared/models/Notification';
+import { MessagingService } from '@app/services/messaging.service';
 
 enum SortingType {
   RELEVANCIA = 'Relevância',
@@ -71,6 +73,7 @@ export class TimelineComponent implements OnInit {
     public dialog: MatDialog,
     public suggestionService: SuggestionService,
     public toastService: ToastService,
+    public messagingService: MessagingService
   ) { }
 
   ngOnInit(): void {
